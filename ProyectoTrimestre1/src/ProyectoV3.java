@@ -4,10 +4,12 @@ import java.util.Random;
 import java.util.Scanner;
 
 //2 y 14 --> minijuegos
-//23 y 24 --> minijuegos terminados
-//1 --> entrada, -1 --> sala secreta, -2 --> 2opciones entrada
+//1 --> entrada, -1 --> sala secreta
 //3, 4, 7, 12, 26, 16 --> salas vacías
 //5, 10, 13, 25, 19 --> cofre
+//8, 17 --> ruletas
+//11, 21, 22 --> finales
+//6, 15 --> puertas
 
 public class ProyectoV3 {
     static int[][] rooms = {
@@ -54,6 +56,20 @@ public class ProyectoV3 {
         room(rooms[xpos][ypos], nombre);
     }
 
+    public static void tpw (String text) {
+
+        for (int i = 0; i < text.length(); i++) {
+            System.out.print(text.charAt(i));
+
+            try {
+                Thread.sleep(1);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                break;
+            }
+        }
+    }
+
     public static void room (int curoom, String nombre){
 
         String[] palabras = {
@@ -71,14 +87,14 @@ public class ProyectoV3 {
                 case -1 -> curoom = salaSecreta();
                 case 1 -> {
                     if (perro){
-                        curoom = entranceV2(nombre);
+                        curoom = entradaV2(nombre);
                     } else {
-                        curoom = entrance(nombre);
+                        curoom = entrada(nombre);
                     }
                 }
                 case 2 -> {
                     if (anafin) {
-                        curoom = anagramaFinish(nombre);
+                        curoom = anagrama(nombre);
                     } else {
                         curoom = anagrama(palabras, nombre);
                     }
@@ -90,10 +106,10 @@ public class ProyectoV3 {
                     if (palcodfin){
                     curoom = palcod(palabras, nombre );
                     } else {
-                    curoom = palcodFinish(nombre);
+                    curoom = palcod(nombre);
                     }
                 }
-                case 6, 15 -> curoom = keydoor(nombre);
+                case 6, 15 -> curoom = puertallav(nombre);
                 case 8 ,17 -> curoom = ruleta();
 
             }
@@ -101,7 +117,7 @@ public class ProyectoV3 {
 
     }
 
-    public static int entrance (String nombre) {
+    public static int entrada (String nombre) {
         Scanner sc = new Scanner(System.in);
         String ans;
 
@@ -126,7 +142,7 @@ public class ProyectoV3 {
             }
        }
 
-    public static int entranceV2 (String nombre) {
+    public static int entradaV2 (String nombre) {
         Scanner sc = new Scanner(System.in);
         String ans;
 
@@ -195,11 +211,11 @@ public class ProyectoV3 {
         return rooms[xpos][ypos];
     }
 
-    public static int anagramaFinish(String nombre) {
+    public static int anagrama(String nombre) {
         Scanner sc = new Scanner(System.in);
         String ans;
 
-        tpw("Enhorabuena " + nombre + " por superar la prueba.\nDos caminos se abren enfrente tuya, izquierda y derecha\n");
+        tpw("Enhorabuena " + nombre + " por superar la prueba.\nHay dos caminos enfrente tuya, izquierda y derecha\n");
 
         do {
             tpw(nombre + ", ¿Qué camino quieres escoger?(1-> Izquierda, 2-> Derecha)");
@@ -279,7 +295,7 @@ public class ProyectoV3 {
         return rooms[xpos][ypos];
     }
 
-    public static int palcodFinish(String nombre){
+    public static int palcod(String nombre){
         Scanner sc = new Scanner(System.in);
         String ans;
         estuve = false;
@@ -475,21 +491,7 @@ public class ProyectoV3 {
         return opc != 'y' && opc != 'n';
     }
 
-    public static void tpw (String text) {
-
-        for (int i = 0; i < text.length(); i++) {
-            System.out.print(text.charAt(i));
-
-            try {
-                Thread.sleep(5);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                break;
-            }
-        }
-    }
-
-    public static int keydoor (String nombre){
+    public static int puertallav (String nombre){
         Scanner sc = new Scanner(System.in);
         String ans;
         tpw("\nTe encuentras ante una puerta cerrada. Parece que necesita una llave\n");
@@ -509,8 +511,8 @@ public class ProyectoV3 {
                 ypos++;
             }
         } else {
-            tpw("A lo mejor deberías volver sobre tus pasos");
-
+            tpw("A lo mejor deberías volver sobre tus pasos\n");
+            System.out.println("\n");
             if (rooms[xpos][ypos] == 6){
                 xpos++;
                 return rooms[xpos][ypos];
@@ -618,8 +620,8 @@ public class ProyectoV3 {
                     ypos++;
                 }
                 case "3" ->{
-                    tpw("El camino está bloqueado, no parece que puedas volver\n");
-                    return rooms[xpos][ypos];
+                    xpos++;
+                    ypos--;
                 }
             }
         }else {
@@ -636,11 +638,7 @@ public class ProyectoV3 {
                         xpos++;
                         ypos++;
                     }
-                    case 4 ->{
-                        tpw("El camino está bloqueado, no parece que puedas volver\n");
-                        return rooms[xpos][ypos];
-                    }
-                    case 7, 16, 26 -> xpos++;
+                    case 4, 7, 16, 26 -> xpos++;
                 }
             }
         }
