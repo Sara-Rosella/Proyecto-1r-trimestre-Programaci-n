@@ -205,7 +205,9 @@ public class ProyectoV3 {
         if (intento.equalsIgnoreCase(palabra)) {
             tpw("\nPalabra adivinada correctamente, felicidades.\n");
             anafin = true;
+            tpw("Las paredes parecen moverse");
         }
+
         return rooms[xpos][ypos];
     }
 
