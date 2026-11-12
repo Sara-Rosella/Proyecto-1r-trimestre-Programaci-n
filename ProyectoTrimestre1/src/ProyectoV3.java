@@ -278,7 +278,7 @@ public class ProyectoV3 {
         }
 
 
-        tpw("\nBienvenido viajero " + nombre + ", esta prueba se llama 'palabra codificada' y como su propio nombre indica, consiste en adivinar la palabra codificada mostrada, durante la aventura has podido encontrar alguna pista para resolverlo pero si no la encontraste solo me queda desearte buena suerte. Tendrás los mismos intentos que vidas restantes tengas, cada fallo te restará 1 vida piénsalo antes de resolver a lo loco.");
+        tpw("\nBienvenido viajero " + nombre + ", esta prueba se llama 'palabra codificada' y como su propio nombre indica, consiste en adivinar la palabra codificada mostrada.\nDurante la aventura has podido encontrar alguna pista para resolverlo pero si no la encontraste solo me queda desearte buena suerte. \nTendrás los mismos intentos que vidas restantes tengas, cada fallo te restará 1 vida piénsalo antes de resolver a lo loco.");
         tpw("\nLa palabra codificada es: ");
         tpw(sb.toString());
 
@@ -312,9 +312,12 @@ public class ProyectoV3 {
 
         if (intento.equalsIgnoreCase("salir")){
             tpw("\nSaliste de la sala a salvo\n");
+            xpos++;
+            ypos--;
         } else {
             sigueVivo();
             tpw("\nPalabra acertada\n");
+            tpw("Enhorabuena " + nombre + " por superar la prueba.");
             palcodfin = true;
         }
         return rooms[xpos][ypos];
@@ -324,8 +327,7 @@ public class ProyectoV3 {
         Scanner sc = new Scanner(System.in);
         String ans;
         estuve = false;
-        cofab = false;
-        tpw("Enhorabuena " + nombre + " por superar la prueba.\nDos caminos se abren enfrente tuya, izquierda y derecha\n");
+        tpw("\nEn la sala se pueden ver dos caminos se abren enfrente.\n");
 
         do {
             tpw(nombre + ", ¿Qué camino quieres escoger?(1-> Izquierda, 2-> Derecha)");
@@ -538,7 +540,7 @@ public class ProyectoV3 {
             }
         } else {
             tpw("A lo mejor deberías volver sobre tus pasos\n");
-            System.out.println("\n");
+            tpw("(Vuelves a la sala anterior)");
             if (rooms[xpos][ypos] == 6){
                 xpos++;
                 return rooms[xpos][ypos];
