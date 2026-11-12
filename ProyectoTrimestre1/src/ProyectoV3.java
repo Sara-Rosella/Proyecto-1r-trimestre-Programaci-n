@@ -37,6 +37,7 @@ public class ProyectoV3 {
     static boolean rulefin;
     static boolean abierto;
     static boolean cofab;
+    static ArrayList<String> inv;
 
     public static void main(String[] args){
         Scanner sc = new Scanner(System.in);
@@ -398,6 +399,7 @@ public class ProyectoV3 {
         }
         tpw("Consigues llegar al final del pasillo donde te encuentras un perro quien parece estar listo para seguirte durante tu aventura");
         perro = true;
+        inv.add("Perro");
         xpos--;
         return rooms[xpos][ypos];
     }
@@ -433,7 +435,7 @@ public class ProyectoV3 {
                 System.out.print(show[i]);
                 System.out.print(' ');
             }
-            System.out.println(' ');
+            tpw(" ");
 
             tpw("\nIntentos restantes: " + vidas);
             tpw("\nLetras introducidas: " + adiv);
@@ -648,6 +650,7 @@ public class ProyectoV3 {
                    llave = true;
                    xpos++;
                    cofab = true;
+                   inv.add("llave");
                }
                case 25 -> {
                    obtain ="una llave";
@@ -655,6 +658,7 @@ public class ProyectoV3 {
                    xpos++;
                    ypos++;
                    cofab = true;
+                   inv.add("llave");
                }
                case 10, 19 -> {
                    obtain = "una vida extra";
@@ -663,10 +667,11 @@ public class ProyectoV3 {
                    cofab = true;
                }
                case 13 ->{
-                   obtain = "un código, parece ser para una prueba, no lo entiendes pero te lo guardas.";
+                   obtain = "una clave de cifrado, parece ser para una prueba, no lo entiendes pero te lo guardas.";
                    clave = true;
                    xpos++;
                    cofab = true;
+                   inv.add("clave de cifrado");
                }
                default ->  obtain = "null";
             }
@@ -808,5 +813,37 @@ public class ProyectoV3 {
             ypos--;
         }
         return rooms[xpos][ypos];
+    }
+
+    public static void inv (){
+        Scanner sc = new Scanner(System.in);
+        String ans;
+        String acc;
+        String check;
+        String use;
+
+        do {
+            tpw("\n¿Qué quieres ver?");
+            tpw(inv.toString());
+            ans = sc.nextLine().toLowerCase();
+        }while(!invCheck(ans));
+
+        switch (ans){
+            case "clave de cifrado" -> {
+                check = "Un papel con cifrado, parace importante";
+
+            }
+        }
+        do {
+            tpw("\n¿Qué quieres hacer? (1-> chequear, 2-> usar)");
+            acc = sc.nextLine().toLowerCase();
+        }while(Op2Check(acc));
+    }
+
+    public static boolean invCheck (String obj) {
+        return switch (obj) {
+            case "perro", "llave", "clave de cifrado" -> true;
+            default -> false;
+        };
     }
 }
