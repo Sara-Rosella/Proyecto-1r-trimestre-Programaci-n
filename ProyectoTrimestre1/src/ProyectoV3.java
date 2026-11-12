@@ -223,13 +223,13 @@ public class ProyectoV3 {
             sb.append(palabra.charAt(r));
         }
 
-        tpw("\nBienvenido viajero " + nombre + " a la prueba del anagrama.\nEsta prueba consiste en reordenar las letras de la cadena dada para adivinar la palabra escondida detrás de ese desorden");
+        tpw("\nBienvenido viajero " + nombre + " a la prueba del anagrama.\nEsta prueba consiste en reordenar las letras de la cadena dada para adivinar la palabra escondida detrás de ese desorden.\nTeniendo en cuenta su dificultad te doy la opción de rendirte, a cambio perderás 3 vidas solo tendrás que introducir 'salir'.");
         tpw("\nANAGRAMA: " + sb);
         tpw("\nPor favor, " + nombre + ", introduzca su intento: ");
         intento = sc.nextLine();
 
 
-        while (!intento.equalsIgnoreCase(palabra) && vidas > 0){
+        while (!intento.equalsIgnoreCase(palabra) && vidas > 0 && !intento.equalsIgnoreCase("salir")){
             vidas--;
             tpw("\nIntento fallido, has perdido una vida.\nVidas restantes: " + vidas);
             sigueVivo();
@@ -245,6 +245,10 @@ public class ProyectoV3 {
             tpw("\nPalabra adivinada correctamente, felicidades.\n");
             anafin = true;
             tpw("Las paredes parecen moverse");
+        } else if (intento.equalsIgnoreCase("salir")) {
+            vidas-= 3;
+            tpw("\nEstá bien puedes marchar pero me quedaré con 3 de tus vidas.\nVidas restantes: " + vidas);
+            anafin = true;
         }
 
         return rooms[xpos][ypos];
@@ -255,7 +259,7 @@ public class ProyectoV3 {
         String ans;
 
 
-        tpw("\nEnhorabuena " + nombre + " por superar la prueba.\nHay dos caminos enfrente tuya, izquierda y derecha\n");
+        tpw("\nHay dos caminos enfrente tuya, izquierda y derecha\n");
 
         do {
             tpw("\n" + nombre + ", ¿Qué camino quieres escoger?(1-> Izquierda, 2-> Derecha, 3 -> Inventario)");
