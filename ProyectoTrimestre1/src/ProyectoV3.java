@@ -215,6 +215,7 @@ public class ProyectoV3 {
             anafin = true;
             tpw("Las paredes parecen moverse");
         }
+        tpw("Enhorabuena " + nombre + " por superar la prueba.\nHay dos caminos enfrente tuya, izquierda y derecha\n");
 
         return rooms[xpos][ypos];
     }
@@ -223,10 +224,9 @@ public class ProyectoV3 {
         Scanner sc = new Scanner(System.in);
         String ans;
 
-        tpw("Enhorabuena " + nombre + " por superar la prueba.\nHay dos caminos enfrente tuya, izquierda y derecha\n");
 
         do {
-            tpw(nombre + ", ¿Qué camino quieres escoger?(1-> Izquierda, 2-> Derecha)");
+            tpw("\nEsta prueba está acabada.\n " + nombre + ", ¿Qué camino quieres escoger?(1-> Izquierda, 2-> Derecha)");
             ans = sc.next();
         } while (Op2Check(ans));
 
@@ -593,14 +593,12 @@ public class ProyectoV3 {
 
             if (Objects.equals(ans,"1")){
                 switch (rooms[xpos][ypos]) {
-                    case 5 -> xpos++;
-
+                    case 5, 10, 19, 13 -> xpos++;
                     case 25 -> {
                         estuve = true;
                         xpos++;
                         ypos++;
                     }
-                    case 10, 19, 13 -> xpos++;
 
                 }
             }
