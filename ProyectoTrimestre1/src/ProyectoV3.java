@@ -32,6 +32,7 @@ public class ProyectoV3 {
     static int vidas;
     static boolean anafin;
     static boolean palcodfin;
+    static boolean ahorcfin;
     static boolean estuve;
     static boolean rulefin;
     static boolean abierto;
@@ -41,6 +42,7 @@ public class ProyectoV3 {
         Scanner sc = new Scanner(System.in);
         String nombre;
         vidas = 7;
+        ahorcfin = false;
         cofab = false;
         abierto = false;
         rulefin = false;
@@ -113,7 +115,6 @@ public class ProyectoV3 {
                     }
                 }
                 case 3, 4, 7, 12, 26, 16 -> curoom = SalVac(nombre);
-                case 9 -> curoom = ahorcado(palabras);
                 case 14 -> {
                     if (palcodfin){
                     curoom = palcod(nombre);
@@ -135,7 +136,13 @@ public class ProyectoV3 {
                         curoom = ruleta();
                     }
                 }
-
+                case 9, 18 -> {
+                    if (ahorcfin) {
+                        curoom = ahorcado(nombre);
+                    } else {
+                        curoom = ahorcado(palabras);
+                    }
+                }
             }
         } while (curoom != 0);
 
@@ -481,7 +488,48 @@ public class ProyectoV3 {
         }while(counter != 0);
 
         tpw("Palabra adivinada: " + pal);
-        xpos--;
+        tpw("\nEnhorabuena por superar la prueba del ahorcado." );
+        ahorcfin = true;
+        return rooms[xpos][ypos];
+    }
+
+    public static int ahorcado (String nombre){
+        Scanner sc = new Scanner(System.in);
+        String ans;
+
+
+        switch (rooms[xpos][ypos]){
+            case 9 -> {
+                tpw("Solo te queda avanzar a la siguiente sala para reclamar tu deseada reliquia");
+                do {
+                    tpw("\n" + nombre + ", ¿Qué quieres hacer ahora?: (1-> Avanzar, 2-> Volver)");
+                    ans = sc.next();
+                } while (Op2Check(ans));
+
+                if (Objects.equals(ans, "1")){
+                    xpos--;
+                } else {
+                    tpw("No hay vuelta atrás");
+                }
+
+            }
+            case 18 ->{
+                tpw("Delante tuya hay dos caminos, elige sabiamente");
+                do {
+                    tpw("\n" + nombre + ", ¿Qué quieres hacer ahora?: (1-> Izquierda, 2-> Derecha, 3-> Volver)");
+                    ans = sc.next();
+                } while (Op3Check(ans));
+
+                if (Objects.equals(ans, "1")){
+                    xpos--;
+                } else if (Objects.equals(ans, "2")){
+                    xpos--;
+                    ypos++;
+                } else {
+                    tpw("No hay vuelta atrás");
+                }
+            }
+        }
         return rooms[xpos][ypos];
     }
 
