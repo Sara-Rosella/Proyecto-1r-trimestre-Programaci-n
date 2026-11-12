@@ -850,15 +850,24 @@ public class ProyectoV3 {
                     case 1, 12, 2 -> use = "\nEl perro se acerca a la puerta de la izquierda, parece que quiere le sigas";
                     case 6, 15 -> {
                         if (abierto){
-                            use = "El perro tiene interés por lo que haya por el camino de la derecha";
+                            use = "\nEl perro tiene interés por lo que haya por el camino de la derecha";
                         } else {
-                            use = "El perro vuelve hacia atrás, parece que quiere que le sigas";
+                            use = "\nEl perro vuelve hacia atrás, parece que quiere que le sigas";
                         }
                     }
-                    case 5, 10, 13, 25, 19, 8, 18-> use = "El perro se reboza por el suelo, no tiene mucho que decir";
+                    case 5, 10, 13, 25, 19, 8, 18, 17, 3-> use = "\nEl perro se reboza por el suelo, no tiene mucho que decir";
+                    case 7, 16 -> use = "\nEl perro mira hacia delante";
+                    case 4, 26 ->{
+                        if (!abierto){
+                            use = "\nEl perro mira hacia atrás";
+                        } else {
+                            use = "\nEl perro mira hacia delante";
+                        }
+                    }
                 }
             }
         }
+
         do {
             tpw("\n¿Qué quieres hacer? (1-> chequear, 2-> usar)");
             acc = sc.nextLine().toLowerCase();
