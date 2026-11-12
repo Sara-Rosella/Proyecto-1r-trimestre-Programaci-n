@@ -157,7 +157,7 @@ public class ProyectoV3 {
         tpw("\nTe encuentras en la entrada de nuevo.\nMiras tu entorno y ves 2 posibles caminos, izquierda, derecha. El conducto detrás de ti parece innacesible.\n");
 
         do {
-            System.out.println(nombre + ", ¿Qué camino quieres escoger: (1-> Izquierda, 2-> Derecha)");
+            System.out.println("\n" + nombre + ", ¿Qué camino quieres escoger: (1-> Izquierda, 2-> Derecha)");
             ans = sc.next();
         } while (Op2Check(ans));
 
@@ -573,7 +573,7 @@ public class ProyectoV3 {
                    xpos++;
                }
                case 13 ->{
-                   obtain = "un código";
+                   obtain = "un código, parece ser para una prueba, no lo entiendes pero te lo guardas.";
                    clave = true;
                    xpos++;
                }
