@@ -124,7 +124,7 @@ public class ProyectoV3 {
         tpw("\nTe encuentras en la primera sala, una sala vacía normal y corriente, sin ningún tipo de prueba o reto visible.\nMiras tu entorno y ves 3 posibles caminos, izquierda, derecha y un pequeño conducto detrás de ti.");
 
         do {
-            System.out.println(nombre + ", ¿Qué camino quieres escoger: (1-> Izquierda, 2-> Derecha, 3-> Conducto)");
+            System.out.println("\n" + nombre + ", ¿Qué camino quieres escoger: (1-> Izquierda, 2-> Derecha, 3-> Conducto)");
             ans = sc.next();
         } while (Op3Check(ans));
 
