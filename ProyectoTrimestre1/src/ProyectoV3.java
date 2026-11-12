@@ -158,20 +158,23 @@ public class ProyectoV3 {
         do {
             tpw("\n" + nombre + ", ¿Qué camino quieres escoger: (1-> Izquierda, 2-> Derecha, 3-> Conducto)");
             ans = sc.next();
-        } while (Op3Check(ans));
+        } while (Op4Check(ans));
 
-            if (Objects.equals(ans, "1")) {
-                xpos--;
-                ypos--;
+           switch (ans) {
+               case "1" -> {
+                   xpos--;
+                   ypos--;
+               }
+               case "3" ->{
+                   xpos++;
+                   return rooms[xpos][ypos];
+               }
+               case "2" -> {
+                   xpos--;
+                   ypos++;
+               }
+           }
                 return rooms[xpos][ypos];
-            } else if (Objects.equals(ans, "3")) {
-                xpos++;
-                return rooms[xpos][ypos];
-            } else {
-                xpos--;
-                ypos++;
-                return rooms[xpos][ypos];
-            }
        }
 
     public static int entradaV2 (String nombre) {
@@ -181,19 +184,22 @@ public class ProyectoV3 {
         tpw("\nTe encuentras en la entrada de nuevo.\nMiras tu entorno y ves 2 posibles caminos, izquierda, derecha. El conducto detrás de ti parece innacesible.\n");
 
         do {
-            tpw("\n" + nombre + ", ¿Qué camino quieres escoger: (1-> Izquierda, 2-> Derecha)");
+            tpw("\n" + nombre + ", ¿Qué quieres hacer? (1-> Ir a la Izquierda, 2-> Ir a la Derecha, 3 -> Inventario)");
             ans = sc.next();
-        } while (Op2Check(ans));
+        } while (Op3Check(ans));
 
-        if (Objects.equals(ans, "1")) {
-            xpos--;
-            ypos--;
-            return rooms[xpos][ypos];
-        } else {
-            xpos--;
-            ypos++;
-            return rooms[xpos][ypos];
+        switch (ans){
+            case "1" ->{
+                xpos--;
+                ypos--;
+            }
+            case "2" -> {
+                xpos--;
+                ypos++;
+            }
+            case "3" -> inv();
         }
+        return rooms[xpos][ypos];
     }
 
     public static int anagrama(String[] palabras, String nombre) {
@@ -252,21 +258,20 @@ public class ProyectoV3 {
         tpw("\nEnhorabuena " + nombre + " por superar la prueba.\nHay dos caminos enfrente tuya, izquierda y derecha\n");
 
         do {
-            tpw("\n" + nombre + ", ¿Qué camino quieres escoger?(1-> Izquierda, 2-> Derecha)");
+            tpw("\n" + nombre + ", ¿Qué camino quieres escoger?(1-> Izquierda, 2-> Derecha, 3 -> Inventario)");
             ans = sc.next();
-        } while (Op2Check(ans));
+        } while (Op3Check(ans));
 
-        if (Objects.equals(ans, "1")) {
-            xpos--;
-            ypos--;
+        switch (ans){
+            case "1" ->{
+                xpos--;
+                ypos--;
+            }
+            case "2" -> xpos--;
 
-            return rooms[xpos][ypos];
-        } else {
-            xpos--;
-            return rooms[xpos][ypos];
+            case "3" -> inv();
         }
-
-
+        return rooms[xpos][ypos];
     }
 
     public static int palcod(String[] palabras, String nombre){
@@ -338,19 +343,20 @@ public class ProyectoV3 {
         tpw("\nEn la sala se pueden ver dos caminos se abren enfrente.\n");
 
         do {
-            tpw(nombre + ", ¿Qué camino quieres escoger?(1-> Izquierda, 2-> Derecha)");
+            tpw(nombre + ", ¿Qué camino quieres escoger?(1-> Izquierda, 2-> Derecha, 3 -> Inventario)");
             ans = sc.next();
-        } while (Op2Check(ans));
+        } while (Op3Check(ans));
 
-        if (Objects.equals(ans, "1")) {
-            xpos--;
-            ypos--;
+        switch (ans){
+            case "1" ->{
+                xpos--;
+                ypos--;
+            }
+            case "2" -> xpos--;
 
-            return rooms[xpos][ypos];
-        } else {
-            xpos--;
-            return rooms[xpos][ypos];
+            case "3" -> inv();
         }
+        return rooms[xpos][ypos];
     }
 
     public static char codifica(char[] conjunto1, char[] conjunto2, char c ){
@@ -504,31 +510,34 @@ public class ProyectoV3 {
             case 9 -> {
                 tpw("Solo te queda avanzar a la siguiente sala para reclamar tu deseada reliquia");
                 do {
-                    tpw("\n" + nombre + ", ¿Qué quieres hacer ahora?: (1-> Avanzar, 2-> Volver)");
+                    tpw("\n" + nombre + ", ¿Qué quieres hacer ahora?: (1-> Avanzar, 2-> Volver, 3-> Inventario)");
                     ans = sc.next();
-                } while (Op2Check(ans));
+                } while (Op3Check(ans));
 
-                if (Objects.equals(ans, "1")){
-                    xpos--;
-                } else {
-                    tpw("No hay vuelta atrás");
+                switch (ans){
+                    case "1" -> xpos--;
+
+                    case "2" -> tpw("No hay vuelta atrás");
+
+                    case "3" -> inv();
                 }
-
+                return rooms[xpos][ypos];
             }
             case 18 ->{
                 tpw("Delante tuya hay dos caminos, elige sabiamente");
                 do {
-                    tpw("\n" + nombre + ", ¿Qué quieres hacer ahora?: (1-> Izquierda, 2-> Derecha, 3-> Volver)");
+                    tpw("\n" + nombre + ", ¿Qué quieres hacer ahora?: (1-> Izquierda, 2-> Derecha, 3-> Volver, 4 -> Inventario)");
                     ans = sc.next();
-                } while (Op3Check(ans));
+                } while (Op4Check(ans));
 
-                if (Objects.equals(ans, "1")){
-                    xpos--;
-                } else if (Objects.equals(ans, "2")){
-                    xpos--;
-                    ypos++;
-                } else {
-                    tpw("No hay vuelta atrás");
+                switch (ans) {
+                    case "1" -> xpos--;
+                    case "2" -> {
+                        xpos--;
+                        ypos++;
+                    }
+                    case "4" -> inv();
+                    case "3" -> tpw("No hay vuelta atrás");
                 }
             }
         }
@@ -553,7 +562,13 @@ public class ProyectoV3 {
         return false;
     }
 
-    public static boolean Op3Check(String opc) { //Función para comprobar que la opción introducida sea 1 2 o 3
+    public static boolean Op4Check(String opc) { //Función para comprobar que la opción introducida sea 1 2 o 3
+        if (IntCheck(opc)) {
+            return true;
+        } else return opc.charAt(0) != '1' && opc.charAt(0) != '2' && opc.charAt(0) != '3' && opc.charAt(0) != '4';
+    }
+
+    public static boolean Op3Check(String opc) { //Función para comprobar que la opción introducida sea 1 o 2
         if (IntCheck(opc)) {
             return true;
         } else return opc.charAt(0) != '1' && opc.charAt(0) != '2' && opc.charAt(0) != '3';
@@ -578,15 +593,17 @@ public class ProyectoV3 {
 
             tpw ("\nSe te presenta dos caminos\n");
             do {
-                tpw(nombre + ", ¿Qué camino quieres escoger? (1-> Izquierda, 2-> Derecha)");
+                tpw(nombre + ", ¿Qué camino quieres escoger? (1-> Izquierda, 2-> Derecha, 3-> Inventario)");
                 ans = sc.next();
-            } while (Op2Check(ans));
+            } while (Op3Check(ans));
 
-            if (Objects.equals(ans,"1")){
-                xpos--;
-            } else {
-                xpos--;
-                ypos++;
+            switch (ans){
+                case "1" -> xpos--;
+                case "2" -> {
+                    xpos--;
+                    ypos++;
+                }
+                case "3" -> inv();
             }
         } else {
             tpw("A lo mejor deberías volver sobre tus pasos\n");
@@ -612,15 +629,17 @@ public class ProyectoV3 {
         tpw("\nTe encuentras en una sala con una puerta abierta, la cual dirige a dos caminos.\n");
 
             do {
-                tpw(nombre + ", ¿Qué camino quieres escoger? (1-> Izquierda, 2-> Derecha)");
+                tpw(nombre + ", ¿Qué quieres hacer? (1-> Ir a la Izquierda, 2-> Ir a la Derecha, 3 -> Inventario)");
                 ans = sc.next();
-            } while (Op2Check(ans));
+            } while (Op3Check(ans));
 
-            if (Objects.equals(ans,"1")){
-                xpos--;
-            } else {
-                xpos--;
-                ypos++;
+            switch (ans) {
+                case "1" -> xpos--;
+                case "2" -> {
+                    xpos--;
+                    ypos++;
+                }
+                case "3" -> inv();
             }
         return rooms[xpos][ypos];
     }
@@ -727,9 +746,9 @@ public class ProyectoV3 {
 
         if (rooms[xpos][ypos] == 12){
             do {
-                tpw(" (1-> Izquierda, 2-> Derecha, 3-> Volver)");
+                tpw(" (1-> Izquierda, 2-> Derecha, 3-> Volver, 4 -> inventario)");
                 ans = sc.next();
-            } while (Op3Check(ans));
+            } while (Op4Check(ans));
 
             switch (ans){
                 case "1" -> xpos--;
@@ -742,12 +761,14 @@ public class ProyectoV3 {
                     xpos++;
                     ypos--;
                 }
+                case "4" -> inv();
             }
         }else {
             do {
-                tpw(" (1-> Avanzar 2-> Volver)");
+                tpw(" (1-> Avanzar 2-> Volver, 3-> Inventario)");
                 ans = sc.next();
-            } while (Op2Check(ans));
+            } while (Op3Check(ans));
+
 
             if (Objects.equals(ans, "1")) {
                 xpos--;
@@ -802,15 +823,18 @@ public class ProyectoV3 {
         tpw("La sala está vacía, que te gustaría hacer?");
 
         do {
-            tpw(" (1-> Avanzar, 2-> Volver)");
+            tpw(" (1-> Avanzar, 2-> Volver, 3-> Inventario)");
             ans = sc.next();
-        } while (Op2Check(ans));
+        } while (Op3Check(ans));
 
-        if (Objects.equals(ans, "1")) {
-            xpos--;
-        } else {
-            xpos++;
-            ypos--;
+        switch (ans){
+            case "1" -> xpos--;
+
+            case "2" -> {
+                xpos++;
+                ypos--;
+            }
+            case "3" -> inv();
         }
         return rooms[xpos][ypos];
     }
