@@ -155,11 +155,9 @@ public class ProyectoV3 {
 
         if (Objects.equals(ans, "1")) {
             xpos--;
-            xpos--;
             ypos--;
             return rooms[xpos][ypos];
         } else {
-            xpos--;
             xpos--;
             ypos++;
             return rooms[xpos][ypos];
