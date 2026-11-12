@@ -106,9 +106,9 @@ public class ProyectoV3 {
                 case 9 -> curoom = ahorcado(palabras);
                 case 14 -> {
                     if (palcodfin){
-                    curoom = palcod(palabras, nombre );
-                    } else {
                     curoom = palcod(nombre);
+                    } else {
+                    curoom = palcod(palabras, nombre);
                     }
                 }
                 case 6, 15 -> curoom = puertallav(nombre);
