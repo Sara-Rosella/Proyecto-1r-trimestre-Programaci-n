@@ -148,7 +148,7 @@ public class ProyectoV3 {
         tpw("\nTe encuentras en la primera sala, una sala vacía normal y corriente, sin ningún tipo de prueba o reto visible.\nMiras tu entorno y ves 3 posibles caminos, izquierda, derecha y un pequeño conducto detrás de ti.");
 
         do {
-            System.out.println("\n" + nombre + ", ¿Qué camino quieres escoger: (1-> Izquierda, 2-> Derecha, 3-> Conducto)");
+            tpw("\n" + nombre + ", ¿Qué camino quieres escoger: (1-> Izquierda, 2-> Derecha, 3-> Conducto)");
             ans = sc.next();
         } while (Op3Check(ans));
 
@@ -173,7 +173,7 @@ public class ProyectoV3 {
         tpw("\nTe encuentras en la entrada de nuevo.\nMiras tu entorno y ves 2 posibles caminos, izquierda, derecha. El conducto detrás de ti parece innacesible.\n");
 
         do {
-            System.out.println("\n" + nombre + ", ¿Qué camino quieres escoger: (1-> Izquierda, 2-> Derecha)");
+            tpw("\n" + nombre + ", ¿Qué camino quieres escoger: (1-> Izquierda, 2-> Derecha)");
             ans = sc.next();
         } while (Op2Check(ans));
 
@@ -759,5 +759,4 @@ public class ProyectoV3 {
         }
         return rooms[xpos][ypos];
     }
-
 }
