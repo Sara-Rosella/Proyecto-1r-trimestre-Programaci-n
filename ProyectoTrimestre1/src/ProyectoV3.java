@@ -37,7 +37,7 @@ public class ProyectoV3 {
     static boolean rulefin;
     static boolean abierto;
     static boolean cofab;
-    static ArrayList<String> inv;
+    static ArrayList<String> inv = new ArrayList<>();
 
     public static void main(String[] args){
         Scanner sc = new Scanner(System.in);
