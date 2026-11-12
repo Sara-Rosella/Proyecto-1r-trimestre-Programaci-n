@@ -33,11 +33,13 @@ public class ProyectoV3 {
     static boolean anafin;
     static boolean palcodfin;
     static boolean estuve;
+    static boolean rulefin;
 
     public static void main(String[] args){
         Scanner sc = new Scanner(System.in);
         String nombre;
         vidas = 7;
+        rulefin = false;
         perro = false;
         clave = false;
         llave = false;
@@ -110,7 +112,13 @@ public class ProyectoV3 {
                     }
                 }
                 case 6, 15 -> curoom = puertallav(nombre);
-                case 8 ,17 -> curoom = ruleta();
+                case 8 ,17 -> {
+                    if (rulefin){
+                    curoom = ruletav2();
+                    } else {
+                        curoom = ruleta();
+                    }
+                }
 
             }
         } while (curoom != 0);
@@ -551,7 +559,7 @@ public class ProyectoV3 {
                case 5 ->{
                    obtain ="una llave";
                    llave = true;
-                   xpos--;
+                   xpos++;
                }
                case 25 -> {
                    obtain ="una llave";
@@ -585,7 +593,7 @@ public class ProyectoV3 {
 
             if (Objects.equals(ans,"1")){
                 switch (rooms[xpos][ypos]) {
-                    case 5 -> xpos--;
+                    case 5 -> xpos++;
 
                     case 25 -> {
                         estuve = true;
@@ -652,7 +660,7 @@ public class ProyectoV3 {
         int intento;
 
 
-        tpw("\nEsta prueba consiste en intentar adivinar el número en el que estoy pensando, si lo adivinas la recompensa puede ser muuuy valiosa, mientras que si fallas sufrirás un pequeño castigo.\nPensaré en un número del 1 al 20");
+        tpw("\nEsta prueba consiste en intentar adivinar el número oculto. Si lo adivinas la recompensa puede ser muuuy valiosa, mientras que si fallas sufrirás un pequeño castigo.\n EL número se encuentra entre el 1 y el 20");
         tpw("\nAhora estimado viajero, introduce tu número elegido: ");
         intento = sc.nextInt();
 
@@ -671,8 +679,29 @@ public class ProyectoV3 {
             vidas--;
             System.out.print(vidas);
         }
+        rulefin = true;
         xpos++;
         ypos--;
+        return rooms[xpos][ypos];
+    }
+
+    public static int ruletav2(){
+        Scanner sc = new Scanner(System.in);
+        String ans;
+
+        tpw("La sala está vacía, que te gustaría hacer?");
+
+        do {
+            tpw(" (1-> Avanzar, 2-> Volver)");
+            ans = sc.next();
+        } while (Op2Check(ans));
+
+        if (Objects.equals(ans, "1")) {
+            xpos--;
+        } else {
+            xpos++;
+            ypos--;
+        }
         return rooms[xpos][ypos];
     }
 
