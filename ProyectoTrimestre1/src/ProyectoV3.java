@@ -34,11 +34,13 @@ public class ProyectoV3 {
     static boolean palcodfin;
     static boolean estuve;
     static boolean rulefin;
+    static boolean abierto;
 
     public static void main(String[] args){
         Scanner sc = new Scanner(System.in);
         String nombre;
         vidas = 7;
+        abierto = false;
         rulefin = false;
         perro = false;
         clave = false;
@@ -111,7 +113,13 @@ public class ProyectoV3 {
                     curoom = palcod(nombre);
                     }
                 }
-                case 6, 15 -> curoom = puertallav(nombre);
+                case 6, 15 ->{
+                    if(abierto){
+                        curoom = puertaab(nombre);
+                    } else {
+                        curoom = puertallav(nombre);
+                    }
+                }
                 case 8 ,17 -> {
                     if (rulefin){
                     curoom = ruletav2();
@@ -297,9 +305,8 @@ public class ProyectoV3 {
             tpw("\nSaliste de la sala a salvo\n");
         } else {
             sigueVivo();
-            tpw("\nPalabra acertada, felicidades puedes pasar a la siguiente habitación\n");
+            tpw("\nPalabra acertada\n");
             palcodfin = true;
-            xpos--;
         }
         return rooms[xpos][ypos];
     }
@@ -505,7 +512,7 @@ public class ProyectoV3 {
         String ans;
         tpw("\nTe encuentras ante una puerta cerrada. Parece que necesita una llave\n");
         if (llave){
-            tpw("Introduces la llave en el cerrojo y abres la puerta. El camino está abierto");
+            tpw("Introduces la llave en el cerrojo y abres la puerta.");
 
             tpw ("\nSe te presenta dos caminos\n");
             do {
@@ -534,6 +541,25 @@ public class ProyectoV3 {
                 }
             }
         }
+        return rooms[xpos][ypos];
+    }
+
+    public static int puertaab (String nombre){
+        Scanner sc = new Scanner(System.in);
+        String ans;
+        tpw("\nTe encuentras en una sala con una puerta abierta, la cual dirige a dos caminos.\n");
+
+            do {
+                tpw(nombre + ", ¿Qué camino quieres escoger? (1-> Izquierda, 2-> Derecha)");
+                ans = sc.next();
+            } while (Op2Check(ans));
+
+            if (Objects.equals(ans,"1")){
+                xpos--;
+            } else {
+                xpos--;
+                ypos++;
+            }
         return rooms[xpos][ypos];
     }
 
