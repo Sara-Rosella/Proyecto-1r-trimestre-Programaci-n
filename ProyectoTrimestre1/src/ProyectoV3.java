@@ -819,8 +819,8 @@ public class ProyectoV3 {
         Scanner sc = new Scanner(System.in);
         String ans;
         String acc;
-        String check;
-        String use;
+        String check = " ";
+        String use = " ";
 
         do {
             tpw("\n¿Qué quieres ver?");
@@ -830,14 +830,45 @@ public class ProyectoV3 {
 
         switch (ans){
             case "clave de cifrado" -> {
-                check = "Un papel con cifrado, parace importante";
+                check = "\nUn papel con cifrado, parace importante";
+                use = "\nEl papel dice: \nClave de codificación: a -> q, o -> x, e -> k y s -> w\" ";
+            }
 
+            case "llave" -> {
+                check = "\nUna llave de oro, no tiene mucho valor";
+                if (rooms[xpos][ypos] == 6 || rooms[xpos][ypos] == 15){
+                    use = "\nLa llave encaja perfectamente en el cerrojo";
+                    llave = true;
+                } else {
+                    use = "\nNo hay ningún sitio en donde usar la llave";
+                }
+            }
+
+            case "perro" -> {
+                check = "\nUn perro encontrado dentro de un templo, te sigue a todas partes";
+                switch (rooms[xpos][ypos]){
+                    case 1, 12, 2 -> use = "\nEl perro se acerca a la puerta de la izquierda, parece que quiere le sigas";
+                    case 6, 15 -> {
+                        if (abierto){
+                            use = "El perro tiene interés por lo que haya por el camino de la derecha";
+                        } else {
+                            use = "El perro vuelve hacia atrás, parece que quiere que le sigas";
+                        }
+                    }
+                    case 5, 10, 13, 25, 19, 8, 18-> use = "El perro se reboza por el suelo, no tiene mucho que decir";
+                }
             }
         }
         do {
             tpw("\n¿Qué quieres hacer? (1-> chequear, 2-> usar)");
             acc = sc.nextLine().toLowerCase();
         }while(Op2Check(acc));
+
+        if (Objects.equals(acc, "1")){
+            tpw(check);
+        } else {
+            tpw(use);
+        }
     }
 
     public static boolean invCheck (String obj) {
