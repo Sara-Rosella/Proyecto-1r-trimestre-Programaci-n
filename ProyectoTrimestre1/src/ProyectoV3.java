@@ -300,6 +300,9 @@ public class ProyectoV3 {
             palcodfin = true;
             xpos--;
         }
+
+        tpw("Enhorabuena " + nombre + " por superar la prueba.\nDos caminos se abren enfrente tuya, izquierda y derecha\n");
+
         return rooms[xpos][ypos];
     }
 
@@ -307,10 +310,9 @@ public class ProyectoV3 {
         Scanner sc = new Scanner(System.in);
         String ans;
         estuve = false;
-        tpw("Enhorabuena " + nombre + " por superar la prueba.\nDos caminos se abren enfrente tuya, izquierda y derecha\n");
 
         do {
-            tpw(nombre + ", ¿Qué camino quieres escoger?(1-> Izquierda, 2-> Derecha)");
+            tpw("\nEsta prueba está acabada.\n" + nombre + ", ¿Qué camino quieres escoger?(1-> Izquierda, 2-> Derecha)");
             ans = sc.next();
         } while (Op2Check(ans));
 
