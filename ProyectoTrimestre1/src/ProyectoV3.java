@@ -377,12 +377,12 @@ public class ProyectoV3 {
         String n;
         Scanner sc = new Scanner(System.in);
 
-        tpw("Te encuentras en un pasillo que no parece tener final, ¿qué quiere hacer? (1-> Seguir hacia adelante, 2-> Darte la vuelta y volver al incio): ");
+        tpw("\nTe encuentras en un pasillo que no parece tener final, ¿qué quiere hacer? (1-> Seguir hacia adelante, 2-> Darte la vuelta y volver al incio): ");
         n = sc.next();
 
 
         while (Op2Check(n)){
-            tpw("Opción no válida, por favor introduzca 1 para seguir o 2 para darte la vuelta: ");
+            tpw("\nOpción no válida, por favor introduzca 1 para seguir o 2 para darte la vuelta: ");
             n = sc.next();
         }
 
@@ -393,20 +393,22 @@ public class ProyectoV3 {
                     tpw("\nTodavía sigues sin ver el final..., ¿quieres seguir recorriendo este pasillo? (1-> Sí, 2-> No): ");
                     n = sc.next();
                     while (Op2Check(n)) {
-                        tpw("Opción no válida, por favor introduzca 1 para seguir o 2 para darte la vuelta: ");
+                        tpw("\nOpción no válida, por favor introduzca 1 para seguir o 2 para darte la vuelta: ");
                         n = sc.next();
                     }
 
 
                     if (n.charAt(0) == '2') {
-                        tpw("Vuelves a la sala inicial");
-                        return 0;
+                        tpw("\nVuelves a la sala inicial");
+                        xpos--;
+                        return rooms[xpos][ypos];
                     }
                 }
                 break;
             case "2":
-                tpw("Vuelves a la sala inicial");
-                return 0;
+                tpw("\nVuelves a la sala inicial");
+                xpos--;
+                return rooms[xpos][ypos];
         }
         tpw("Consigues llegar al final del pasillo donde te encuentras un perro quien parece estar listo para seguirte durante tu aventura");
         perro = true;
@@ -463,7 +465,7 @@ public class ProyectoV3 {
                 if (Objects.equals(res2, pal)){
                     break;
                 } else {
-                    tpw("Palabra incorrecta");
+                    tpw("\nPalabra incorrecta");
                     vidas--;
                 }
             } else {
@@ -472,7 +474,7 @@ public class ProyectoV3 {
 
                 for (Character character : adiv) {
                     if (Objects.equals(guess, character)) {
-                        tpw("La letra ya ha sido introducida");
+                        tpw("\nLa letra ya ha sido introducida");
                         repeat = true;
                     }
                 }
@@ -488,10 +490,10 @@ public class ProyectoV3 {
                     }
 
                     if (!correct) {
-                        tpw("La letra no está en la palabra");
+                        tpw("\nLa letra no está en la palabra");
                         vidas--;
                     } else {
-                        tpw("La letra está en la palabra");
+                        tpw("\nLa letra está en la palabra");
                     }
 
                     sigueVivo();
@@ -513,7 +515,7 @@ public class ProyectoV3 {
 
         switch (rooms[xpos][ypos]){
             case 9 -> {
-                tpw("Solo te queda avanzar a la siguiente sala para reclamar tu deseada reliquia");
+                tpw("\nSolo te queda avanzar a la siguiente sala para reclamar tu deseada reliquia");
                 do {
                     tpw("\n" + nombre + ", ¿Qué quieres hacer ahora?: (1-> Avanzar, 2-> Volver, 3-> Inventario)");
                     ans = sc.next();
@@ -522,14 +524,14 @@ public class ProyectoV3 {
                 switch (ans){
                     case "1" -> xpos--;
 
-                    case "2" -> tpw("No hay vuelta atrás");
+                    case "2" -> tpw("\nNo hay vuelta atrás");
 
                     case "3" -> inv();
                 }
                 return rooms[xpos][ypos];
             }
             case 18 ->{
-                tpw("Delante tuya hay dos caminos, elige sabiamente");
+                tpw("\nDelante tuya hay dos caminos, elige sabiamente");
                 do {
                     tpw("\n" + nombre + ", ¿Qué quieres hacer ahora?: (1-> Izquierda, 2-> Derecha, 3-> Volver, 4 -> Inventario)");
                     ans = sc.next();
@@ -542,7 +544,7 @@ public class ProyectoV3 {
                         ypos++;
                     }
                     case "4" -> inv();
-                    case "3" -> tpw("No hay vuelta atrás");
+                    case "3" -> tpw("\nNo hay vuelta atrás");
                 }
             }
         }
@@ -593,8 +595,30 @@ public class ProyectoV3 {
         Scanner sc = new Scanner(System.in);
         String ans;
         tpw("\nTe encuentras ante una puerta cerrada. Parece que necesita una llave\n");
+
+        do {
+            tpw(nombre + ", ¿Qué te gustaría hacer? (1-> Volver, 2-> Inventario)");
+            ans = sc.nextLine();
+        } while (Op2Check(ans));
+
+        if (Objects.equals(ans, "1")){
+            if (rooms[xpos][ypos] == 6){
+                xpos++;
+                return rooms[xpos][ypos];
+            } else {
+                if (estuve){
+                    xpos++;
+                    ypos--;
+                } else {
+                    xpos++;
+                }
+            }
+        } else {
+            inv();
+        }
+
         if (llave){
-            tpw("Introduces la llave en el cerrojo y abres la puerta.");
+            tpw("\nLe das una vuelta a la llave y abres la puerta.");
 
             tpw ("\nSe te presenta dos caminos\n");
             do {
@@ -611,8 +635,9 @@ public class ProyectoV3 {
                 case "3" -> inv();
             }
         } else {
-            tpw("A lo mejor deberías volver sobre tus pasos\n");
-            tpw("(Vuelves a la sala anterior)");
+            tpw("\nA lo mejor deberías volver sobre tus pasos\n");
+            sc.next();
+            tpw("\n(Vuelves a la sala anterior)");
             if (rooms[xpos][ypos] == 6){
                 xpos++;
                 return rooms[xpos][ypos];
@@ -747,11 +772,11 @@ public class ProyectoV3 {
         Scanner sc = new Scanner(System.in);
         String ans;
 
-        tpw("Te encuentras en una sala vacía, ¿a dónde te gustaría ir " + nombre + "?");
+        tpw("\nTe encuentras en una sala vacía, ¿a dónde te gustaría ir " + nombre + "?");
 
         if (rooms[xpos][ypos] == 12){
             do {
-                tpw(" (1-> Izquierda, 2-> Derecha, 3-> Volver, 4 -> inventario)");
+                tpw(" \n(1-> Izquierda, 2-> Derecha, 3-> Volver, 4 -> inventario)\n");
                 ans = sc.next();
             } while (Op4Check(ans));
 
@@ -803,16 +828,16 @@ public class ProyectoV3 {
 
 
         while (intento < 1 || intento > 20){
-            tpw("Número no valido, por favor introduzca otro: ");
+            tpw("\nNúmero no valido, por favor introduzca otro: ");
             intento = sc.nextInt();
         }
 
         if (intento == numAleat){
-            tpw("Felicidades, acertaste el número secreto. Se te recompensará con 5 vidas extra para terminar tu aventura, espero que sepas usarlas.\nEl número de vidas actualmente es: ");
+            tpw("\nFelicidades, acertaste el número secreto. Se te recompensará con 5 vidas extra para terminar tu aventura, espero que sepas usarlas.\nEl número de vidas actualmente es: ");
             vidas+=5;
             System.out.print(vidas);
         } else {
-            tpw("Número incorrecto. Tu castigo: perder 1 vida.\n");
+            tpw("\nNúmero incorrecto. Tu castigo: perder 1 vida.\n");
             vidas--;
             System.out.print(vidas);
         }
@@ -825,10 +850,10 @@ public class ProyectoV3 {
         Scanner sc = new Scanner(System.in);
         String ans;
 
-        tpw("La sala está vacía, que te gustaría hacer?");
+        tpw("\nLa sala está vacía, que te gustaría hacer?");
 
         do {
-            tpw(" (1-> Avanzar, 2-> Volver, 3-> Inventario)");
+            tpw(" \n(1-> Avanzar, 2-> Volver, 3-> Inventario)\n");
             ans = sc.next();
         } while (Op3Check(ans));
 
@@ -928,9 +953,9 @@ public class ProyectoV3 {
             }
         }
         switch (rooms [xpos][ypos]){
-            case 11 -> tpw("Te encuentras en una sala con un gran cofre rodeado de una fortuna. Te acercas al cofre y al abrirlo te encuentras con el tesoro del templo del DRAGÓN HERÁLDICO GUIVERNO BLANCO. Una puerta se abre delante tuya, incitandote a salir con el fruto de tus esfuerzos" + per);
-            case 21 -> tpw("Te encuntras en una sala con un pilar en el medio. Encima de este, un cofre iluminado por una luz procedente del exterior. Al abrirlo te encuentras con varios tesoros, pero no parece que sean tan legendarias como las historias decían que eran. Una puerta se abre dando al exterior, decides recoger los tesoro y volver a tu hogar" + per);
-            case 22 ->tpw("Te encuntras en una sala con una puerta que da al exterior del templo. Parece que esta puerta fue recientemente movida, pero no ves nada que de una indicación a un tesoro. Al final terminas volviendo con las manos vacías" + per);
+            case 11 -> tpw("\nTe encuentras en una sala con un gran cofre rodeado de una fortuna. \nTe acercas al cofre y al abrirlo te encuentras con el tesoro del templo del DRAGÓN HERÁLDICO GUIVERNO BLANCO. \nUna puerta se abre delante tuya, incitandote a salir con el fruto de tus esfuerzos" + per);
+            case 21 -> tpw("\nTe encuntras en una sala con un pilar en el medio. \nEncima de este, un cofre iluminado por una luz procedente del exterior. \nAl abrirlo te encuentras con varios tesoros, pero no parece que sean tan legendarias como las historias decían que eran. \nUna puerta se abre dando al exterior, decides recoger los tesoro y volver a tu hogar" + per);
+            case 22 ->tpw("\nTe encuntras en una sala con una puerta que da al exterior del templo. \nParece que esta puerta fue recientemente movida, pero no ves nada que de una indicación a un tesoro. \nAl final terminas volviendo con las manos vacías" + per);
         }
         System.exit(0);
     }
