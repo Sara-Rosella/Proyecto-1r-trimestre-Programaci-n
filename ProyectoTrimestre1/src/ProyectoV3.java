@@ -157,7 +157,7 @@ public class ProyectoV3 {
         tpw("\nTe encuentras en la primera sala, una sala vacía normal y corriente, sin ningún tipo de prueba o reto visible.\nMiras tu entorno y ves 3 posibles caminos, izquierda, derecha y un pequeño conducto detrás de ti.");
 
         do {
-            tpw("\n" + nombre + ", ¿Qué camino quieres escoger: (1-> Izquierda, 2-> Derecha, 3-> Conducto)");
+            tpw("\n" + nombre + ", ¿Qué camino quieres escoger: (1-> Izquierda, 2-> Derecha, 3-> Conducto, 4-> Inventario )");
             ans = sc.next();
         } while (Op4Check(ans));
 
@@ -174,6 +174,7 @@ public class ProyectoV3 {
                    xpos--;
                    ypos++;
                }
+               case "4" -> inv();
            }
                 return rooms[xpos][ypos];
        }
@@ -285,8 +286,8 @@ public class ProyectoV3 {
         String palabra = palabras[rnd.nextInt(palabras.length)];
         StringBuilder sb = new StringBuilder();
         String intento;
-        char[] cadena1 = {'a', 'o', 'e', 's'};
-        char[] cadena2 = {'q', 'x', 'k', 'w'};
+        char[] cadena1 = {'a', 'o', 'e', 's', 'c', 'r', 'n'};
+        char[] cadena2 = {'q', 'x', 'k', 'w', 'l', 's', 'j'};
         char c;
 
 
@@ -302,7 +303,7 @@ public class ProyectoV3 {
 
 
         if (clave){
-            tpw("\nClave de codificación: a -> q, o -> x, e -> k y s -> w");
+            tpw("\nClave de codificación: a -> q, o -> x, e -> k, s -> w, c -> l, r -> s y n -> j");
         }
 
 
@@ -885,7 +886,7 @@ public class ProyectoV3 {
         switch (ans){
             case "clave de cifrado" -> {
                 check = "\nUn papel con cifrado, parace importante";
-                use = "\nEl papel dice: \nClave de codificación: a -> q, o -> x, e -> k y s -> w\" ";
+                use = "\nEl papel dice: \nClave de codificación: a -> q, o -> x, e -> k, s -> w, c -> l, r -> s y n -> j";
             }
 
             case "llave" -> {
