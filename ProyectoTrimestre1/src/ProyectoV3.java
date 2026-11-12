@@ -144,6 +144,7 @@ public class ProyectoV3 {
                         curoom = ahorcado(palabras);
                     }
                 }
+                case 11, 21, 22 -> termino();
             }
         } while (curoom != 0);
 
@@ -883,7 +884,7 @@ public class ProyectoV3 {
                             use = "\nEl perro vuelve hacia atrás, parece que quiere que le sigas";
                         }
                     }
-                    case 5, 10, 13, 25, 19, 8, 18, 17, 3-> use = "\nEl perro se reboza por el suelo, no tiene mucho que decir";
+                    case 5, 10, 13, 25, 19, 8, 17, 3-> use = "\nEl perro se reboza por el suelo, no tiene mucho que decir";
                     case 7, 16 -> use = "\nEl perro mira hacia delante";
                     case 4, 26 ->{
                         if (!abierto){
@@ -892,6 +893,7 @@ public class ProyectoV3 {
                             use = "\nEl perro mira hacia delante";
                         }
                     }
+                    case 18 -> use = "\n El perro te intenta guiar hacia la izquirda";
                 }
             }
         }
@@ -913,5 +915,23 @@ public class ProyectoV3 {
             case "perro", "llave", "clave de cifrado" -> true;
             default -> false;
         };
+    }
+
+    public static void termino (){
+        String per = ".";
+
+        if (perro){
+            switch (rooms[xpos][ypos]) {
+                case 11 -> per = " y un nuevo leal compañero.";
+                case 21 -> per = " acompañado de tu nuevo compañero.";
+                case 22 -> per = ", diciendole adiós al perro que encontraste y viendo como se aleja a la distancia.";
+            }
+        }
+        switch (rooms [xpos][ypos]){
+            case 11 -> tpw("Te encuentras en una sala con un gran cofre rodeado de una fortuna. Te acercas al cofre y al abrirlo te encuentras con el tesoro del templo del DRAGÓN HERÁLDICO GUIVERNO BLANCO. Una puerta se abre delante tuya, incitandote a salir con el fruto de tus esfuerzos" + per);
+            case 21 -> tpw("Te encuntras en una sala con un pilar en el medio. Encima de este, un cofre iluminado por una luz procedente del exterior. Al abrirlo te encuentras con varios tesoros, pero no parece que sean tan legendarias como las historias decían que eran. Una puerta se abre dando al exterior, decides recoger los tesoro y volver a tu hogar" + per);
+            case 22 ->tpw("Te encuntras en una sala con una puerta que da al exterior del templo. Parece que esta puerta fue recientemente movida, pero no ves nada que de una indicación a un tesoro. Al final terminas volviendo con las manos vacías" + per);
+        }
+        System.exit(0);
     }
 }
