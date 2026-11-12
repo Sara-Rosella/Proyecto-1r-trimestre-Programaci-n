@@ -35,13 +35,13 @@ public class ProyectoV3 {
     static boolean estuve;
     static boolean rulefin;
     static boolean abierto;
-    static boolean cof;
+    static boolean cofab;
 
     public static void main(String[] args){
         Scanner sc = new Scanner(System.in);
         String nombre;
         vidas = 7;
-        cof = true;
+        cofab = false;
         abierto = false;
         rulefin = false;
         perro = false;
@@ -106,7 +106,7 @@ public class ProyectoV3 {
                     }
                 }
                 case 5, 10, 13, 25, 19 ->{
-                    if (abierto) {
+                    if (cofab) {
                         curoom = SalCofAb();
                     } else {
                         curoom = SalCof();
@@ -196,7 +196,7 @@ public class ProyectoV3 {
         Random rand = new Random();
         String palabra = palabras[rnd.nextInt(palabras.length)];
         String intento;
-
+        cofab = false;
 
         int r;
 
@@ -239,7 +239,7 @@ public class ProyectoV3 {
     public static int anagrama(String nombre) {
         Scanner sc = new Scanner(System.in);
         String ans;
-        cof = true;
+
 
         tpw("\nEnhorabuena " + nombre + " por superar la prueba.\nHay dos caminos enfrente tuya, izquierda y derecha\n");
 
@@ -324,7 +324,7 @@ public class ProyectoV3 {
         Scanner sc = new Scanner(System.in);
         String ans;
         estuve = false;
-        cof = true;
+        cofab = false;
         tpw("Enhorabuena " + nombre + " por superar la prueba.\nDos caminos se abren enfrente tuya, izquierda y derecha\n");
 
         do {
@@ -597,26 +597,26 @@ public class ProyectoV3 {
                    obtain ="una llave";
                    llave = true;
                    xpos++;
-                   cof = false;
+                   cofab = true;
                }
                case 25 -> {
                    obtain ="una llave";
                    llave = true;
                    xpos++;
                    ypos++;
-                   cof = false;
+                   cofab = true;
                }
                case 10, 19 -> {
                    obtain = "una vida extra";
                    vidas++;
                    xpos++;
-                   cof = false;
+                   cofab = true;
                }
                case 13 ->{
                    obtain = "un código, parece ser para una prueba, no lo entiendes pero te lo guardas.";
                    clave = true;
                    xpos++;
-                   cof = false;
+                   cofab = true;
                }
                default ->  obtain = "null";
             }
@@ -650,7 +650,7 @@ public class ProyectoV3 {
 
     public static int SalCofAb (){
         tpw("\nTe encuentras en una sala con un cofre en el medio.");
-        tpw ("\nEl cofre está abierto, no hay nada más en la habitación");
+        tpw ("\nEl cofre está abierto, no hay nada más en la habitación\n");
 
                 switch (rooms[xpos][ypos]) {
                     case 5, 10, 19, 13 -> xpos++;
@@ -736,7 +736,7 @@ public class ProyectoV3 {
             System.out.print(vidas);
         }
         rulefin = true;
-        cof = true;
+        cofab = true;
         return rooms[xpos][ypos];
     }
 
