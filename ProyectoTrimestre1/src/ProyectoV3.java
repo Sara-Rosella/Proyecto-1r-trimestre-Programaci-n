@@ -106,9 +106,9 @@ public class ProyectoV3 {
                 case 9 -> curoom = ahorcado(palabras);
                 case 14 -> {
                     if (palcodfin){
-                    curoom = palcod(nombre);
+                    curoom = palcod(palabras, nombre );
                     } else {
-                    curoom = palcod(palabras, nombre);
+                    curoom = palcod(nombre);
                     }
                 }
                 case 6, 15 -> curoom = puertallav(nombre);
@@ -193,6 +193,7 @@ public class ProyectoV3 {
             sb.append(palabra.charAt(r));
         }
 
+        tpw("\nBienvenido viajero " + nombre + " a la prueba del anagrama.\nEsta prueba consiste en reordenar las letras de la cadena dada para adivinar la palabra escondida detrás de ese desorden");
         tpw("\nANAGRAMA: " + sb);
         tpw("\nPor favor, " + nombre + ", introduzca su intento: ");
         intento = sc.nextLine();
@@ -215,7 +216,6 @@ public class ProyectoV3 {
             anafin = true;
             tpw("Las paredes parecen moverse");
         }
-        tpw("Enhorabuena " + nombre + " por superar la prueba.\nHay dos caminos enfrente tuya, izquierda y derecha\n");
 
         return rooms[xpos][ypos];
     }
@@ -224,9 +224,10 @@ public class ProyectoV3 {
         Scanner sc = new Scanner(System.in);
         String ans;
 
+        tpw("\nEnhorabuena " + nombre + " por superar la prueba.\nHay dos caminos enfrente tuya, izquierda y derecha\n");
 
         do {
-            tpw("\nEsta prueba está acabada.\n " + nombre + ", ¿Qué camino quieres escoger?(1-> Izquierda, 2-> Derecha)");
+            tpw("\n" + nombre + ", ¿Qué camino quieres escoger?(1-> Izquierda, 2-> Derecha)");
             ans = sc.next();
         } while (Op2Check(ans));
 
@@ -300,9 +301,6 @@ public class ProyectoV3 {
             palcodfin = true;
             xpos--;
         }
-
-        tpw("Enhorabuena " + nombre + " por superar la prueba.\nDos caminos se abren enfrente tuya, izquierda y derecha\n");
-
         return rooms[xpos][ypos];
     }
 
@@ -310,9 +308,10 @@ public class ProyectoV3 {
         Scanner sc = new Scanner(System.in);
         String ans;
         estuve = false;
+        tpw("Enhorabuena " + nombre + " por superar la prueba.\nDos caminos se abren enfrente tuya, izquierda y derecha\n");
 
         do {
-            tpw("\nEsta prueba está acabada.\n" + nombre + ", ¿Qué camino quieres escoger?(1-> Izquierda, 2-> Derecha)");
+            tpw(nombre + ", ¿Qué camino quieres escoger?(1-> Izquierda, 2-> Derecha)");
             ans = sc.next();
         } while (Op2Check(ans));
 
@@ -595,12 +594,14 @@ public class ProyectoV3 {
 
             if (Objects.equals(ans,"1")){
                 switch (rooms[xpos][ypos]) {
-                    case 5, 10, 19, 13 -> xpos++;
+                    case 5 -> xpos++;
+
                     case 25 -> {
                         estuve = true;
                         xpos++;
                         ypos++;
                     }
+                    case 10, 19, 13 -> xpos++;
 
                 }
             }
