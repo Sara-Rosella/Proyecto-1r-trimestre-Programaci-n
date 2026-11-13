@@ -861,8 +861,11 @@ public class ProyectoV3 {
             tpw("\nTe quedan " + vidas + " vidas");
             tpw("La respuesta correcta era: " + numAleat + ", mala suerte");
         }
-        rulefin = true;
+        xpos++;
+        ypos--;
         }
+
+        rulefin = true;
         return rooms[xpos][ypos];
     }
 
