@@ -823,9 +823,24 @@ public class ProyectoV3 {
         Scanner sc = new Scanner(System.in);
         int numAleat = rnd.nextInt(20) + 1; //rango del 1 al 20
         int intento;
-
+        String ans;
+        char first;
 
         tpw("\nEsta prueba consiste en intentar adivinar el número oculto. Si lo adivinas la recompensa puede ser muuuy valiosa, mientras que si fallas sufrirás un pequeño castigo.\n EL número se encuentra entre el 1 y el 20");
+
+        do {
+            tpw("Te gustaría participar en esta prueba? Ten encuenta que una vez rechazado, no podrás volver ha hacerla (Y/N)");
+            ans = sc.next().toLowerCase();
+            first = ans.charAt(0);
+
+            if (!ynCheck(first)){
+                tpw("Opción incorrect, escriba Y si quieres proceder con la prueba o N si quieres saltártela");
+                ans = sc.next().toLowerCase();
+                first = ans.charAt(0);
+            }
+        }while (!ynCheck(first));
+
+        if (first == 'y'){
         tpw("\nAhora estimado viajero, introduce tu número elegido: ");
         intento = sc.nextInt();
 
@@ -847,7 +862,7 @@ public class ProyectoV3 {
             tpw("La respuesta correcta era: " + numAleat + ", mala suerte");
         }
         rulefin = true;
-        cofab = true;
+        }
         return rooms[xpos][ypos];
     }
 
