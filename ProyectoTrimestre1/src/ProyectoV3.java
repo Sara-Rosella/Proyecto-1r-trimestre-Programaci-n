@@ -757,6 +757,7 @@ public class ProyectoV3 {
     public static int SalCofAb (){
         tpw("\nTe encuentras en una sala con un cofre en el medio.");
         tpw ("\nEl cofre está abierto, no hay nada más en la habitación\n");
+        tpw ("Es mejor volver\n");
 
                 switch (rooms[xpos][ypos]) {
                     case 5, 10, 19, 13 -> xpos++;
@@ -900,22 +901,23 @@ public class ProyectoV3 {
         String use = " ";
 
         if (inv.isEmpty()){
-            tpw("No hay nada en el inventario");
+            tpw("\nNo hay nada en el inventario\n");
         } else {
             do {
                 tpw("\n¿Qué quieres ver? ");
+                tpw( "Si no quieres ver nada, escriba 'Salir'\n" );
                 tpw(inv.toString() + ": ");
                 ans = sc.nextLine().toLowerCase();
             } while (!invCheck(ans));
 
             switch (ans) {
                 case "clave de cifrado" -> {
-                    check = "\nUn papel con un cifrado, parece importante";
+                    check = "\nUn papel con un cifrado, parece importante\n";
                     use = "\nEl papel dice: \nClave de codificación: a -> q, o -> x, e -> k, s -> w, c -> l, r -> h y n -> j";
                 }
 
                 case "llave" -> {
-                    check = "\nUna llave de oro, no tiene mucho valor";
+                    check = "\nUna llave de oro, no tiene mucho valor\n";
                     if (rooms[xpos][ypos] == 6 || rooms[xpos][ypos] == 15) {
                         use = "\nLa llave encaja perfectamente en el cerrojo";
                         llave = true;
@@ -925,7 +927,7 @@ public class ProyectoV3 {
                 }
 
                 case "perro" -> {
-                    check = "\nUn perro encontrado dentro de un templo, te sigue a todas partes";
+                    check = "\nUn perro encontrado dentro de un templo, te está siguiendo a todas lados\n";
                     switch (rooms[xpos][ypos]) {
                         case 1, 12, 2, 14 ->
                                 use = "\nEl perro se acerca a la puerta de la izquierda, parece que quiere le sigas";
@@ -949,6 +951,9 @@ public class ProyectoV3 {
                         case 18 -> use = "\n El perro te intenta guiar hacia la izquierda";
                     }
                 }
+                case "salir" -> {
+                    return;
+                }
             }
 
             do {
@@ -966,7 +971,7 @@ public class ProyectoV3 {
 
     public static boolean invCheck (String obj) {
         return switch (obj) {
-            case "perro", "llave", "clave de cifrado" -> true;
+            case "perro", "llave", "clave de cifrado", "salir" -> true;
             default -> false;
         };
     }
