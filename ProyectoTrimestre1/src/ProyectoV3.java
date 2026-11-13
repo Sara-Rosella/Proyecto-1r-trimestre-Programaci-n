@@ -59,7 +59,7 @@ public class ProyectoV3 {
         nombre = sc.nextLine();
 
         tpw(nombre + "... ese nombre suena a éxito, suerte para tu aventura la vas a necesitar...");
-
+        //xpos = 7; ypos = 2;
         xpos = 7;
         ypos = 2;
 
@@ -1097,9 +1097,22 @@ public class ProyectoV3 {
             }
         }
         switch (rooms [xpos][ypos]){
-            case 11 -> tpw("\nTe encuentras en una sala con un gran cofre rodeado de una fortuna. \nTe acercas al cofre y al abrirlo te encuentras con el tesoro del templo del DRAGÓN HERÁLDICO GUIVERNO BLANCO. \nUna puerta se abre delante tuya, incitandote a salir con el fruto de tus esfuerzos" + per);
-            case 21 -> tpw("\nTe encuentras en una sala con un pilar en el medio. \nEncima de este, un cofre iluminado por una luz procedente del exterior. \nAl abrirlo te encuentras con varios tesoros, pero no parece que sean tan legendarias como las historias decían que eran. \nUna puerta se abre dando al exterior, decides recoger los tesoro y volver a tu hogar" + per);
-            case 22 ->tpw("\nTe encuentras en una sala con una puerta que da al exterior del templo. \nParece que esta puerta fue recientemente movida, pero no ves nada que de una indicación a un tesoro. \nAl final terminas volviendo con las manos vacías" + per);
+            case 11 -> {
+                tpw("\nTe encuentras en una sala con un gran cofre rodeado de una fortuna. \nTe acercas al cofre y al abrirlo te encuentras con el tesoro del templo del DRAGÓN HERÁLDICO GUIVERNO BLANCO. \nUna puerta se abre delante tuya, incitandote a salir con el fruto de tus esfuerzos" + per);
+
+                tpw("\n\u001B[32m FINAL BUENO");
+            }
+
+            case 21 -> {
+                tpw("\nTe encuentras en una sala con un pilar en el medio. \nEncima de este, un cofre iluminado por una luz procedente del exterior. \nAl abrirlo te encuentras con varios tesoros, pero no parece que sean tan legendarias como las historias decían que eran. \nUna puerta se abre dando al exterior, decides recoger los tesoro y volver a tu hogar" + per);
+                tpw("\n\u001B[33m FINAL NEUTRAL");
+            }
+
+            case 22 ->{
+                tpw("\nTe encuentras en una sala con una puerta que da al exterior del templo. \nParece que esta puerta fue recientemente movida, pero no ves nada que de una indicación a un tesoro. \nAl final terminas volviendo con las manos vacías" + per);
+
+                tpw("\n\u001B[31m FINAL MALO");
+            }
         }
         System.exit(0);
     }
