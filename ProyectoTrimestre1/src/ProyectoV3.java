@@ -37,12 +37,14 @@ public class ProyectoV3 {
     static boolean rulefin;
     static boolean abierto;
     static boolean cofab;
+    static boolean cofrerul;
     static ArrayList<String> inv = new ArrayList<>();
 
     public static void main(String[] args){
         Scanner sc = new Scanner(System.in);
         String nombre;
         vidas = 7;
+        cofrerul = false;
         ahorcfin = false;
         cofab = false;
         abierto = false;
@@ -108,8 +110,16 @@ public class ProyectoV3 {
                         curoom = anagrama(palabras, nombre);
                     }
                 }
-                case 5, 10, 13, 25, 19 ->{
+                case 5, 13, 25 ->{
                     if (cofab) {
+                        curoom = SalCofAb();
+                    } else {
+                        curoom = SalCof();
+                    }
+                }
+
+                case 19, 10 ->{
+                    if (cofrerul){
                         curoom = SalCofAb();
                     } else {
                         curoom = SalCof();
@@ -289,7 +299,7 @@ public class ProyectoV3 {
         StringBuilder sb = new StringBuilder();
         String intento;
         char[] cadena1 = {'a', 'o', 'e', 's', 'c', 'r', 'n'};
-        char[] cadena2 = {'q', 'x', 'k', 'w', 'l', 'h', 'j'};
+        char[] cadena2 = {'q', 'x', 'k', 'w', 'z', 'ñ', 'h'};
         char c;
 
 
@@ -305,7 +315,7 @@ public class ProyectoV3 {
 
 
         if (clave){
-            tpw("\nClave de codificación: a -> q, o -> x, e -> k, s -> w, c -> l, r -> h y n -> j");
+            tpw("\nClave de codificación: a -> q, o -> x, e -> k, s -> w, c -> z, r -> ñ y n -> h");
         }
 
 
@@ -320,7 +330,7 @@ public class ProyectoV3 {
             tpw("\nVidas restantes: ");
             tpw(String.valueOf(vidas));
             if (clave){
-                tpw("\nClave de codificación: a -> q, o -> x, e -> k, s -> w, c -> l, r -> h y n -> j");
+                tpw("\nClave de codificación: a -> q, o -> x, e -> k, s -> w, c -> z, r -> ñ y n -> h");
             }
             tpw("\nLa palabra codficada: ");
             tpw(sb.toString());
@@ -338,8 +348,11 @@ public class ProyectoV3 {
             sigueVivo();
             tpw("\nPalabra acertada\n");
             tpw("Enhorabuena " + nombre + " por superar la prueba.");
+            tpw("\nEscuchas algo moverse por la dirección por donde entraste");
             palcodfin = true;
+            cofab = false;
         }
+
         return rooms[xpos][ypos];
     }
 
@@ -347,7 +360,8 @@ public class ProyectoV3 {
         Scanner sc = new Scanner(System.in);
         String ans;
         estuve = false;
-        tpw("\nEn la sala se pueden ver dos caminos se abren enfrente.\n");
+
+        tpw("\nEn la sala se pueden ver dos caminos.\n");
 
         do {
             tpw(nombre + ", ¿Qué camino quieres escoger?(1-> Izquierda, 2-> Derecha, 3 -> Inventario): ");
@@ -603,22 +617,6 @@ public class ProyectoV3 {
             ans = sc.nextLine();
         } while (Op2Check(ans));
 
-        if (Objects.equals(ans, "1")){
-            if (rooms[xpos][ypos] == 6){
-                xpos++;
-                return rooms[xpos][ypos];
-            } else {
-                if (estuve){
-                    xpos++;
-                    ypos--;
-                } else {
-                    xpos++;
-                }
-            }
-        } else {
-            inv();
-        }
-
         if (llave){
             tpw("\nLe das una vuelta a la llave y abres la puerta.");
 
@@ -636,9 +634,25 @@ public class ProyectoV3 {
                 }
                 case "3" -> inv();
             }
+        }
+
+        if (Objects.equals(ans, "1")){
+            if (rooms[xpos][ypos] == 6){
+                xpos++;
+                return rooms[xpos][ypos];
+            } else {
+                if (estuve){
+                    xpos++;
+                    ypos--;
+                    return rooms[xpos][ypos];
+                } else {
+                    xpos++;
+                    return rooms[xpos][ypos];
+                }
+            }
         } else {
+            inv();
             tpw("\nA lo mejor deberías volver sobre tus pasos\n");
-            sc.next();
             tpw("\n(Vuelves a la sala anterior)");
             if (rooms[xpos][ypos] == 6){
                 xpos++;
@@ -647,12 +661,15 @@ public class ProyectoV3 {
                 if (estuve){
                     xpos++;
                     ypos--;
+                    estuve = false;
                 } else {
                     xpos++;
                 }
             }
+            return rooms[xpos][ypos];
         }
-        return rooms[xpos][ypos];
+
+
     }
 
     public static int puertaab (String nombre){
@@ -705,7 +722,6 @@ public class ProyectoV3 {
                }
                case 25 -> {
                    obtain ="una llave";
-                   llave = true;
                    xpos++;
                    ypos++;
                    cofab = true;
@@ -715,7 +731,7 @@ public class ProyectoV3 {
                    obtain = "una vida extra";
                    vidas++;
                    xpos++;
-                   cofab = true;
+                   cofrerul = true;
                }
                case 13 ->{
                    obtain = "una clave de cifrado, parece ser para una prueba, no lo entiendes pero te lo guardas.";
@@ -729,25 +745,52 @@ public class ProyectoV3 {
             tpw("\nAbres el cofre y en el te encuentras " + obtain);
             tpw("\nNo hay nada más en esta sala, es mejor volver\n");
         } else {
-            do {
-                tpw("\n¿Qué desea hacer ahora? 1-> volver atrás, 2-> abrir el cofre\n");
-                ans = sc.next().toLowerCase();
+            if (rooms[xpos][ypos] == 25) {
+                do {
+                    tpw("\n¿Qué desea hacer ahora? 1-> volver atrás, 2-> ir hacia delante, 3-> abrir el cofre\n");
+                    ans = sc.next().toLowerCase();
 
-                if (Op2Check(ans)){
-                    tpw("\nOpción no válida, porfavor escriba '1' para volver y '2' para volver a interctuar con el cofre");
-                }
-            } while(Op2Check(ans));
+                    if (Op3Check(ans)) {
+                        tpw("\nOpción no válida, porfavor escriba '1' para volver, '2' para avanzar y '3' para volver a interctuar con el cofre");
+                    }
+                } while (Op3Check(ans));
 
-            if (Objects.equals(ans,"1")){
-                switch (rooms[xpos][ypos]) {
-                    case 5, 10, 19, 13 -> xpos++;
+                estuve = true;
 
-                    case 25 -> {
-                        estuve = true;
+                switch (ans) {
+                    case "1" -> {
                         xpos++;
                         ypos++;
                     }
+                    case "2" -> {
+                        xpos--;
+                        ypos++;
+                    }
+                    case "3" -> {
+                        return rooms[xpos][ypos];
+                    }
+                }
+            } else {
+                do {
+                    tpw("\n¿Qué desea hacer ahora? 1-> volver atrás, 2-> abrir el cofre\n");
+                    ans = sc.next().toLowerCase();
 
+                    if (Op2Check(ans)) {
+                        tpw("\nOpción no válida, porfavor escriba '1' para volver y '2' para volver a interctuar con el cofre");
+                    }
+                } while (Op2Check(ans));
+
+                if (Objects.equals(ans, "1")) {
+                    switch (rooms[xpos][ypos]) {
+                        case 5, 10, 19, 13 -> xpos++;
+
+                        case 25 -> {
+                            estuve = true;
+                            xpos++;
+                            ypos++;
+                        }
+
+                    }
                 }
             }
         }
@@ -755,19 +798,49 @@ public class ProyectoV3 {
     }
 
     public static int SalCofAb (){
+        Scanner sc = new Scanner(System.in);
+        String ans;
         tpw("\nTe encuentras en una sala con un cofre en el medio.");
         tpw ("\nEl cofre está abierto, no hay nada más en la habitación\n");
-        tpw ("Es mejor volver\n");
 
-                switch (rooms[xpos][ypos]) {
-                    case 5, 10, 19, 13 -> xpos++;
+        if (rooms[xpos][ypos] == 25){
+            do {
+                tpw("\n¿Qué desea hacer ahora? 1-> volver atrás, 2-> ir hacia delante, 3-> abrir el cofre\n");
+                ans = sc.next().toLowerCase();
 
-                    case 25 -> {
-                        estuve = true;
-                        xpos++;
-                        ypos++;
-                    }
+                if (Op3Check(ans)) {
+                    tpw("\nOpción no válida, porfavor escriba '1' para volver, '2' para avanzar y '3' para volver a interctuar con el cofre");
                 }
+            } while (Op3Check(ans));
+
+            estuve = true;
+
+            switch (ans) {
+                case "1" -> {
+                    xpos++;
+                    ypos++;
+                }
+                case "2" -> {
+                    xpos--;
+                    ypos++;
+                }
+                case "3" -> {
+                    return rooms[xpos][ypos];
+                }
+            }
+        } else {
+            tpw("Es mejor volver\n");
+
+            switch (rooms[xpos][ypos]) {
+                case 5, 10, 19, 13 -> xpos++;
+
+                case 25 -> {
+                    estuve = true;
+                    xpos++;
+                    ypos++;
+                }
+            }
+        }
         return rooms[xpos][ypos];
     }
 
@@ -913,7 +986,7 @@ public class ProyectoV3 {
             switch (ans) {
                 case "clave de cifrado" -> {
                     check = "\nUn papel con un cifrado, parece importante\n";
-                    use = "\nEl papel dice: \nClave de codificación: a -> q, o -> x, e -> k, s -> w, c -> l, r -> h y n -> j";
+                    use = "\nEl papel dice: \nClave de codificación: a -> q, o -> x, e -> k, s -> w, c -> z, r -> ñ y n -> h";
                 }
 
                 case "llave" -> {
