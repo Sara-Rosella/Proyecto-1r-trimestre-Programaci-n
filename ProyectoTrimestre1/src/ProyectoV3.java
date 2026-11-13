@@ -610,12 +610,9 @@ public class ProyectoV3 {
     public static int puertallav (String nombre){
         Scanner sc = new Scanner(System.in);
         String ans;
-        tpw("\nTe encuentras ante una puerta cerrada. Parece que necesita una llave\n");
-
-        do {
-            tpw(nombre + ", ¿Qué te gustaría hacer? (1-> Volver, 2-> Inventario): ");
-            ans = sc.nextLine();
-        } while (Op2Check(ans));
+        if (!llave) {
+            tpw("\nTe encuentras ante una puerta cerrada. Parece que necesita una llave\n");
+        }
 
         if (llave){
             tpw("\nLe das una vuelta a la llave y abres la puerta.");
@@ -632,8 +629,21 @@ public class ProyectoV3 {
                     xpos--;
                     ypos++;
                 }
-                case "3" -> inv();
+                case "3" -> {
+                    inv();
+                    if (llave){
+                        return rooms[xpos][ypos];
+                    }
+                }
             }
+            abierto = true;
+            return rooms[xpos][ypos];
+        } else {
+            do {
+                tpw(nombre + ", ¿Qué te gustaría hacer? (1-> Volver, 2-> Inventario): ");
+                ans = sc.nextLine();
+            } while (Op2Check(ans));
+
         }
 
         if (Objects.equals(ans, "1")){
@@ -652,24 +662,25 @@ public class ProyectoV3 {
             }
         } else {
             inv();
-            tpw("\nA lo mejor deberías volver sobre tus pasos\n");
-            tpw("\n(Vuelves a la sala anterior)");
-            if (rooms[xpos][ypos] == 6){
-                xpos++;
-                return rooms[xpos][ypos];
-            } else {
-                if (estuve){
+            if (!llave) {
+
+                tpw("\nA lo mejor deberías volver sobre tus pasos\n");
+                tpw("\n(Vuelves a la sala anterior)");
+                if (rooms[xpos][ypos] == 6) {
                     xpos++;
-                    ypos--;
-                    estuve = false;
+                    return rooms[xpos][ypos];
                 } else {
-                    xpos++;
+                    if (estuve) {
+                        xpos++;
+                        ypos--;
+                        estuve = false;
+                    } else {
+                        xpos++;
+                    }
                 }
             }
             return rooms[xpos][ypos];
         }
-
-
     }
 
     public static int puertaab (String nombre){
@@ -742,8 +753,34 @@ public class ProyectoV3 {
                }
                default ->  obtain = "null";
             }
+
             tpw("\nAbres el cofre y en el te encuentras " + obtain);
-            tpw("\nNo hay nada más en esta sala, es mejor volver\n");
+
+            if (rooms[xpos][ypos] == 25){
+                do{
+                    tpw("\n¿Qué desea hacer ahora? 1-> Avanzar, 2-> volver\n");
+                    ans = sc.next().toLowerCase();
+
+                    if (Op2Check(ans)) {
+                        tpw("\nOpción no válida, porfavor escriba '1' para avanzar y '2' para volver");
+                    }
+                } while (Op2Check(ans));
+
+                estuve = true;
+
+                switch (ans) {
+                    case "1" -> {
+                        xpos--;
+                        ypos++;
+                    }
+                    case "2" -> {
+                        xpos++;
+                        ypos++;
+                    }
+                }
+            } else {
+                tpw("\nNo hay nada más en esta sala, es mejor volver\n");
+            }
         } else {
             if (rooms[xpos][ypos] == 25) {
                 do {
@@ -805,27 +842,24 @@ public class ProyectoV3 {
 
         if (rooms[xpos][ypos] == 25){
             do {
-                tpw("\n¿Qué desea hacer ahora? 1-> volver atrás, 2-> ir hacia delante, 3-> abrir el cofre\n");
+                tpw("\n¿Qué desea hacer ahora? 1-> Avanzar, 2-> volver\n");
                 ans = sc.next().toLowerCase();
 
-                if (Op3Check(ans)) {
-                    tpw("\nOpción no válida, porfavor escriba '1' para volver, '2' para avanzar y '3' para volver a interctuar con el cofre");
+                if (Op2Check(ans)) {
+                    tpw("\nOpción no válida, porfavor escriba '1' para avanzar y '2' para volver");
                 }
-            } while (Op3Check(ans));
+            } while (Op2Check(ans));
 
             estuve = true;
 
             switch (ans) {
                 case "1" -> {
-                    xpos++;
-                    ypos++;
-                }
-                case "2" -> {
                     xpos--;
                     ypos++;
                 }
-                case "3" -> {
-                    return rooms[xpos][ypos];
+                case "2" -> {
+                    xpos++;
+                    ypos++;
                 }
             }
         } else {
@@ -900,19 +934,19 @@ public class ProyectoV3 {
         String ans;
         char first;
 
-        tpw("\nEsta prueba consiste en intentar adivinar el número oculto. Si lo adivinas la recompensa puede ser muuuy valiosa, mientras que si fallas sufrirás un pequeño castigo.\n EL número se encuentra entre el 1 y el 20");
+        tpw("\nEsta prueba consiste en intentar adivinar el número oculto. Si lo adivinas la recompensa puede ser muuuy valiosa, mientras que si fallas sufrirás un pequeño castigo.\n EL número se encuentra entre el 1 y el 20\n");
 
         do {
             tpw("Te gustaría participar en esta prueba? Ten encuenta que una vez rechazado, no podrás volver ha hacerla (Y/N)");
             ans = sc.next().toLowerCase();
             first = ans.charAt(0);
 
-            if (!ynCheck(first)){
-                tpw("Opción incorrect, escriba Y si quieres proceder con la prueba o N si quieres saltártela");
+            if (ynCheck(first)){
+                tpw("Opción incorrecta, escriba Y si quieres proceder con la prueba o N si quieres saltártela");
                 ans = sc.next().toLowerCase();
                 first = ans.charAt(0);
             }
-        }while (!ynCheck(first));
+        }while (ynCheck(first));
 
         if (first == 'y'){
         tpw("\nAhora estimado viajero, introduce tu número elegido: ");
@@ -937,6 +971,8 @@ public class ProyectoV3 {
         }
         xpos++;
         ypos--;
+        } else {
+            tpw("La prueba ha sido cancelada");
         }
 
         rulefin = true;
@@ -994,6 +1030,7 @@ public class ProyectoV3 {
                     if (rooms[xpos][ypos] == 6 || rooms[xpos][ypos] == 15) {
                         use = "\nLa llave encaja perfectamente en el cerrojo";
                         llave = true;
+
                     } else {
                         use = "\nNo hay ningún sitio en donde usar la llave";
                     }
