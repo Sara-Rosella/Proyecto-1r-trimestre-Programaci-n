@@ -937,7 +937,7 @@ public class ProyectoV3 {
         tpw("\nEsta prueba consiste en intentar adivinar el número oculto. Si lo adivinas la recompensa puede ser muuuy valiosa, mientras que si fallas sufrirás un pequeño castigo.\n EL número se encuentra entre el 1 y el 20\n");
 
         do {
-            tpw("Te gustaría participar en esta prueba? Ten encuenta que una vez rechazado, no podrás volver ha hacerla (Y/N)");
+            tpw("Te gustaría participar en esta prueba? Ten en cuenta que una vez rechazado, no podrás volver ha hacerla (Y/N)");
             ans = sc.next().toLowerCase();
             first = ans.charAt(0);
 
@@ -953,24 +953,24 @@ public class ProyectoV3 {
         intento = sc.nextInt();
 
 
-        while (intento < 1 || intento > 20){
-            tpw("\nNúmero no valido, por favor introduzca otro: ");
-            intento = sc.nextInt();
-        }
+            while (intento < 1 || intento > 20){
+                tpw("\nNúmero no valido, por favor introduzca otro: ");
+                intento = sc.nextInt();
+            }
 
-        if (intento == numAleat){
-            tpw("\nFelicidades, acertaste el número secreto. Se te recompensará con 5 vidas extra para terminar tu aventura, espero que sepas usarlas.\nEl número de vidas actualmente es: ");
-            vidas+=5;
-            System.out.print(vidas);
-        } else {
-            tpw("\nNúmero incorrecto. Tu castigo: perder 1 vida.\n");
-            vidas--;
-            sigueVivo();
-            tpw("\nTe quedan " + vidas + " vidas");
-            tpw("La respuesta correcta era: " + numAleat + ", mala suerte");
-        }
-        xpos++;
-        ypos--;
+            if (intento == numAleat){
+                tpw("\nFelicidades, acertaste el número secreto. Se te recompensará con 5 vidas extra para terminar tu aventura, espero que sepas usarlas.");
+                vidas+=5;
+                tpw("\nEl número de vidas actualmente es: " + vidas);
+            } else {
+                tpw("\nNúmero incorrecto. Tu castigo: perder 1 vida.\n");
+                vidas--;
+                sigueVivo();
+                tpw("\nTe quedan " + vidas + " vidas");
+                tpw("La respuesta correcta era: " + numAleat + ", mala suerte");
+            }
+            xpos++;
+            ypos--;
         } else {
             tpw("La prueba ha sido cancelada");
         }
