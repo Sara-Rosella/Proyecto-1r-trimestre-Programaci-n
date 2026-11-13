@@ -183,10 +183,10 @@ public class ProyectoV3 {
         Scanner sc = new Scanner(System.in);
         String ans;
 
-        tpw("\nTe encuentras en la entrada de nuevo.\nMiras tu entorno y ves 2 posibles caminos, izquierda, derecha. El conducto detrás de ti parece innacesible.\n");
+        tpw("\nTe encuentras en la entrada de nuevo.\nMiras tu entorno y ves 2 posibles caminos, izquierda y derecha. El conducto detrás de ti parece innacesible.\n");
 
         do {
-            tpw("\n" + nombre + ", ¿Qué quieres hacer? (1-> Ir a la Izquierda, 2-> Ir a la Derecha, 3 -> Inventario): ");
+            tpw("\n" + nombre + ", ¿Qué quieres hacer? (1-> Ir a la Izquierda, 2-> Ir a la Derecha, 3-> Inventario): ");
             ans = sc.next();
         } while (Op3Check(ans));
 
@@ -249,7 +249,9 @@ public class ProyectoV3 {
             tpw("Las paredes parecen moverse");
         } else if (intento.equalsIgnoreCase("salir")) {
             vidas-= 3;
-            tpw("\nEstá bien puedes marchar pero me quedaré con 3 de tus vidas.\nVidas restantes: " + vidas);
+            tpw("\nEstá bien puedes marchar pero me quedaré con 3 de tus vidas.");
+            sigueVivo();
+            tpw("\nVidas restantes: " + vidas);
             anafin = true;
         }
 
@@ -411,7 +413,7 @@ public class ProyectoV3 {
                 xpos--;
                 return rooms[xpos][ypos];
         }
-        tpw("Consigues llegar al final del pasillo donde te encuentras un perro quien parece estar listo para seguirte durante tu aventura");
+        tpw("Consigues llegar al final del pasillo donde te encuentras un perro quien te mira con cara de expectación y miedo pero después de unos minutos se acerca a ti amistosamente y parece estar listo para seguirte durante tu aventura.");
         perro = true;
         inv.add("Perro");
         xpos--;
@@ -777,7 +779,7 @@ public class ProyectoV3 {
 
         if (rooms[xpos][ypos] == 12){
             do {
-                tpw(" \n(1-> Izquierda, 2-> Derecha, 3-> Volver, 4 -> inventario)\n");
+                tpw(" \n(1-> Izquierda, 2-> Derecha, 3-> Volver, 4 -> inventario): \n");
                 ans = sc.next();
             } while (Op4Check(ans));
 
@@ -800,17 +802,18 @@ public class ProyectoV3 {
                 ans = sc.next();
             } while (Op3Check(ans));
 
-
-            if (Objects.equals(ans, "1")) {
-                xpos--;
-            } else {
-                switch (rooms[xpos][ypos]){
-                    case 3 -> {
-                        xpos++;
-                        ypos++;
+            switch (ans){
+                case "1" -> xpos--;
+                case "2" -> {
+                    switch (rooms[xpos][ypos]) {
+                        case 3 -> {
+                            xpos++;
+                            ypos++;
+                        }
+                        case 4, 7, 16, 26 -> xpos++;
                     }
-                    case 4, 7, 16, 26 -> xpos++;
                 }
+                case "3" -> inv();
             }
         }
         return rooms[xpos][ypos];
@@ -881,8 +884,8 @@ public class ProyectoV3 {
             tpw("No hay nada en el inventario");
         } else {
             do {
-                tpw("\n¿Qué quieres ver?");
-                tpw(inv.toString());
+                tpw("\n¿Qué quieres ver? ");
+                tpw(inv.toString() + ": ");
                 ans = sc.nextLine().toLowerCase();
             } while (!invCheck(ans));
 
