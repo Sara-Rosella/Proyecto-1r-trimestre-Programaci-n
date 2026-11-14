@@ -15,7 +15,8 @@ public class ProyectoV3 {
     static int[][] rooms = {
             {0, 0, 0, 0, 21, 22},
             {0, 11, 0, 0, 18, 19},
-            {0, 9, 10, 0, 16, 17},
+            {0, 9, 0, 0, 16, 17},
+            {0, 27, 10, 0, 28, 0},
             {0, 7, 8, 0, 15, 0},
             {5, 6, 0, 25, 26, 0},
             {3, 4, 0, 13, 14, 0},
@@ -41,6 +42,7 @@ public class ProyectoV3 {
     static boolean gema;
     static boolean llaveGet;
     static boolean stop;
+    static boolean sombrero;
     static ArrayList<String> inv = new ArrayList<>();
 
     public static void main(String[] args){
@@ -61,12 +63,13 @@ public class ProyectoV3 {
         anafin = false;
         estuve = false;
         palcodfin = false;
+        sombrero = false;
         tpw("Bienvenido estimado aventurero al templo del DRAGÓN HERÁLDICO GUIVERNO BLANCO.\nDurante siglos un tesoro ha permanecido oculto en este lugar, centenares de aventureros lo han intentado conseguir sin exito pereciendo en el intento.\n¿Serás el primero en superar todas la pruebas que te deparen tus elecciones durante el camino? Tengo ganas de comprobarlo...\nAhora valiente aventurero,¿Cuál es tu nombre?: ");
         nombre = sc.nextLine();
 
         tpw(nombre + "... ese nombre suena a éxito, suerte para tu aventura la vas a necesitar...");
         //xpos = 7; ypos = 2;
-        xpos = 7;
+        xpos = 8;
         ypos = 2;
 
 
@@ -131,7 +134,7 @@ public class ProyectoV3 {
                         curoom = SalCof();
                     }
                 }
-                case 3, 4, 7, 12, 26, 16 -> curoom = SalVac(nombre);
+                case 3, 4, 7, 12, 26, 16, 27, 28 -> curoom = SalVac(nombre);
                 case 14 -> {
                     if (palcodfin){
                     curoom = palcod(nombre);
@@ -241,13 +244,13 @@ public class ProyectoV3 {
             sb.append(palabra.charAt(r));
         }
 
-        tpw("\nBienvenido viajero " + nombre + " a la prueba del anagrama.\nEsta prueba consiste en reordenar las letras de la cadena dada para adivinar la palabra escondida detrás de ese desorden.\nTeniendo en cuenta su dificultad te doy la opción de rendirte, a cambio perderás 3 vidas solo tendrás que introducir 'salir'.");
+        tpw("\nBienvenido viajero " + nombre + " a la prueba del anagrama.\nEsta prueba consiste en reordenar las letras de la cadena dada para adivinar la palabra escondida detrás de ese desorden.\nTeniendo en cuenta su dificultad te doy la opción de rendirte, a cambio perderás 3 vidas solo tendrás que introducir 'escapar'.");
         tpw("\nANAGRAMA: " + sb);
         tpw("\nPor favor, " + nombre + ", introduzca su intento: ");
-        intento = sc.nextLine();
+        intento = sc.nextLine().toLowerCase();
 
 
-        while (!intento.equalsIgnoreCase(palabra) && vidas > 0 && !intento.equalsIgnoreCase("salir")){
+        while (!intento.equalsIgnoreCase(palabra) && vidas > 0 && !intento.equalsIgnoreCase("escapar")){
             vidas--;
             tpw("\nIntento fallido, has perdido una vida.\nVidas restantes: " + vidas);
             sigueVivo();
@@ -262,10 +265,10 @@ public class ProyectoV3 {
         if (intento.equalsIgnoreCase(palabra)) {
             tpw("\nPalabra adivinada correctamente, felicidades.\n");
             anafin = true;
-            tpw("Las paredes parecen moverse");
-        } else if (intento.equalsIgnoreCase("salir")) {
+            tpw("La entrada por la que entraste empieza a colapsar, bloqueando el camino por donde entraste");
+        } else if (intento.equalsIgnoreCase("escapar")) {
             vidas-= 3;
-            tpw("\nEstá bien puedes marchar pero me quedaré con 3 de tus vidas.");
+            tpw("\nIntentas escapar de la prueba pero en la sala empieza a temblar y te caen piedras grandes encima, logras esquivar la mayoría pero sales con heridas, quitándote 3 vidas.");
             sigueVivo();
             tpw("\nVidas restantes: " + vidas);
             anafin = true;
@@ -463,7 +466,7 @@ public class ProyectoV3 {
 
 
 
-        tpw("\nTienes " + vidas + " intentos para adivinar la palabra");
+        tpw("\nTienes " + vidas + " intentos para adivinar la palabra\n");
 
 
         do{
@@ -909,33 +912,71 @@ public class ProyectoV3 {
         return rooms[xpos][ypos];
     }
 
-    public static int SalVac(String nombre){
+    public static int SalVac(String nombre) {
         Scanner sc = new Scanner(System.in);
         String ans;
 
         tpw("\nTe encuentras en una sala vacía, ¿a dónde te gustaría ir " + nombre + "?");
 
-        if (rooms[xpos][ypos] == 12){
+        if (rooms[xpos][ypos] == 12) {
             do {
                 tpw(" \n(1-> Izquierda, 2-> Derecha, 3-> Volver, 4 -> inventario): \n");
                 ans = sc.next();
             } while (Op4Check(ans));
 
-            switch (ans){
+            switch (ans) {
                 case "1" -> xpos--;
 
                 case "2" -> {
                     xpos--;
                     ypos++;
                 }
-                case "3" ->{
+                case "3" -> {
                     xpos++;
                     ypos--;
                 }
                 case "4" -> inv();
             }
-        }else {
-            do {
+        } else if (rooms[xpos][ypos] == 27 || rooms[xpos][ypos] == 28){
+            if (!sombrero) {
+                do {
+                    tpw(" \n(1-> Avanzar, 2-> Volver, 3-> Investigar 4 -> inventario): \n");
+                    ans = sc.next();
+
+                    if (Op4Check(ans)){
+                        tpw("Opción no válida, por favor escriba '1' si quieres avanzar, '2' si quieres volver, '4' si quieres investigar la habitación y '4' si quieres abrir el inventario");
+                    }
+                } while (Op4Check(ans));
+
+                switch (ans) {
+                    case "1" -> xpos--;
+
+                    case "2" -> xpos++;
+
+                    case "3" -> gorro();
+
+                    case "4" -> inv();
+                }
+            } else {
+                do {
+                    tpw(" \n(1-> Avanzar, 2-> Volver, 3 -> inventario): \n");
+                    ans = sc.next();
+
+                    if (Op3Check(ans)){
+                        tpw("Opción no válida, por favor escriba '1' si quieres avanzar, '2' si quieres volver y '3' si quieres abrir el inventario");
+                    }
+                } while (Op3Check(ans));
+
+                switch (ans) {
+                    case "1" -> xpos--;
+
+                    case "2" -> xpos++;
+
+                    case "3" -> inv();
+                }
+            }
+        } else {
+                do {
                 tpw(" (1-> Avanzar 2-> Volver, 3-> Inventario): ");
                 ans = sc.next();
             } while (Op3Check(ans));
@@ -1065,6 +1106,15 @@ public class ProyectoV3 {
                     }
                 }
 
+                case "sombrero" -> {
+                    if (sombrero){
+                        check = "\n Un sombrero que cojiste prestado de un aventurero";
+                        use = "\n El gorro es un poco pequeño y no te cabe en la cabeza, pero te lo quedas de todas formas";
+                    } else {
+                        use = "\nNo tienes ese objeto";
+                    }
+                }
+
                 case "llave" -> {
                     if (llaveGet) {
                         check = "\nUna llave de oro, no tiene mucho valor\n";
@@ -1137,9 +1187,30 @@ public class ProyectoV3 {
         }
     }
 
+    public static void gorro(){
+        Scanner sc = new Scanner(System.in);
+        String ans;
+        char exp;
+        tpw("Hay un esqueleto de un aventurero que no tuvo la misma suerte que tú, pero tiene un sombero que está que flipas\n");
+
+        do {
+            tpw("Te gustaría cogerlo?(Y/N)\n");
+            ans = sc.nextLine();
+            exp = ans.charAt(0);
+        } while (ynCheck(exp));
+
+        if (exp == 'y'){
+            tpw("Cogiste un sombrero\n");
+            inv.add("sombrero");
+            sombrero = true;
+        } else {
+            tpw("No cojes el sombrero\n");
+        }
+    }
+
     public static boolean invCheck (String obj) {
         return !switch (obj) {
-            case "perro", "llave", "clave de cifrado", "salir", "gema" -> true;
+            case "perro", "llave", "clave de cifrado", "salir", "gema", "sombrero" -> true;
             default -> false;
         };
     }
