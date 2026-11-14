@@ -631,7 +631,7 @@ public class ProyectoV3 {
                 tpw("\nDetrás de la puerta te encuentras un pedestal con una gema encima.");
 
                 do {
-                    tpw("Quieres cogerla? (Y/N)");
+                    tpw("Quieres cogerla? (Y/N): ");
                     pick = sc.next();
                     check = pick.charAt(0);
                 } while (ynCheck(check));
