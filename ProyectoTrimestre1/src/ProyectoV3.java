@@ -38,12 +38,18 @@ public class ProyectoV3 {
     static boolean abierto;
     static boolean cofab;
     static boolean cofrerul;
+    static boolean gema;
+    static boolean llaveGet;
+    static boolean stop;
     static ArrayList<String> inv = new ArrayList<>();
 
     public static void main(String[] args){
         Scanner sc = new Scanner(System.in);
         String nombre;
         vidas = 7;
+        stop = false;
+        llaveGet = false;
+        gema = false;
         cofrerul = false;
         ahorcfin = false;
         cofab = false;
@@ -427,6 +433,7 @@ public class ProyectoV3 {
                 return rooms[xpos][ypos];
         }
         tpw("Consigues llegar al final del pasillo donde te encuentras un perro quien te mira con cara de expectación y miedo.\nDespués de unos minutos se acerca a ti amistosamente y parece estar listo para seguirte durante tu aventura.");
+        tpw("Vuelves a la entrada, no nada más aquí");
         perro = true;
         inv.add("Perro");
         xpos--;
@@ -610,12 +617,31 @@ public class ProyectoV3 {
     public static int puertallav (String nombre){
         Scanner sc = new Scanner(System.in);
         String ans;
+        String pick;
+        char check;
         if (!llave) {
             tpw("\nTe encuentras ante una puerta cerrada. Parece que necesita una llave\n");
         }
 
         if (llave){
-            tpw("\nLe das una vuelta a la llave y abres la puerta.");
+            if (!stop) {
+                tpw("\nDetrás de la puerta te encuentras un pedestal con una gema encima.");
+
+                do {
+                    tpw("Quieres cogerla? (Y/N)");
+                    pick = sc.next();
+                    check = pick.charAt(0);
+                } while (ynCheck(check));
+
+                if (check == 'y') {
+                    tpw("\nCogiste la gema");
+                    inv.add("gema");
+                    gema = true;
+                } else {
+                    tpw("\n Surge un temblor que empuja la gema al suelo y se rompe a pedazos, no parece ser una buena idea coger los pedazos sin guantes");
+                }
+            }
+            stop = true;
 
             tpw ("\nSe te presenta dos caminos\n");
             do {
@@ -643,7 +669,6 @@ public class ProyectoV3 {
                 tpw(nombre + ", ¿Qué te gustaría hacer? (1-> Volver, 2-> Inventario): ");
                 ans = sc.nextLine();
             } while (Op2Check(ans));
-
         }
 
         if (Objects.equals(ans, "1")){
@@ -663,7 +688,6 @@ public class ProyectoV3 {
         } else {
             inv();
             if (!llave) {
-
                 tpw("\nA lo mejor deberías volver sobre tus pasos\n");
                 tpw("\n(Vuelves a la sala anterior)");
                 if (rooms[xpos][ypos] == 6) {
@@ -678,6 +702,8 @@ public class ProyectoV3 {
                         xpos++;
                     }
                 }
+            } else {
+                tpw("\nLe das una vuelta a la llave y abres la puerta.");
             }
             return rooms[xpos][ypos];
         }
@@ -726,20 +752,21 @@ public class ProyectoV3 {
             switch (rooms[xpos][ypos]){
                case 5 ->{
                    obtain ="una llave";
-                   llave = true;
+                   llaveGet = true;
                    xpos++;
                    cofab = true;
                    inv.add("llave");
                }
                case 25 -> {
                    obtain ="una llave";
+                   inv.add("llave");
                    xpos++;
                    ypos++;
                    cofab = true;
-                   inv.add("llave");
+                   llaveGet = true;
                }
                case 10, 19 -> {
-                   obtain = "una vida extra";
+                   obtain = "una vida extra y una gema brillante";
                    vidas++;
                    xpos++;
                    cofrerul = true;
@@ -842,13 +869,13 @@ public class ProyectoV3 {
 
         if (rooms[xpos][ypos] == 25){
             do {
-                tpw("\n¿Qué desea hacer ahora? 1-> Avanzar, 2-> volver\n");
+                tpw("\n¿Qué desea hacer ahora? 1-> Avanzar, 2-> volver, 3-> inventario\n");
                 ans = sc.next().toLowerCase();
 
-                if (Op2Check(ans)) {
-                    tpw("\nOpción no válida, porfavor escriba '1' para avanzar y '2' para volver");
+                if (Op3Check(ans)) {
+                    tpw("\nOpción no válida, porfavor escriba '1' para avanzar, '2' para volver y '3' para abrir el inventario");
                 }
-            } while (Op2Check(ans));
+            } while (Op3Check(ans));
 
             estuve = true;
 
@@ -860,6 +887,10 @@ public class ProyectoV3 {
                 case "2" -> {
                     xpos++;
                     ypos++;
+                }
+                case "3"-> {
+                    inv();
+                    return rooms[xpos][ypos];
                 }
             }
         } else {
@@ -1017,48 +1048,75 @@ public class ProyectoV3 {
                 tpw( "Si no quieres ver nada, escriba 'Salir'\n" );
                 tpw(inv.toString() + ": ");
                 ans = sc.nextLine().toLowerCase();
-            } while (!invCheck(ans));
+
+                if (invCheck(ans)){
+                    tpw("\nNo tienes ese objeto");
+                }
+            } while (invCheck(ans));
 
             switch (ans) {
                 case "clave de cifrado" -> {
-                    check = "\nUn papel con un cifrado, parece importante\n";
-                    use = "\nEl papel dice: \nClave de codificación: a -> q, o -> x, e -> k, s -> w, c -> z, r -> ñ y n -> h";
-                }
-
-                case "llave" -> {
-                    check = "\nUna llave de oro, no tiene mucho valor\n";
-                    if (rooms[xpos][ypos] == 6 || rooms[xpos][ypos] == 15) {
-                        use = "\nLa llave encaja perfectamente en el cerrojo";
-                        llave = true;
-
+                    if (clave) {
+                        check = "\nUn papel con un cifrado, parece importante\n";
+                        use = "\nEl papel dice: \nClave de codificación: a -> q, o -> x, e -> k, s -> w, c -> z, r -> ñ y n -> h";
                     } else {
-                        use = "\nNo hay ningún sitio en donde usar la llave";
+                        tpw("\nNo tienes ese objeto\n");
+                        return;
                     }
                 }
 
+                case "llave" -> {
+                    if (llaveGet) {
+                        check = "\nUna llave de oro, no tiene mucho valor\n";
+                        if (rooms[xpos][ypos] == 6 || rooms[xpos][ypos] == 15) {
+                            use = "\nLa llave encaja perfectamente en el cerrojo";
+                            llave = true;
+
+                        } else {
+                            use = "\nNo hay ningún sitio en donde usar la llave";
+                        }
+                    } else {
+                        tpw("\nNo tienes ese objeto\n");
+                        return;
+                    }
+                }
+                case "gema" -> {
+                    if (gema) {
+                        check = "\nUna gema brillante de color verde, no se puede identificar que tipo de gema es en este momento";
+                        use = "\nEs una gema hermosa, pero no parece tener utilidad\n";
+                    } else {
+                        tpw("\nNo tienes ese objeto\n");
+                        return;
+                    }
+                }
                 case "perro" -> {
-                    check = "\nUn perro encontrado dentro de un templo, te está siguiendo a todas lados\n";
-                    switch (rooms[xpos][ypos]) {
-                        case 1, 12, 2, 14 ->
-                                use = "\nEl perro se acerca a la puerta de la izquierda, parece que quiere le sigas";
-                        case 6, 15 -> {
-                            if (abierto) {
-                                use = "\nEl perro tiene interés por lo que haya por el camino de la derecha";
-                            } else {
-                                use = "\nEl perro vuelve hacia atrás, parece que quiere que le sigas";
+                    if (perro) {
+                        check = "\nUn perro encontrado dentro de un templo, te está siguiendo a todas lados\n";
+                        switch (rooms[xpos][ypos]) {
+                            case 1, 12, 2, 14 ->
+                                    use = "\nEl perro se acerca a la puerta de la izquierda, parece que quiere le sigas";
+                            case 6, 15 -> {
+                                if (abierto) {
+                                    use = "\nEl perro tiene interés por lo que haya por el camino de la derecha";
+                                } else {
+                                    use = "\nEl perro vuelve hacia atrás, parece que quiere que le sigas";
+                                }
                             }
-                        }
-                        case 5, 10, 13, 25, 19, 8, 17, 3, 9 ->
-                                use = "\nEl perro se reboza por el suelo, no tiene mucho que decir";
-                        case 7, 16 -> use = "\nEl perro mira hacia delante";
-                        case 4, 26 -> {
-                            if (!abierto) {
-                                use = "\nEl perro mira hacia atrás";
-                            } else {
-                                use = "\nEl perro mira hacia delante";
+                            case 5, 10, 13, 25, 19, 8, 17, 3, 9 ->
+                                    use = "\nEl perro se reboza por el suelo, no tiene mucho que decir";
+                            case 7, 16 -> use = "\nEl perro mira hacia delante";
+                            case 4, 26 -> {
+                                if (!abierto) {
+                                    use = "\nEl perro mira hacia atrás";
+                                } else {
+                                    use = "\nEl perro mira hacia delante";
+                                }
                             }
+                            case 18 -> use = "\n El perro te intenta guiar hacia la izquierda";
                         }
-                        case 18 -> use = "\n El perro te intenta guiar hacia la izquierda";
+                    } else {
+                        tpw("\nNo tienes ese objeto\n");
+                        return;
                     }
                 }
                 case "salir" -> {
@@ -1080,15 +1138,15 @@ public class ProyectoV3 {
     }
 
     public static boolean invCheck (String obj) {
-        return switch (obj) {
-            case "perro", "llave", "clave de cifrado", "salir" -> true;
+        return !switch (obj) {
+            case "perro", "llave", "clave de cifrado", "salir", "gema" -> true;
             default -> false;
         };
     }
 
     public static void termino (){
         String per = ".";
-
+        String yay;
         if (perro){
             switch (rooms[xpos][ypos]) {
                 case 11 -> per = " y un nuevo leal compañero.";
@@ -1096,6 +1154,13 @@ public class ProyectoV3 {
                 case 22 -> per = ", diciendole adiós al perro que encontraste y viendo como se aleja a la distancia.";
             }
         }
+
+        if (gema){
+            yay = "una misera gema en las manos";
+        } else {
+            yay = "las manos vacías";
+        }
+
         switch (rooms [xpos][ypos]){
             case 11 -> {
                 tpw("\nTe encuentras en una sala con un gran cofre rodeado de una fortuna. \nTe acercas al cofre y al abrirlo te encuentras con el tesoro del templo del DRAGÓN HERÁLDICO GUIVERNO BLANCO. \nUna puerta se abre delante tuya, incitandote a salir con el fruto de tus esfuerzos" + per);
@@ -1104,12 +1169,12 @@ public class ProyectoV3 {
             }
 
             case 21 -> {
-                tpw("\nTe encuentras en una sala con un pilar en el medio. \nEncima de este, un cofre iluminado por una luz procedente del exterior. \nAl abrirlo te encuentras con varios tesoros, pero no parece que sean tan legendarias como las historias decían que eran. \nUna puerta se abre dando al exterior, decides recoger los tesoro y volver a tu hogar" + per);
+                tpw("\nTe encuentras en una sala con un pilar en el medio. \nEncima de este, un cofre iluminado por una luz procedente del exterior. \nAl abrirlo te encuentras con varios tesoros, pero no parece que sean tan legendarias como las historias decían que eran. \nUna puerta se abre dando al exterior, decides recoger los tesoro dentro del cofre y volver a tu hogar" + per);
                 tpw("\n\u001B[33m FINAL NEUTRAL");
             }
 
             case 22 ->{
-                tpw("\nTe encuentras en una sala con una puerta que da al exterior del templo. \nParece que esta puerta fue recientemente movida, pero no ves nada que de una indicación a un tesoro. \nAl final terminas volviendo con las manos vacías" + per);
+                tpw("\nTe encuentras en una sala con una puerta que da al exterior del templo. \nParece que esta puerta fue recientemente movida, pero no ves nada que de una indicación a un tesoro. \nAl final terminas volviendo con" + yay + per);
 
                 tpw("\n\u001B[31m FINAL MALO");
             }
