@@ -44,6 +44,7 @@ public class ProyectoV3 {
     static boolean stop;
     static boolean sombrero;
     static ArrayList<String> inv = new ArrayList<>();
+    static ArrayList<String> notepad = new ArrayList<>();
 
     public static void main(String[] args){
         Scanner sc = new Scanner(System.in);
@@ -64,6 +65,9 @@ public class ProyectoV3 {
         estuve = false;
         palcodfin = false;
         sombrero = false;
+
+        inv.add("Papel");
+
         tpw("Bienvenido estimado aventurero al templo del DRAGÓN HERÁLDICO GUIVERNO BLANCO.\nDurante siglos un tesoro ha permanecido oculto en este lugar, centenares de aventureros lo han intentado conseguir sin exito pereciendo en el intento.\n¿Serás el primero en superar todas la pruebas que te deparen tus elecciones durante el camino? Tengo ganas de comprobarlo...\nAhora valiente aventurero,¿Cuál es tu nombre?: ");
         nombre = sc.nextLine();
 
@@ -1096,6 +1100,19 @@ public class ProyectoV3 {
             } while (invCheck(ans));
 
             switch (ans) {
+                case "papel" -> {
+                    check = "\nUn papel que te has traído de tu hogar junto a un lápiz para escribir";
+                    if (notepad.isEmpty()){
+                        use = "\nEl papel está vacío";
+                    } else {
+                        use = "\nEstas son las cosas que te has apuntado";
+
+                       //Crea variable string S que va aumentando como si fuera i++, luego se enseña por consola lo que sea que esté en la supiesta posición de la i
+                        for (String s : notepad) {
+                            tpw(s);
+                        }
+                    }
+                }
                 case "clave de cifrado" -> {
                     if (clave) {
                         check = "\nUn papel con un cifrado, parece importante\n";
@@ -1210,7 +1227,7 @@ public class ProyectoV3 {
 
     public static boolean invCheck (String obj) {
         return !switch (obj) {
-            case "perro", "llave", "clave de cifrado", "salir", "gema", "sombrero" -> true;
+            case "perro", "llave", "clave de cifrado", "salir", "gema", "sombrero", "papel" -> true;
             default -> false;
         };
     }
