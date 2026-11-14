@@ -569,7 +569,7 @@ public class ProyectoV3 {
 
     public static void sigueVivo() { //Funcion para comprobar las vidas al acabar las pruebas
         if (vidas <= 0) {
-            tpw("\nTE HAS QUEDADO SIN VIDAS. FIN DE LA AVENTURA.");
+            tpw("\n\u001B[31mTE HAS QUEDADO SIN VIDAS. FIN DE LA AVENTURA.");
             System.exit(0);
         }
     }
