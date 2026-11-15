@@ -769,8 +769,6 @@ public class ProyectoV3 {
                case 25 -> {
                    obtain ="una llave";
                    inv.add("llave");
-                   xpos++;
-                   ypos++;
                    cofab = true;
                    llaveGet = true;
                }
@@ -951,7 +949,10 @@ public class ProyectoV3 {
                     ypos--;
                     invuse = false;
                 }
-                case "4" -> inv();
+                case "4" -> {
+                    inv();
+                    invuse = true;
+                }
             }
         } else if (rooms[xpos][ypos] == 27 || rooms[xpos][ypos] == 28){
             if (!sombrero) {
@@ -1056,7 +1057,7 @@ public class ProyectoV3 {
         String ans;
         String resp;
 
-        tpw("\nResponde correctamente a la siguiente pregunta para superar la prueba, en caso de fallar, se te restará una vida\nLa respuesta tiene que ser la más corta posible, o se contará como error... y recuerda las tildes\n");
+        tpw("\nAparece una prueba enfrente tuya:\nResponde correctamente a la siguiente pregunta para superar la prueba, en caso de fallar, se te restará una vida\nLa respuesta tiene que ser la más corta posible, o se contará como error... y recuerda las tildes.\nSi tienes algo que te ayude a responder, escriba 'ayuda'\n");
 
         int pos = r.nextInt(quest.length);
         String preg = quest[pos] ;
@@ -1067,8 +1068,25 @@ public class ProyectoV3 {
             case 2 -> resp = "líquido";
             default -> resp = "";
         }
-        tpw(preg + "\n");
-        ans = sc.nextLine().toLowerCase();
+
+        do {
+            tpw("Pregunata: " + preg + "\n");
+            ans = sc.nextLine().toLowerCase();
+
+            if (Objects.equals(ans, "ayuda")) {
+                if (notepadQuest.isEmpty()) {
+                    tpw("\nNo tienes nada apuntado\n");
+                } else {
+                    tpw("\nEstas son las preguntas que te has apuntado");
+                    for (int i = 0; i < notepadQuest.size(); i++) {
+                        int j = 1 + i;
+                        tpw("\n" + j + ".");
+                        tpw("\n" + notepadQuest.get(i));
+                        tpw("\n" + notepadAns.get(i) + "\n\n");
+                    }
+                }
+            }
+        }while (Objects.equals(ans, "ayuda"));
 
         if (Objects.equals(ans, resp)){
             tpw("\nRespuesta correcta, continue con su aventura.\n");
@@ -1095,10 +1113,9 @@ public class ProyectoV3 {
                 notepadQuest.add(preg);
                 notepadAns.add(resp);
             }
-
         } else {
-            tpw("\nRespuesta incorrecta, -1 vida\n");
-            vidas--;
+                tpw("\nRespuesta incorrecta, -1 vida\n");
+                vidas--;
         }
     }
 
@@ -1290,7 +1307,11 @@ public class ProyectoV3 {
             do {
                 tpw("\n¿Qué quieres hacer? (1-> examinar, 2-> usar): \n");
                 acc = sc.nextLine().toLowerCase();
-            } while (Op2Check(acc));
+
+                if (acc.isEmpty() || Op2Check(acc) ){
+                    tpw("Opción incorrecta, escriba '1' para examinar y '2' para usar un objeto");
+                }
+            } while (acc.isEmpty() || Op2Check(acc));
 
             if (Objects.equals(acc, "1")) {
                 tpw(check);
@@ -1298,9 +1319,12 @@ public class ProyectoV3 {
                 tpw(use);
 
                 if (Objects.equals(ans, "papel")){
+                    if (notepadQuest.isEmpty()){
+                        tpw("El papel está vacio");
+                    }
                     for (int i = 0; i < notepadQuest.size(); i++) {
                         int j = 1+i;
-                        tpw(j + ".");
+                        tpw("\n" + j + ".");
                         tpw("\n" + notepadQuest.get(i));
                         tpw("\n" + notepadAns.get(i) + "\n");
                     }
