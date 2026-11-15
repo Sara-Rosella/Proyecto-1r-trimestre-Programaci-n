@@ -47,6 +47,10 @@ public class ProyectoV3 {
     static ArrayList<String> inv = new ArrayList<>();
     static ArrayList<String> notepadQuest = new ArrayList<>();
     static ArrayList<String> notepadAns= new ArrayList<>();
+    static String[] objetos = {
+            "perro", "llave", "clave de cifrado",
+            "salir", "gema", "sombrero",
+            "papel", "guia", "vidas"};
 
     public static void main(String[] args){
         Scanner sc = new Scanner(System.in);
@@ -108,6 +112,7 @@ public class ProyectoV3 {
                 "pergamino", "medallon", "espada", "acertijo",
                 "enigma", "jeroglifico"
         };
+
         do {
             switch (curoom){
                 case -1 -> curoom = salaSecreta();
@@ -1342,9 +1347,6 @@ public class ProyectoV3 {
                 tpw(use);
 
                 if (Objects.equals(ans, "papel")){
-                    if (notepadQuest.isEmpty()){
-                        tpw("El papel está vacio");
-                    }
                     for (int i = 0; i < notepadQuest.size(); i++) {
                         int j = 1+i;
                         tpw("\n" + j + ".");
@@ -1378,10 +1380,12 @@ public class ProyectoV3 {
     }
 
     public static boolean invCheck (String obj) {
-        return !switch (obj) {
-            case "perro", "llave", "clave de cifrado", "salir", "gema", "sombrero", "papel" -> true;
-            default -> false;
-        };
+        for (String checker : objetos) {
+            if (Objects.equals(obj, checker)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public static void termino (){
