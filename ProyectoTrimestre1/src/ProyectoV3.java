@@ -1053,11 +1053,25 @@ public class ProyectoV3 {
         Scanner sc = new Scanner(System.in);
         Random r = new Random();
         char pub;
-        String[] quest = {"¿Cuánto es  8 + 5?", "¿Cuanto es 10 * 4 - 3?", "¿En qué estado está el agua a 30ºC?"};
+        String[] quest = {
+                "¿Cuánto es  8 + 5?",
+                "¿Cuanto es 10 * 4 - 3?",
+                "¿En qué estado está el agua a 30ºC?",
+                "¿Cuantos lados tiene un hexágono?",
+                "¿Cual es el planeta más grande?",
+                "¿Cual es el sexto planeta a partir del sol?",
+                "¿Es la serpiente un animal vertebrado o invertebrado?",
+                "¿Son las arañas insectos?",
+                "¿Cuántos minutos tiene una hora?",
+                "¿Qué instrumento se utiliza para medir la temperatura?",
+                "¿Cuál es el símbolo químico del oro?",
+                "¿En qué continente se encuentra España?"
+        };
+
         String ans;
         String resp;
 
-        tpw("\nAparece una prueba enfrente tuya:\nResponde correctamente a la siguiente pregunta para superar la prueba, en caso de fallar, se te restará una vida\nLa respuesta tiene que ser la más corta posible, o se contará como error... y recuerda las tildes.\nSi tienes algo que te ayude a responder, escriba 'ayuda'\n");
+        tpw("\nAparece una prueba enfrente tuya:\nResponde correctamente a la siguiente pregunta para superar la prueba, en caso de fallar, se te restará una vida\nLa respuesta tiene que ser la más corta posible o en número si es posible, o se contará como error... y recuerda las tildes.\nSi tienes algo que te ayude a responder, escriba 'ayuda'\n");
 
         int pos = r.nextInt(quest.length);
         String preg = quest[pos] ;
@@ -1066,11 +1080,20 @@ public class ProyectoV3 {
             case 0 -> resp = "13";
             case 1 -> resp = "37";
             case 2 -> resp = "líquido";
+            case 3 -> resp  = "6";
+            case 4 -> resp = "júpiter";
+            case 5 -> resp = "saturno";
+            case 6 -> resp = "vertebrado";
+            case 7 -> resp = "no";
+            case 8 -> resp = "60";
+            case 9 -> resp = "termómetro";
+            case 10 -> resp = "au";
+            case 11 -> resp = "europa";
             default -> resp = "";
         }
 
         do {
-            tpw("Pregunata: " + preg + "\n");
+            tpw("Pregunta: " + preg + "\n");
             ans = sc.nextLine().toLowerCase();
 
             if (Objects.equals(ans, "ayuda")) {
