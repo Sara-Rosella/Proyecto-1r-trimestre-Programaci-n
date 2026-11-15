@@ -43,8 +43,10 @@ public class ProyectoV3 {
     static boolean llaveGet;
     static boolean stop;
     static boolean sombrero;
+    static boolean invuse;
     static ArrayList<String> inv = new ArrayList<>();
-    static ArrayList<String> notepad = new ArrayList<>();
+    static ArrayList<String> notepadQuest = new ArrayList<>();
+    static ArrayList<String> notepadAns= new ArrayList<>();
 
     public static void main(String[] args){
         Scanner sc = new Scanner(System.in);
@@ -65,15 +67,13 @@ public class ProyectoV3 {
         estuve = false;
         palcodfin = false;
         sombrero = false;
-
-        inv.add("Papel");
-
-        preguntas();
+        invuse = false;
+        inv.add("papel");
 
         tpw("Bienvenido estimado aventurero al templo del DRAGÓN HERÁLDICO GUIVERNO BLANCO.\nDurante siglos un tesoro ha permanecido oculto en este lugar, centenares de aventureros lo han intentado conseguir sin exito pereciendo en el intento.\n¿Serás el primero en superar todas la pruebas que te deparen tus elecciones durante el camino? Tengo ganas de comprobarlo...\nAhora valiente aventurero,¿Cuál es tu nombre?: ");
         nombre = sc.nextLine();
 
-        tpw(nombre + "... ese nombre suena a éxito, suerte para tu aventura la vas a necesitar...");
+        tpw("\n" + nombre + "... ese nombre suena a éxito, suerte para tu aventura la vas a necesitar...\n");
         //xpos = 7; ypos = 2;
         xpos = 8;
         ypos = 2;
@@ -816,6 +816,7 @@ public class ProyectoV3 {
                 }
             } else {
                 tpw("\nNo hay nada más en esta sala, es mejor volver\n");
+                tpw(("\n(Vuelves a la sala anterior)"));
             }
         } else {
             if (rooms[xpos][ypos] == 25) {
@@ -875,6 +876,7 @@ public class ProyectoV3 {
         String ans;
         tpw("\nTe encuentras en una sala con un cofre en el medio.");
         tpw ("\nEl cofre está abierto, no hay nada más en la habitación\n");
+        tpw(("\n(Vuelves a la sala anterior)"));
 
         if (rooms[xpos][ypos] == 25){
             do {
@@ -922,8 +924,9 @@ public class ProyectoV3 {
         Scanner sc = new Scanner(System.in);
         String ans;
 
-        preguntas();
-
+        if (!invuse) {
+            preguntas();
+        }
         tpw("\nTe encuentras en una sala vacía, ¿a dónde te gustaría ir " + nombre + "?");
 
         if (rooms[xpos][ypos] == 12) {
@@ -933,15 +936,20 @@ public class ProyectoV3 {
             } while (Op4Check(ans));
 
             switch (ans) {
-                case "1" -> xpos--;
+                case "1" -> {
+                    xpos--;
+                    invuse = false;
+                }
 
                 case "2" -> {
                     xpos--;
                     ypos++;
+                    invuse = false;
                 }
                 case "3" -> {
                     xpos++;
                     ypos--;
+                    invuse = false;
                 }
                 case "4" -> inv();
             }
@@ -957,13 +965,26 @@ public class ProyectoV3 {
                 } while (Op4Check(ans));
 
                 switch (ans) {
-                    case "1" -> xpos--;
+                    case "1" -> {
+                        xpos--;
+                        invuse = false;
+                    }
 
-                    case "2" -> xpos++;
+                    case "2" -> {
+                        xpos++;
+                        invuse = false;
 
-                    case "3" -> gorro();
+                    }
 
-                    case "4" -> inv();
+                    case "3" -> {
+                        gorro();
+                        invuse = false;
+                    }
+
+                    case "4" -> {
+                        inv();
+                        invuse = true;
+                    }
                 }
             } else {
                 do {
@@ -976,11 +997,20 @@ public class ProyectoV3 {
                 } while (Op3Check(ans));
 
                 switch (ans) {
-                    case "1" -> xpos--;
+                    case "1" -> {
+                        xpos--;
+                        invuse = false;
+                    }
 
-                    case "2" -> xpos++;
+                    case "2" -> {
+                        xpos++;
+                        invuse = false;
+                    }
 
-                    case "3" -> inv();
+                    case "3" -> {
+                        inv();
+                        invuse = true;
+                    }
                 }
             }
         } else {
@@ -990,17 +1020,29 @@ public class ProyectoV3 {
             } while (Op3Check(ans));
 
             switch (ans){
-                case "1" -> xpos--;
+                case "1" -> {
+                    xpos--;
+                    invuse = false;
+
+                }
                 case "2" -> {
                     switch (rooms[xpos][ypos]) {
                         case 3 -> {
                             xpos++;
                             ypos++;
+                            invuse = false;
+
                         }
-                        case 4, 7, 16, 26 -> xpos++;
+                        case 4, 7, 16, 26 -> {
+                            xpos++;
+                            invuse = false;
+                        }
                     }
                 }
-                case "3" -> inv();
+                case "3" -> {
+                    inv();
+                    invuse = true;
+                }
             }
         }
         return rooms[xpos][ypos];
@@ -1014,7 +1056,7 @@ public class ProyectoV3 {
         String ans;
         String resp;
 
-        tpw("\nRespode correctamente a la siguiente pregunta para superar la prueba, en caso de fallar, se te restará una vida\nLa respuesta tiene que ser la más corta posible, o se contará como error\n");
+        tpw("\nResponde correctamente a la siguiente pregunta para superar la prueba, en caso de fallar, se te restará una vida\nLa respuesta tiene que ser la más corta posible, o se contará como error... y recuerda las tildes\n");
 
         int pos = r.nextInt(quest.length);
         String preg = quest[pos] ;
@@ -1032,17 +1074,26 @@ public class ProyectoV3 {
             tpw("\nRespuesta correcta, continue con su aventura.\n");
 
             do {
-                tpw("Te gustaría apuntarte la prueba en un papel? (Y/N)\n");
+                tpw("\nTe gustaría apuntarte la prueba en un papel? (Y/N)\n");
                 ans = sc.next();
                 pub = ans.charAt(0);
 
                 if (ynCheck(pub)){
-                    tpw("Opción inválida, escriba 'Y' si quieres escribir en el papel o 'N' si no");
+                    tpw("\nOpción inválida, escriba 'Y' si quieres escribir en el papel o 'N' si no\n");
                 }
             }while (ynCheck(pub));
 
             if (pub == 'y'){
-                tpw("Escribiste la pregunta y la respuesta en el papel.\nAhora puedes mirarlo cuando quieras");
+                //Se crea una variable 's' que cambia de valor como si fuera i++, donde cada valor es cada String dentro de notepadQuest
+                for (String s : notepadQuest) {
+                    if (Objects.equals(s, preg)) {
+                        tpw("\nEsta pregunta ya está apuntada\n");
+                        return;
+                    }
+                }
+                tpw("\nEscribiste la pregunta y la respuesta en el papel.\n");
+                notepadQuest.add(preg);
+                notepadAns.add(resp);
             }
 
         } else {
@@ -1151,15 +1202,11 @@ public class ProyectoV3 {
             switch (ans) {
                 case "papel" -> {
                     check = "\nUn papel que te has traído de tu hogar junto a un lápiz para escribir";
-                    if (notepad.isEmpty()){
+
+                    if (notepadQuest.isEmpty() || notepadAns.isEmpty()){
                         use = "\nEl papel está vacío";
                     } else {
                         use = "\nEstas son las cosas que te has apuntado";
-
-                       //Crea variable string S que va aumentando como si fuera i++, luego se enseña por consola lo que sea que esté en la supiesta posición de la i
-                        for (String s : notepad) {
-                            tpw(s);
-                        }
                     }
                 }
                 case "clave de cifrado" -> {
@@ -1218,7 +1265,7 @@ public class ProyectoV3 {
                                     use = "\nEl perro vuelve hacia atrás, parece que quiere que le sigas";
                                 }
                             }
-                            case 5, 10, 13, 25, 19, 8, 17, 3, 9 ->
+                            case 5, 10, 13, 25, 19, 8, 17, 3, 9, 27, 28 ->
                                     use = "\nEl perro se reboza por el suelo, no tiene mucho que decir";
                             case 7, 16 -> use = "\nEl perro mira hacia delante";
                             case 4, 26 -> {
@@ -1249,6 +1296,15 @@ public class ProyectoV3 {
                 tpw(check);
             } else {
                 tpw(use);
+
+                if (Objects.equals(ans, "papel")){
+                    for (int i = 0; i < notepadQuest.size(); i++) {
+                        int j = 1+i;
+                        tpw(j + ".");
+                        tpw("\n" + notepadQuest.get(i));
+                        tpw("\n" + notepadAns.get(i) + "\n");
+                    }
+                }
             }
         }
     }
