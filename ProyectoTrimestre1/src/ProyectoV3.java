@@ -14,9 +14,9 @@ import java.util.Scanner;
 public class ProyectoV3 {
     static int[][] rooms = {
             {0, 0, 0, 0, 21, 22},
-            {0, 11, 0, 0, 18, 19},
-            {0, 9, 0, 0, 16, 17},
-            {0, 27, 10, 0, 28, 0},
+            {0, 11, 0, 0, 18, 0},
+            {0, 9, 0, 0, 16, 19},
+            {0, 27, 10, 0, 28, 17},
             {0, 7, 8, 0, 15, 0},
             {5, 6, 0, 25, 26, 0},
             {3, 4, 0, 13, 14, 0},
@@ -44,18 +44,20 @@ public class ProyectoV3 {
     static boolean stop;
     static boolean sombrero;
     static boolean invuse;
+    static boolean gema2;
     static ArrayList<String> inv = new ArrayList<>();
     static ArrayList<String> notepadQuest = new ArrayList<>();
     static ArrayList<String> notepadAns= new ArrayList<>();
     static String[] objetos = {
             "perro", "llave", "clave de cifrado",
             "salir", "gema", "sombrero",
-            "papel", "nota", "vidas"};
+            "papel", "nota", "vidas", "piedra preciosa"};
 
     public static void main(String[] args){
         Scanner sc = new Scanner(System.in);
         String nombre;
         vidas = 7;
+        gema2 = false;
         stop = false;
         llaveGet = false;
         gema = false;
@@ -258,7 +260,6 @@ public class ProyectoV3 {
 
         int r;
 
-
         for (int i = 0; i < palabra.length(); i++){
             do {
                 r = rand.nextInt(palabra.length());
@@ -267,7 +268,7 @@ public class ProyectoV3 {
             sb.append(palabra.charAt(r));
         }
 
-        tpw("\nBienvenido viajero " + nombre + " a la prueba del anagrama.\nEsta prueba consiste en reordenar las letras de la cadena dada para adivinar la palabra escondida detrás de ese desorden.\nTeniendo en cuenta su dificultad te doy la opción de rendirte, a cambio perderás 3 vidas solo tendrás que introducir 'escapar'.");
+        tpw("\n(Escuchas a un puerta moverse)\n\nBienvenido viajero " + nombre + " a la prueba del anagrama.\nEsta prueba consiste en reordenar las letras de la cadena dada para adivinar la palabra escondida detrás de ese desorden.\nTeniendo en cuenta su dificultad te doy la opción de rendirte, a cambio perderás 3 vidas solo tendrás que introducir 'escapar'.");
         tpw("\nANAGRAMA: " + sb);
         tpw("\nPor favor, " + nombre + ", introduzca su intento: ");
         intento = sc.nextLine().toLowerCase();
@@ -821,10 +822,12 @@ public class ProyectoV3 {
                    llaveGet = true;
                }
                case 10, 19 -> {
-                   obtain = "una vida extra y una gema brillante";
+                   obtain = "una vida extra y una piedra preciosa";
                    vidas++;
                    xpos++;
+                   inv.add("piedra preciosa");
                    cofrerul = true;
+                   gema2 = true;
                }
                case 13 ->{
                    obtain = "una clave de cifrado, parece ser para una prueba, no lo entiendes pero te lo guardas.";
@@ -1123,7 +1126,7 @@ public class ProyectoV3 {
         String ans;
         String resp;
 
-        tpw("\nAparece una prueba enfrente tuya:\nResponde correctamente a la siguiente pregunta para superar la prueba, en caso de fallar, se te restará una vida\nLa respuesta tiene que ser la más corta posible o en número si es posible, o se contará como error... y recuerda las tildes.\nSi tienes algo que te ayude a responder, escriba 'ayuda'\n");
+        tpw("\nAparece una prueba enfrente tuya:\nResponde correctamente a la siguiente pregunta para superar la prueba, en caso de fallar, se te restará una vida\nLa respuesta tiene que ser la más corta posible mientras que sea un palabra existente o en número si es posible, o se contará como error... y recuerda las tildes.\nSi tienes algo que te ayude a responder, escriba 'ayuda'\n");
 
         int pos = r.nextInt(quest.length);
         String preg = quest[pos] ;
@@ -1235,12 +1238,13 @@ public class ProyectoV3 {
                 vidas--;
                 sigueVivo();
                 tpw("\nTe quedan " + vidas + " vidas");
-                tpw("La respuesta correcta era: " + numAleat + ", mala suerte");
+                tpw("\nLa respuesta correcta era: " + numAleat + ", mala suerte\n");
+                tpw("(Vuelves a la sala anterior)");
             }
             xpos++;
             ypos--;
         } else {
-            tpw("La prueba ha sido cancelada");
+            tpw("\nLa prueba ha sido cancelada\n");
         }
 
         rulefin = true;
@@ -1303,6 +1307,15 @@ public class ProyectoV3 {
                         use = "\nEl papel está vacío";
                     } else {
                         use = "\nEstas son las cosas que te has apuntado";
+                    }
+                }
+                case "piedra preciosa" -> {
+                    if (gema2){
+                        check = "\nUna piedra brillante de color azul marino, no se puede identificar que tipo de piedra es en este momento";
+                        use = "\nEs una piedra hermosa, pero no parece tener utilidad\n";
+                    } else {
+                        tpw("\nNo tienes ese objeto\n");
+                        return;
                     }
                 }
                 case "clave de cifrado" -> {
@@ -1461,8 +1474,12 @@ public class ProyectoV3 {
             }
         }
 
-        if (gema){
-            yay = "una misera gema en las manos";
+        if (gema || gema2){
+            if (gema && gema2){
+                yay = "unas miseras gemas en las manos";
+            } else {
+                yay = "una misera gema en las manos";
+            }
         } else {
             yay = "las manos vacías";
         }
