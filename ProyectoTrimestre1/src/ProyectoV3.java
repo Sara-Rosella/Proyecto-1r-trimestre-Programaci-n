@@ -72,8 +72,9 @@ public class ProyectoV3 {
         palcodfin = false;
         sombrero = false;
         invuse = false;
-        inv.add("papel");
+
         inv.add("vidas");
+        inv.add("papel");
 
         tpw("Bienvenido estimado aventurero al templo del DRAGÓN HERÁLDICO GUIVERNO BLANCO.\nDurante siglos un tesoro ha permanecido oculto en este lugar, centenares de aventureros lo han intentado conseguir sin exito pereciendo en el intento.\n¿Serás el primero en superar todas la pruebas que te deparen tus elecciones durante el camino? Tengo ganas de comprobarlo...\nAhora valiente aventurero,¿Cuál es tu nombre?: ");
         nombre = sc.nextLine();
@@ -1316,15 +1317,15 @@ public class ProyectoV3 {
 
                 case "sombrero" -> {
                     if (sombrero){
-                        check = "\n Un sombrero que cojiste prestado de un aventurero";
-                        use = "\n El gorro es un poco pequeño y no te cabe en la cabeza, pero te lo quedas de todas formas";
+                        check = "\nUn sombrero que cojiste prestado de un aventurero";
+                        use = "\nEl gorro es un poco pequeño y no te cabe en la cabeza, pero te lo quedas de todas formas";
                     } else {
                         use = "\nNo tienes ese objeto";
                     }
                 }
                 case "vidas" -> {
                     check = "\nTambién se podria decir tus condiciones o cuantas vidas tienes";
-                    use = "\n Tienes " + vidas + " vidas";
+                    use = "\nTienes " + vidas + " vidas";
                 }
                 case "nota" -> {
                     check = "\nUn papel encontrado en la entrada que contiene un texto, ¿Quién lo habrá dejado?";
