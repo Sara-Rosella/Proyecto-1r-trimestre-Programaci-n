@@ -68,6 +68,8 @@ public class ProyectoV3 {
 
         inv.add("Papel");
 
+        preguntas();
+
         tpw("Bienvenido estimado aventurero al templo del DRAGÓN HERÁLDICO GUIVERNO BLANCO.\nDurante siglos un tesoro ha permanecido oculto en este lugar, centenares de aventureros lo han intentado conseguir sin exito pereciendo en el intento.\n¿Serás el primero en superar todas la pruebas que te deparen tus elecciones durante el camino? Tengo ganas de comprobarlo...\nAhora valiente aventurero,¿Cuál es tu nombre?: ");
         nombre = sc.nextLine();
 
@@ -920,6 +922,8 @@ public class ProyectoV3 {
         Scanner sc = new Scanner(System.in);
         String ans;
 
+        preguntas();
+
         tpw("\nTe encuentras en una sala vacía, ¿a dónde te gustaría ir " + nombre + "?");
 
         if (rooms[xpos][ypos] == 12) {
@@ -1000,6 +1004,51 @@ public class ProyectoV3 {
             }
         }
         return rooms[xpos][ypos];
+    }
+
+    public static void preguntas(){
+        Scanner sc = new Scanner(System.in);
+        Random r = new Random();
+        char pub;
+        String[] quest = {"¿Cuánto es  8 + 5?", "¿Cuanto es 10 * 4 - 3?", "¿En qué estado está el agua a 30ºC?"};
+        String ans;
+        String resp;
+
+        tpw("\nRespode correctamente a la siguiente pregunta para superar la prueba, en caso de fallar, se te restará una vida\nLa respuesta tiene que ser la más corta posible, o se contará como error\n");
+
+        int pos = r.nextInt(quest.length);
+        String preg = quest[pos] ;
+
+        switch (pos){
+            case 0 -> resp = "13";
+            case 1 -> resp = "37";
+            case 2 -> resp = "líquido";
+            default -> resp = "";
+        }
+        tpw(preg + "\n");
+        ans = sc.nextLine().toLowerCase();
+
+        if (Objects.equals(ans, resp)){
+            tpw("\nRespuesta correcta, continue con su aventura.\n");
+
+            do {
+                tpw("Te gustaría apuntarte la prueba en un papel? (Y/N)\n");
+                ans = sc.next();
+                pub = ans.charAt(0);
+
+                if (ynCheck(pub)){
+                    tpw("Opción inválida, escriba 'Y' si quieres escribir en el papel o 'N' si no");
+                }
+            }while (ynCheck(pub));
+
+            if (pub == 'y'){
+                tpw("Escribiste la pregunta y la respuesta en el papel.\nAhora puedes mirarlo cuando quieras");
+            }
+
+        } else {
+            tpw("\nRespuesta incorrecta, -1 vida\n");
+            vidas--;
+        }
     }
 
     public static int ruleta(){
@@ -1192,7 +1241,7 @@ public class ProyectoV3 {
             }
 
             do {
-                tpw("\n¿Qué quieres hacer? (1-> examinar, 2-> usar): ");
+                tpw("\n¿Qué quieres hacer? (1-> examinar, 2-> usar): \n");
                 acc = sc.nextLine().toLowerCase();
             } while (Op2Check(acc));
 
