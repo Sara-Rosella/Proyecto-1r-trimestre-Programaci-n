@@ -14,13 +14,13 @@ Por último es seleccionar el archivo 'ProyectoV3' y ejecutar el archivo dentro 
 ## ¿CÓMO FUNCIONA LA APLICACIÓN?
 La aplicación permite al usuario ejecutar el juego 'El templo del Dragón Heráldico Guiverno Blanco'  
 
-El juego tiene un sistema de vidas, si te quedas con 0 vidas, la partida de termina.  
+El jugador dispone de un número limitado de vidas. Si estas llegan a 0, la partida termina.
+También puede acceder a su inventario en cualquier momento, siempre que no se encuentre realizando una prueba. Desde él puede examinar y usar los objetos que haya conseguido durante la aventura.
+El templo está dividido en diferentes salas que contienen pruebas, cofres y puertas que pueden requerir objetos especiales para abrirse 
 
-También tienes un inventario, al que puedes acceder siempre que no estés en medio de una prueba y puedes examinar o usar todos los objetos en el inventario.  
+Durante el juego, se puede elegir diferentes caminos durante la exploración. Estas decisiones pueden conducir a distintas recompensas y afectar al desarrollo de la aventura.  
 
-Consiste en explorar un templo, el cual está dividido en salas con pruebas, cofres que puedes abrir y puertas que requieren un objeto especial.  
-
-Dependiendo del camino que elijas, obtendrás diferentes recompensas, con el objetivo de obtener el tesoro del Dragón. 
+El objetivo principal es explorar el templo, superar sus desafíos, conseguir los objetos necesarios y encontrar el tesoro del Dragón.  
 
 ## Enlace al repositorio en GITHUB
 [Proyecto 1er Trimestre](https://github.com/Sara-Rosella/Proyecto-1r-trimestre-Programacion).
