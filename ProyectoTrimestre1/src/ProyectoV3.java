@@ -744,7 +744,7 @@ public class ProyectoV3 {
                 tpw("\nDetrás de la puerta te encuentras un pedestal con una gema encima.");
 
                 do {
-                    tpw("Quieres cogerla? (Y/N): ");
+                    tpw("\nQuieres cogerla? (Y/N): ");
                     pick = sc.next();
                     check = pick.charAt(0);
 
@@ -1022,11 +1022,10 @@ public class ProyectoV3 {
     }
 
     public static int salCof (){
-        int lugar = rooms[xpos][ypos];
         Scanner sc = new Scanner(System.in);
         String ans;
         char yn;
-
+        System.out.println(rooms[xpos][ypos]);
         tpw("\nTe encuentras en una sala con un cofre en el medio.");
 
         do {
@@ -1041,7 +1040,7 @@ public class ProyectoV3 {
 
         if (yn == 'y'){
            String obtain;
-            switch (lugar){
+            switch (rooms[xpos][ypos]){
 
                case 5 ->{
                    obtain ="una llave";
@@ -1090,7 +1089,7 @@ public class ProyectoV3 {
 
             tpw("\nAbres el cofre y en el te encuentras " + obtain);
 
-            if (lugar == 25 || lugar == 29 ){
+            if (rooms[xpos][ypos] == 25 || rooms[xpos][ypos] == 29 ){
                 do{
                     tpw("\n¿Qué desea hacer ahora? 1-> Avanzar, 2-> volver\n");
                     ans = sc.next().toLowerCase();
@@ -1117,7 +1116,7 @@ public class ProyectoV3 {
                 tpw(("\n(Vuelves a la sala anterior)\n"));
             }
         } else {
-            if (lugar == 25 || lugar == 29) {
+            if (rooms[xpos][ypos] == 25 || rooms[xpos][ypos] == 29) {
                 do {
                     tpw("\n¿Qué desea hacer ahora? 1-> volver, 2-> ir adelante, 3-> abrir el cofre\n");
                     ans = sc.next().toLowerCase();
@@ -1139,7 +1138,7 @@ public class ProyectoV3 {
                         ypos++;
                     }
                     case "3" -> {
-                        return lugar;
+                        return rooms[xpos][ypos];
                     }
                 }
             } else {
@@ -1153,7 +1152,7 @@ public class ProyectoV3 {
                 } while (op2Check(ans));
 
                 if (Objects.equals(ans, "1")) {
-                    switch (lugar) {
+                    switch (rooms[xpos][ypos]) {
                         case 5, 10, 19, 13 -> xpos++;
 
                         case 36 -> ypos--;
@@ -1162,7 +1161,7 @@ public class ProyectoV3 {
                 }
             }
         }
-        return lugar;
+        return rooms[xpos][ypos];
     }
 
     public static int salCofAb (){
@@ -1171,7 +1170,7 @@ public class ProyectoV3 {
         tpw("\nTe encuentras en una sala con un cofre en el medio.");
         tpw ("\nEl cofre está abierto, no hay nada más en la habitación\n");
         tpw(("\n(Vuelves a la sala anterior)"));
-
+        System.out.println(rooms[xpos][ypos]);
         if (rooms[xpos][ypos] == 25){
             do {
                 tpw("\n¿Qué desea hacer ahora? 1-> Avanzar, 2-> volver, 3-> inventario\n");
@@ -1221,7 +1220,7 @@ public class ProyectoV3 {
     public static int salVac(String nombre) {
         Scanner sc = new Scanner(System.in);
         String ans;
-
+        System.out.println(rooms[xpos][ypos]);
         if (!invuse) {
             preguntas();
         }
@@ -1418,7 +1417,7 @@ public class ProyectoV3 {
 
                 switch (ans) {
                     case "1" -> {
-                        xpos++;
+                        xpos--;
                         invuse = false;
                     }
 
