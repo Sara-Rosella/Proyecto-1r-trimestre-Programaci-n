@@ -3,8 +3,8 @@
 Juego de aventura conversacional por consola, desarrollado en Java como Proyecto Modular de **Programación** (1.º DAM, 1.ª evaluación).
 
 **Integrantes:** Marcos Castro, Pablo Espinal y Sara Rosella
-
 **Repositorio:** [https\://github.com/Sara-Rosella/Proyecto-1r-trimestre-Programacion](https://github.com/Sara-Rosella/Proyecto-1r-trimestre-Programacion)  
+
 **Java:** JDK 21  
 **IDE utilizado:** IntelliJ IDEA  
 ---
