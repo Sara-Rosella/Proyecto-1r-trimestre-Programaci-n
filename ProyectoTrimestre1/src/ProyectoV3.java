@@ -204,6 +204,7 @@ public class ProyectoV3 {
                         curoom = ahorcado(palabras);
                     }
                 }
+                case 38 -> curoom = salMed(nombre);
                 case 11, 21, 22 -> termino();
             }
         } while (curoom != 0);
@@ -239,7 +240,7 @@ public class ProyectoV3 {
                }
                case "3" ->{
                    xpos++;
-                   return rooms[xpos][ypos];
+                   return lugar;
                }
                case "2" -> {
                    xpos--;
@@ -247,7 +248,7 @@ public class ProyectoV3 {
                }
                case "4" -> inv();
            }
-                return rooms[xpos][ypos];
+                return lugar;
        }
 
     public static int entradaV2 (String nombre) {
@@ -276,7 +277,7 @@ public class ProyectoV3 {
             }
             case "3" -> inv();
         }
-        return rooms[xpos][ypos];
+        return lugar;
     }
 
     public static int salaSecreta () { //En esta funcion quiero que pregunte 3 veces si quiero tomar el camino para llegar a la sala secreta
@@ -309,21 +310,21 @@ public class ProyectoV3 {
                     if (s == 'n') {
                         tpw("\nVuelves a la sala inicial");
                         xpos--;
-                        return rooms[xpos][ypos];
+                        return lugar;
                     }
                 }
                 break;
             case "2", "n":
                 tpw("\nVuelves a la sala inicial");
                 xpos--;
-                return rooms[xpos][ypos];
+                return lugar;
         }
         tpw("Consigues llegar al final del pasillo donde te encuentras un perro quien te mira con cara de expectación y miedo.\nDespués de unos minutos se acerca a ti amistosamente y parece estar listo para seguirte durante tu aventura.");
         tpw("Vuelves a la entrada, no nada más aquí");
         perro = true;
         inv.add("perro");
         xpos--;
-        return rooms[xpos][ypos];
+        return lugar;
     }
 
     public static int anagrama(String[] palabras, String nombre) {
@@ -951,7 +952,8 @@ public class ProyectoV3 {
     public static int puertpiedab (String nombre){
         Scanner sc = new Scanner(System.in);
         String ans;
-        tpw("\nTe encuentras en una sala con una puerta abierta, la cual dirige a dos caminos.\n");
+        if (lugar == 31){
+        tpw("\nTe encuentras en una sala con una puerta abierta.\n");
 
         do {
             tpw(nombre + ", ¿Qué quieres hacer? (1-> Avanzar, 2-> Volver, 3 -> Inventario): ");
@@ -966,11 +968,58 @@ public class ProyectoV3 {
             case "1" -> xpos--;
             case "2" -> {
                 tpw("No puedes volver");
-                return rooms[xpos][ypos];
+                return lugar;
             }
             case "3" -> inv();
         }
-        return rooms[xpos][ypos];
+        } else {
+            if (!over) {
+                tpw("\nTe encuentras en una sala con una puerta abierta, la cual dirige a dos caminos.\n");
+
+                do {
+                    tpw(nombre + ", ¿Qué quieres hacer? (1-> Izquierda, 2-> Avanzar, 3 -> Volver, 4-> inventario): \n");
+                    ans = sc.next();
+
+                    if (op4Check(ans)) {
+                        tpw("\nOpción no válida, por favor escriba '1' si quieres ir a izquierda, '2' si quieres avanzar, '3' si quieres volver y '4' si quieres abrir el inventario\n");
+                    }
+                } while (op4Check(ans));
+
+                switch (ans) {
+                    case "1" -> xpos--;
+                    case "2" -> {
+                        xpos++;
+                        ypos--;
+                    }
+                    case "3" -> {
+                        tpw("\nNo puedes volver\n");
+                        return lugar;
+                    }
+                    case "4" -> inv();
+                }
+            } else {
+                tpw("\nTe encuentras en una sala con una puerta abierta, la solo puedes avanzar, al puerta de la izquierda está bloqueada.\n");
+
+                do {
+                    tpw(nombre + ", ¿Qué quieres hacer? (1-> Avanzar, 2 -> Volver, 3-> inventario): \n");
+                    ans = sc.next();
+
+                    if (op3Check(ans)) {
+                        tpw("\nOpción no válida, por favor escriba '1' si quieres avanzar, '2' si quieres volver y '3' si quieres abrir el inventario\n");
+                    }
+                } while (op3Check(ans));
+
+                switch (ans) {
+                    case "1" -> xpos--;
+                    case "2" -> {
+                        tpw("\nNo puedes volver\n");
+                        return lugar;
+                    }
+                    case "3" -> inv();
+                }
+            }
+        }
+        return lugar;
     }
 
     public static int salCof (){
@@ -1492,8 +1541,10 @@ public class ProyectoV3 {
         } while (ynCheck(pub));
         if (pub == 'y'){
             preguntaDif(nombre);
+            return lugar;
         } else {
             tpw("La prueba se ha cancelado");
+            over = true;
         }
         return lugar;
     }
@@ -1637,7 +1688,7 @@ public class ProyectoV3 {
         }
     }
 
-    public static int preguntaDif (String nombre){
+    public static void preguntaDif (String nombre){
         Scanner sc = new Scanner(System.in);
         String resp;
 
@@ -1679,12 +1730,10 @@ public class ProyectoV3 {
         } else {
             tpw("\nRespuesta incorrecta, -1 vida\n");
             vidas--;
-            xpos--;
-            ypos++;
             over = true;
             sigueVivo();
         }
-        return lugar;
+
     }
 
     public static void termino (){
