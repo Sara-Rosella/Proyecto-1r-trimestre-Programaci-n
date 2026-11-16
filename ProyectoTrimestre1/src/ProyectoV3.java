@@ -54,6 +54,7 @@ public class ProyectoV3 {
     static boolean piedab = false;
     static boolean abierto2 = false;
     static boolean over = false;
+    static boolean fin = false;
     static ArrayList<String> inv = new ArrayList<>();
     static ArrayList<String> notepadQuest = new ArrayList<>();
     static ArrayList<String> notepadAns= new ArrayList<>();
@@ -974,7 +975,7 @@ public class ProyectoV3 {
         }
         } else {
             if (!over) {
-                tpw("\nTe encuentras en una sala con una puerta abierta, la cual dirige a dos caminos.\n");
+                tpw("\nTe encuentras en una sala con una puerta cerrada, la cual dirige a dos caminos.\n");
 
                 do {
                     tpw(nombre + ", ¿Qué quieres hacer? (1-> Izquierda, 2-> Avanzar, 3 -> Volver, 4-> inventario): \n");
@@ -998,7 +999,7 @@ public class ProyectoV3 {
                     case "4" -> inv();
                 }
             } else {
-                tpw("\nTe encuentras en una sala con una puerta abierta, solo puedes avanzar, al puerta de la izquierda está bloqueada.\n");
+                tpw("\nTe encuentras en una sala con una puerta cerrada, solo puedes avanzar, al puerta de la izquierda está bloqueada.\n");
 
                 do {
                     tpw(nombre + ", ¿Qué quieres hacer? (1-> Avanzar, 2 -> Volver, 3-> inventario): \n");
@@ -1027,7 +1028,6 @@ public class ProyectoV3 {
         String ans;
         char yn;
         int lugar = rooms[xpos][ypos];
-        System.out.println(rooms[xpos][ypos]);
         tpw("\nTe encuentras en una sala con un cofre en el medio.");
 
         do {
@@ -1175,7 +1175,6 @@ public class ProyectoV3 {
         tpw("\nTe encuentras en una sala con un cofre en el medio.");
         tpw ("\nEl cofre está abierto, no hay nada más en la habitación\n");
         tpw(("\n(Vuelves a la sala anterior)"));
-        System.out.println(rooms[xpos][ypos]);
         if (rooms[xpos][ypos] == 25){
             do {
                 tpw("\n¿Qué desea hacer ahora? 1-> Avanzar, 2-> volver, 3-> inventario\n");
@@ -1225,7 +1224,6 @@ public class ProyectoV3 {
     public static int salVac(String nombre) {
         Scanner sc = new Scanner(System.in);
         String ans;
-        System.out.println(rooms[xpos][ypos]);
         if (!invuse) {
             preguntas();
         }
@@ -1529,25 +1527,61 @@ public class ProyectoV3 {
         String ans;
         char pub;
 
-        tpw("Bienvenido a esta prueba, se te va a hacer una pregunta, si respondes correctamente, podrás continuar y se te dará 2 vidas, de lo contrario, se te hechará de la sala y no podrás volver, además se te restrá 1 vida");
+        if (fin){
+            do {
+                tpw(" (1-> Avanzar 2-> Volver, 3-> Inventario): ");
+                ans = sc.next();
+                if (op3Check(ans)) {
+                    tpw("Opción no válida, por favor escriba '1' si quieres avanzar, '2' si quieres volver y '3' si quieres abrir el inventario");
+                }
+            } while (op3Check(ans));
 
-        do {
-            tpw("Estás listo para la prueba, " + nombre + "? (Y/N)");
-            ans = sc.nextLine().toLowerCase();
-            pub = ans.charAt(0);
+            switch (ans){
+                case "1" -> {
+                    ypos++;
+                    ypos++;
+                    invuse = false;
+                }
+                case "2" -> {
+                    switch (rooms[xpos][ypos]) {
+                        case 3, 34 -> {
+                            xpos++;
+                            ypos++;
+                            invuse = false;
+                        }
+                        case 4, 7, 26, 27, 28, 37 -> {
+                            xpos++;
+                            invuse = false;
+                        }
+                    }
+                }
+                case "3" -> {
+                    inv();
+                    invuse = true;
+                }
+            }
+        } else {
+            tpw("Bienvenido a esta prueba, se te va a hacer una pregunta, si respondes correctamente, podrás continuar y se te dará 2 vidas, de lo contrario, se te hechará de la sala y no podrás volver, además se te restrá 1 vida\n");
 
-            if (ynCheck(pub)){
-                tpw("Opción no válida, por favor introduce 'Y' si quieres hacer la prueba y 'N' si no");
+            do {
+                tpw("Estás listo para la prueba, " + nombre + "? (Y/N)");
                 ans = sc.nextLine().toLowerCase();
                 pub = ans.charAt(0);
+
+                if (ynCheck(pub)) {
+                    tpw("Opción no válida, por favor introduce 'Y' si quieres hacer la prueba y 'N' si no");
+                    ans = sc.nextLine().toLowerCase();
+                    pub = ans.charAt(0);
+                }
+            } while (ynCheck(pub));
+            if (pub == 'y') {
+                preguntaDif(nombre);
+                fin = true;
+                return rooms[xpos][ypos];
+            } else {
+                tpw("\nLa prueba se ha cancelado.\nEres expulsado a la sala anterior.\n");
+                over = true;
             }
-        } while (ynCheck(pub));
-        if (pub == 'y'){
-            preguntaDif(nombre);
-            return rooms[xpos][ypos];
-        } else {
-            tpw("La prueba se ha cancelado");
-            over = true;
         }
         return rooms[xpos][ypos];
     }
@@ -1709,7 +1743,7 @@ public class ProyectoV3 {
         };
 
 
-        tpw("\nMuy bien" + nombre + "\n, aparece una prueba enfrente tuya:\nResponde correctamente a la siguiente pregunta para superar la prueba, en caso de fallar, se te restará una vida\nLa respuesta tiene que ser la más corta posible mientras que sea un palabra existente o en número si es posible, o se contará como error... y recuerda las tildes.");
+        tpw("\nMuy bien" + nombre + ", aparece una prueba enfrente tuya:\nResponde correctamente a la siguiente pregunta para superar la prueba, en caso de fallar, se te restará una vida\nLa respuesta tiene que ser la más corta posible mientras que sea un palabra existente o en número si es posible, o se contará como error... y recuerda las tildes.");
 
         int pos = r.nextInt(quest.length);
         String preg = quest[pos] ;
@@ -1729,7 +1763,8 @@ public class ProyectoV3 {
         ans = sc.nextLine().toLowerCase().replaceAll("\\s+", "");
 
         if (Objects.equals(ans, resp)){
-            tpw("\nRespuesta correcta, ganaste una vida.\n Continue con su aventura.\n");
+            tpw("\nRespuesta correcta, ganaste dos vidas.\n Continue con su aventura.\n");
+            vidas++;
             vidas++;
         } else {
             tpw("\nRespuesta incorrecta, -1 vida\n");
