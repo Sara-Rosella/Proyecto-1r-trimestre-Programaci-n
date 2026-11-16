@@ -494,6 +494,7 @@ public class ProyectoV3 {
         counter = pal.length();
 
 
+        tpw("Te encuentras en la prueba del ahorcado, tu objetivo es adivinar la palabra secreta.\nTendrás la opción de decir una letra y comprobar si está contenida en la palabra, o de adivinarla cuando lo tengas claro.\nCada letra o intento fallado te restará una vida, ahora sí que comience la prueba...");
         for (int i = 0; i < pal.length(); i++) {
             show[i] = '_';
         }
