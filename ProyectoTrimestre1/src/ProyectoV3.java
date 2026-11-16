@@ -31,29 +31,30 @@ public class ProyectoV3 {
     static int xpos;
     static int ypos;
     static int lugar = rooms[xpos][ypos];
-    static boolean perro;
-    static boolean llave;
-    static boolean clave;
-    static int vidas;
-    static boolean anafin;
-    static boolean palcodfin;
-    static boolean ahorcfin;
-    static boolean estuve;
-    static boolean rulefin;
-    static boolean abierto;
-    static boolean cofab;
-    static boolean cofrerul;
-    static boolean gema;
-    static boolean llaveGet;
-    static boolean stop;
-    static boolean sombrero;
-    static boolean invuse;
-    static boolean gema2;
-    static boolean cofab2;
-    static boolean pregvid1;
-    static boolean pregvid2;
-    static boolean piedab;
-    static boolean abierto2;
+    static boolean perro = false;
+    static boolean llave = false;
+    static boolean clave = false;
+    static int vidas = 7;
+    static boolean anafin = false;
+    static boolean palcodfin = false;
+    static boolean ahorcfin = false;
+    static boolean estuve = false;
+    static boolean rulefin = false;
+    static boolean abierto = false;
+    static boolean cofab = false;
+    static boolean cofrerul = false;
+    static boolean gema = false;
+    static boolean llaveGet = false;
+    static boolean stop = false;
+    static boolean sombrero = false;
+    static boolean invuse = false;
+    static boolean gema2 = false;
+    static boolean cofab2 = false;
+    static boolean pregvid1 = false;
+    static boolean pregvid2 = false;
+    static boolean piedab = false;
+    static boolean abierto2 = false;
+    static boolean over = false;
     static ArrayList<String> inv = new ArrayList<>();
     static ArrayList<String> notepadQuest = new ArrayList<>();
     static ArrayList<String> notepadAns= new ArrayList<>();
@@ -65,29 +66,6 @@ public class ProyectoV3 {
     public static void main(String[] args){
         Scanner sc = new Scanner(System.in);
         String nombre;
-        vidas = 7;
-        abierto2 = false;
-        piedab = false;
-        pregvid1 = false;
-        pregvid2 = false;
-        cofab2 = false;
-        gema2 = false;
-        stop = false;
-        llaveGet = false;
-        gema = false;
-        cofrerul = false;
-        ahorcfin = false;
-        cofab = false;
-        abierto = false;
-        rulefin = false;
-        perro = false;
-        clave = false;
-        llave = false;
-        anafin = false;
-        estuve = false;
-        palcodfin = false;
-        sombrero = false;
-        invuse = false;
 
         inv.add("vidas");
         inv.add("papel");
@@ -1494,6 +1472,32 @@ public class ProyectoV3 {
         return lugar;
     }
 
+    public static int salMed (String nombre){
+        Scanner sc = new Scanner(System.in);
+        String ans;
+        char pub;
+
+        tpw("Bienvenido a esta prueba, se te va a hacer una pregunta, si respondes correctamente, podrás continuar y se te dará 2 vidas, de lo contrario, se te hechará de la sala y no podrás volver, además se te restrá 1 vida");
+
+        do {
+            tpw("Estás listo para la prueba, " + nombre + "? (Y/N)");
+            ans = sc.nextLine().toLowerCase();
+            pub = ans.charAt(0);
+
+            if (ynCheck(pub)){
+                tpw("Opción no válida, por favor introduce 'Y' si quieres hacer la prueba y 'N' si no");
+                ans = sc.nextLine().toLowerCase();
+                pub = ans.charAt(0);
+            }
+        } while (ynCheck(pub));
+        if (pub == 'y'){
+            preguntaDif(nombre);
+        } else {
+            tpw("La prueba se ha cancelado");
+        }
+        return lugar;
+    }
+
     public static void preguntas(){
         Scanner sc = new Scanner(System.in);
         Random r = new Random();
@@ -1635,24 +1639,50 @@ public class ProyectoV3 {
 
     public static int preguntaDif (String nombre){
         Scanner sc = new Scanner(System.in);
+        String resp;
+
         String ans;
-        char pub;
-        tpw("Bienvenido a esta prueba, se te va a hacer una pregunta, si respondes correctamente, podrás continuar y se te dará 2 vidas, de lo contrario, se te hechará de la sala y no podrás volver, además se te restrá 1 vida");
+        Random r = new Random();
+        String[] quest = {
+                "¿Cuánto es  (28/2 + 62*3)/(sqrt((5*4)+5))?",
+                "¿cual es el animal mas rápido del mundo? (2 palabras)",
+                "¿Capital de Madagascar?",
+                "¿Cual es el radio de la tierra aproximado a 4 cifras significativas en km? (Sin espacios ni caractéres especiales)",
+                "¿En qué continente está Papúa Nueva Guinea?",
+                "¿Cual es el nombre de la serie de metales al que pertenece el magnesio (En plural)?",
+                "¿En qué año se descubrió Urano?",
+        };
 
-        do {
-            tpw("Estás listo para la prueba, " + nombre + "? (Y/N)");
-            ans = sc.nextLine().toLowerCase();
-            pub = ans.charAt(0);
 
-            if (ynCheck(pub)){
-                tpw("Opción no válida, por favor introduce 'Y' si quieres hacer la prueba y 'N' si no");
-                ans = sc.nextLine().toLowerCase();
-                pub = ans.charAt(0);
-            }
-        } while (ynCheck(pub));
+        tpw("\nMuy bien" + nombre + "\n, aparece una prueba enfrente tuya:\nResponde correctamente a la siguiente pregunta para superar la prueba, en caso de fallar, se te restará una vida\nLa respuesta tiene que ser la más corta posible mientras que sea un palabra existente o en número si es posible, o se contará como error... y recuerda las tildes.");
 
-        if (pub == 'y'){
+        int pos = r.nextInt(quest.length);
+        String preg = quest[pos] ;
 
+        switch (pos){
+            case 0 -> resp = "40";
+            case 1 -> resp = "alcón peregrino";
+            case 2 -> resp = "antananarivo";
+            case 3 -> resp  = "6371";
+            case 4 -> resp = "oceanía";
+            case 5 -> resp = "alcalinotérreos";
+            case 6 -> resp = "1781";
+            default -> resp = "";
+        }
+
+        tpw("Pregunta: " + preg + "\n");
+        ans = sc.nextLine().toLowerCase();
+
+        if (Objects.equals(ans, resp)){
+            tpw("\nRespuesta correcta, ganaste una vida.\n Continue con su aventura.\n");
+            vidas++;
+        } else {
+            tpw("\nRespuesta incorrecta, -1 vida\n");
+            vidas--;
+            xpos--;
+            ypos++;
+            over = true;
+            sigueVivo();
         }
         return lugar;
     }
