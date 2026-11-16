@@ -1527,7 +1527,7 @@ public class ProyectoV3 {
         String ans;
         char pub;
 
-        if (fin){
+        if (fin && !over){
             tpw("\nObservas un camino abierto.\n");
             do {
                 tpw("Que desea hacer? (1-> Avanzar 2-> Volver, 3-> Inventario): \n");
@@ -1552,6 +1552,10 @@ public class ProyectoV3 {
                     invuse = true;
                 }
             }
+        } else if (over){
+            xpos--;
+            ypos++;
+            return rooms[xpos][ypos];
         } else {
             tpw("Bienvenido a esta prueba, se te va a hacer una pregunta, si respondes correctamente, podrás continuar y se te dará 2 vidas, de lo contrario, se te hechará de la sala y no podrás volver, además se te restrá 1 vida\n");
 
@@ -1744,7 +1748,7 @@ public class ProyectoV3 {
 
         switch (pos){
             case 0 -> resp = "40";
-            case 1 -> resp = "alcón peregrino";
+            case 1 -> resp = "halcónperegrino";
             case 2 -> resp = "antananarivo";
             case 3 -> resp  = "6371";
             case 4 -> resp = "oceanía";
