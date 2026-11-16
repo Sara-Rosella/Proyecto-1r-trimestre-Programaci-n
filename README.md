@@ -1,6 +1,6 @@
 # Proyecto-1r-trimestre-Programación
 
-## ¿CÓMO SE PUEDE EJECUTAR EL PRROGRAMA EN TU ORDENADOR?
+## ¿CÓMO SE PUEDE EJECUTAR EL PROGRAMA EN TU ORDENADOR?
 
 Para poder ejecutar el programa hay que descargar la carpeta 'ProyectoTrimestre1'.  
 Luego hay que ejecutar el archivo en un programa que pueda ejecutar el lenguaje Java, nuestra recomendación es IntelliJ.
