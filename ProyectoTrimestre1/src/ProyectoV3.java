@@ -793,7 +793,7 @@ public class ProyectoV3 {
             inv();
             if (!llave) {
                 tpw("\nA lo mejor deberías volver sobre tus pasos\n");
-                tpw("\n(Vuelves a la sala anterior)");
+                tpw("\n(Vuelves a la sala anterior)\n");
                 if (rooms[xpos][ypos] == 6) {
                     xpos++;
                     return rooms[xpos][ypos];
