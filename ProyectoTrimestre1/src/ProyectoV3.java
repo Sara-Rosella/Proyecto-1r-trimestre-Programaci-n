@@ -3,6 +3,7 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
 
+//https://github.com/Sara-Rosella/Proyecto-1r-trimestre-Programacion
 //2 y 14 --> minijuegos
 //1 --> entrada, -1 --> sala secreta
 //3, 4, 7, 12, 26, 16 --> salas vacías
@@ -1605,15 +1606,30 @@ public class ProyectoV3 {
                 "¿Cuánto es  8 + 5?",
                 "¿Cuanto es 10 * 4 - 3?",
                 "¿En qué estado está el agua a 30ºC?",
-                "¿Cuantos lados tiene un hexágono?",
-                "¿Cual es el planeta más grande?",
-                "¿Cual es el sexto planeta a partir del sol?",
+                "¿Cuántos lados tiene un hexágono?",
+                "¿Cuál es el planeta más grande?",
+                "¿Cuál es el sexto planeta a partir del sol?",
                 "¿Es la serpiente un animal vertebrado o invertebrado?",
                 "¿Son las arañas insectos?",
                 "¿Cuántos minutos tiene una hora?",
                 "¿Qué instrumento se utiliza para medir la temperatura?",
                 "¿Cuál es el símbolo químico del oro?",
-                "¿En qué continente se encuentra España?"
+                "¿En qué continente se encuentra España?",
+                "¿Cuántos colores tiene el arcoíris tradicionalmente?",
+                "¿Cuál es el océano más grande del mundo?",
+                "¿Cuántos minutos tiene un día? (Sin espacios ni carácteres especiales)",
+                "¿Cuántos huesos tiene aproximadamente un adulto?",
+                "¿Cuántos corazones tiene un pulpo?",
+                "¿Cuál es el hueso más largo del cuerpo humano?",
+                "¿Qué estación suele tener las temperaturas más bajas?",
+                "¿Qué elemento químico tiene el símbolo Fe?",
+                "¿Son las cochinillas / bicho bola insectos?",
+                "¿Se puede ver Marte desde la Tierra?",
+                "¿Cuántos mundiales de fútbol masculino tiene España?",
+                "¿Cuál es la nacionalidad de Messi?",
+                "¿Cual es el color menos comun en la naturaleza?",
+                "¿Son los arandanos considerados botanicamente frutas?",
+                "¿Son las fresas consideradas botanicamente frutas?"
         };
 
         String ans;
@@ -1632,11 +1648,23 @@ public class ProyectoV3 {
             case 4 -> resp = "júpiter";
             case 5 -> resp = "saturno";
             case 6 -> resp = "vertebrado";
-            case 7 -> resp = "no";
+            case 7, 20, 26 -> resp = "no";
             case 8 -> resp = "60";
             case 9 -> resp = "termómetro";
             case 10 -> resp = "au";
             case 11 -> resp = "europa";
+            case 12 -> resp = "7";
+            case 13 -> resp = "pacífico";
+            case 14 -> resp = "1440";
+            case 15 -> resp = "206";
+            case 16 -> resp = "3";
+            case 17 -> resp = "fémur";
+            case 18 -> resp = "invierno";
+            case 19 -> resp = "hierro";
+            case 21, 25 -> resp = "sí";
+            case 22 -> resp = "2";
+            case 23 -> resp = "argentina";
+            case 24 -> resp = "azul";
             default -> resp = "";
         }
 
@@ -1698,7 +1726,7 @@ public class ProyectoV3 {
                 "¿Cuánto es  34 + 5 - 21?",
                 "¿Cuanto es (9 * 6 + 10)/4?",
                 "¿Capital de Canadá?",
-                "¿Cuantos lados tiene un decágono?",
+                "¿Cuántos lados tiene un decágono?",
                 "¿En qué continente está Singapur?",
                 "¿Qué es la luna?",
                 "¿Qué tipo de animal es un delfín?",
@@ -1745,9 +1773,9 @@ public class ProyectoV3 {
         Random r = new Random();
         String[] quest = {
                 "¿Cuánto es  (28/2 + 62*3)/(sqrt((5*4)+5))?",
-                "¿cual es el animal mas rápido del mundo? (2 palabras)",
+                "¿Cuál es el animal mas rápido del mundo? (2 palabras)",
                 "¿Capital de Madagascar?",
-                "¿Cual es el radio de la tierra aproximado a 4 cifras significativas en km? (Sin espacios ni caractéres especiales)",
+                "¿Cuál es el radio de la tierra aproximado a 4 cifras significativas en km? (Sin espacios ni caractéres especiales)",
                 "¿En qué continente está Papúa Nueva Guinea?",
                 "¿Cual es el nombre de la serie de metales al que pertenece el magnesio (En plural)?",
                 "¿En qué año se descubrió Urano?",
