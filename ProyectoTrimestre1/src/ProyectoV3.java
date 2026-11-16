@@ -1633,6 +1633,30 @@ public class ProyectoV3 {
         }
     }
 
+    public static int preguntaDif (String nombre){
+        Scanner sc = new Scanner(System.in);
+        String ans;
+        char pub;
+        tpw("Bienvenido a esta prueba, se te va a hacer una pregunta, si respondes correctamente, podrás continuar y se te dará 2 vidas, de lo contrario, se te hechará de la sala y no podrás volver, además se te restrá 1 vida");
+
+        do {
+            tpw("Estás listo para la prueba, " + nombre + "? (Y/N)");
+            ans = sc.nextLine().toLowerCase();
+            pub = ans.charAt(0);
+
+            if (ynCheck(pub)){
+                tpw("Opción no válida, por favor introduce 'Y' si quieres hacer la prueba y 'N' si no");
+                ans = sc.nextLine().toLowerCase();
+                pub = ans.charAt(0);
+            }
+        } while (ynCheck(pub));
+
+        if (pub == 'y'){
+
+        }
+        return lugar;
+    }
+
     public static void termino (){
         String per = ".";
         String yay;
