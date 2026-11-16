@@ -30,7 +30,6 @@ public class ProyectoV3 {
     };
     static int xpos;
     static int ypos;
-    static int lugar = rooms[xpos][ypos];
     static boolean perro = false;
     static boolean llave = false;
     static boolean clave = false;
@@ -81,7 +80,7 @@ public class ProyectoV3 {
         tpw("\nTe encuentras en la primera sala, una sala vacía normal y corriente, sin ningún tipo de prueba o reto visible, sin embargo encuentras una nota a tu derecha.\nParece que la nota habla del templo, es mejor guardarla por si acaso.\n(Pones la nota el junto a un papel que trajiste de casa, para usarlo o examinarlo, abra el inventario)");
         inv.add("nota");
 
-        room(lugar, nombre);
+        room(rooms[xpos][ypos], nombre);
     }
 
     public static void tpw (String text) {
@@ -240,7 +239,7 @@ public class ProyectoV3 {
                }
                case "3" ->{
                    xpos++;
-                   return lugar;
+                   return rooms[xpos][ypos];
                }
                case "2" -> {
                    xpos--;
@@ -248,8 +247,8 @@ public class ProyectoV3 {
                }
                case "4" -> inv();
            }
-                return lugar;
-       }
+        return rooms[xpos][ypos];
+    }
 
     public static int entradaV2 (String nombre) {
         Scanner sc = new Scanner(System.in);
@@ -277,7 +276,7 @@ public class ProyectoV3 {
             }
             case "3" -> inv();
         }
-        return lugar;
+        return rooms[xpos][ypos];
     }
 
     public static int salaSecreta () { //En esta funcion quiero que pregunte 3 veces si quiero tomar el camino para llegar a la sala secreta
@@ -310,21 +309,21 @@ public class ProyectoV3 {
                     if (s == 'n') {
                         tpw("\nVuelves a la sala inicial");
                         xpos--;
-                        return lugar;
+                        return rooms[xpos][ypos];
                     }
                 }
                 break;
             case "2", "n":
                 tpw("\nVuelves a la sala inicial");
                 xpos--;
-                return lugar;
+                return rooms[xpos][ypos];
         }
         tpw("Consigues llegar al final del pasillo donde te encuentras un perro quien te mira con cara de expectación y miedo.\nDespués de unos minutos se acerca a ti amistosamente y parece estar listo para seguirte durante tu aventura.");
         tpw("Vuelves a la entrada, no nada más aquí");
         perro = true;
         inv.add("perro");
         xpos--;
-        return lugar;
+        return rooms[xpos][ypos];
     }
 
     public static int anagrama(String[] palabras, String nombre) {
@@ -759,7 +758,7 @@ public class ProyectoV3 {
                     inv.add("gema");
                     gema = true;
                 } else {
-                    tpw("\n Surge un temblor que empuja la gema al suelo y se rompe a pedazos, no parece ser una buena idea coger los pedazos sin guantes");
+                    tpw("\nSurge un temblor que empuja la gema al suelo y se rompe a pedazos, no parece ser una buena idea coger los pedazos sin guantes");
                 }
             }
             stop = true;
@@ -872,7 +871,7 @@ public class ProyectoV3 {
         }
 
         if (piedab){
-            switch (lugar) {
+            switch (rooms[xpos][ypos]) {
                 case 31 -> {
                     tpw("\nSolo tienes un camino\n");
 
@@ -941,18 +940,18 @@ public class ProyectoV3 {
                 tpw("\nA lo mejor deberías volver sobre tus pasos\n");
                 tpw("\n(Vuelves a la sala anterior)\n");
                     xpos++;
-                    return lugar;
+                    return rooms[xpos][ypos];
             } else {
                 tpw("\nIntroduces la piedra y abres la puerta. Al volver a coger la piedra, la puerta se cierra");
             }
         }
-        return lugar;
+        return rooms[xpos][ypos];
     }
 
     public static int puertpiedab (String nombre){
         Scanner sc = new Scanner(System.in);
         String ans;
-        if (lugar == 31){
+        if (rooms[xpos][ypos] == 31){
         tpw("\nTe encuentras en una sala con una puerta abierta.\n");
 
         do {
@@ -968,7 +967,7 @@ public class ProyectoV3 {
             case "1" -> xpos--;
             case "2" -> {
                 tpw("No puedes volver");
-                return lugar;
+                return rooms[xpos][ypos];
             }
             case "3" -> inv();
         }
@@ -993,7 +992,7 @@ public class ProyectoV3 {
                     }
                     case "3" -> {
                         tpw("\nNo puedes volver\n");
-                        return lugar;
+                        return rooms[xpos][ypos];
                     }
                     case "4" -> inv();
                 }
@@ -1013,16 +1012,17 @@ public class ProyectoV3 {
                     case "1" -> xpos--;
                     case "2" -> {
                         tpw("\nNo puedes volver\n");
-                        return lugar;
+                        return rooms[xpos][ypos];
                     }
                     case "3" -> inv();
                 }
             }
         }
-        return lugar;
+        return rooms[xpos][ypos];
     }
 
     public static int salCof (){
+        int lugar = rooms[xpos][ypos];
         Scanner sc = new Scanner(System.in);
         String ans;
         char yn;
@@ -1041,7 +1041,7 @@ public class ProyectoV3 {
 
         if (yn == 'y'){
            String obtain;
-            switch (rooms[xpos][ypos]){
+            switch (lugar){
 
                case 5 ->{
                    obtain ="una llave";
@@ -1057,7 +1057,7 @@ public class ProyectoV3 {
                    llaveGet = true;
                }
                case 29 ->{
-                   obtain = "Una rata.\nLa rata se asusta y te araña la cara.\n-1 vida";
+                   obtain = "una rata.\nLa rata se asusta y te araña la cara.\n-1 vida";
                    vidas--;
                    xpos++;
                    ypos++;
@@ -1065,7 +1065,7 @@ public class ProyectoV3 {
                    cofab2 = true;
                }
                case 36 -> {
-                   obtain = "Una rata.\nLa rata se asusta y te araña la cara.\n-1 vida";
+                   obtain = "una rata.\nLa rata se asusta y te araña la cara.\n-1 vida";
                    vidas--;
                    ypos--;
                    estuve = false;
@@ -1090,7 +1090,7 @@ public class ProyectoV3 {
 
             tpw("\nAbres el cofre y en el te encuentras " + obtain);
 
-            if (rooms[xpos][ypos] == 25){
+            if (lugar == 25 || lugar == 29 ){
                 do{
                     tpw("\n¿Qué desea hacer ahora? 1-> Avanzar, 2-> volver\n");
                     ans = sc.next().toLowerCase();
@@ -1114,10 +1114,10 @@ public class ProyectoV3 {
                 }
             } else {
                 tpw("\nNo hay nada más en esta sala, es mejor volver\n");
-                tpw(("\n(Vuelves a la sala anterior)"));
+                tpw(("\n(Vuelves a la sala anterior)\n"));
             }
         } else {
-            if (rooms[xpos][ypos] == 25) {
+            if (lugar == 25 || lugar == 29) {
                 do {
                     tpw("\n¿Qué desea hacer ahora? 1-> volver, 2-> ir adelante, 3-> abrir el cofre\n");
                     ans = sc.next().toLowerCase();
@@ -1139,7 +1139,7 @@ public class ProyectoV3 {
                         ypos++;
                     }
                     case "3" -> {
-                        return rooms[xpos][ypos];
+                        return lugar;
                     }
                 }
             } else {
@@ -1153,14 +1153,8 @@ public class ProyectoV3 {
                 } while (op2Check(ans));
 
                 if (Objects.equals(ans, "1")) {
-                    switch (rooms[xpos][ypos]) {
+                    switch (lugar) {
                         case 5, 10, 19, 13 -> xpos++;
-
-                        case 25, 29 -> {
-                            estuve = true;
-                            xpos++;
-                            ypos++;
-                        }
 
                         case 36 -> ypos--;
 
@@ -1168,7 +1162,7 @@ public class ProyectoV3 {
                 }
             }
         }
-        return rooms[xpos][ypos];
+        return lugar;
     }
 
     public static int salCofAb (){
@@ -1329,7 +1323,9 @@ public class ProyectoV3 {
                     tpw(" \n(1-> Izquierda, 2-> Derecha, 3-> Volver, 4 -> inventario): \n");
                     ans = sc.next();
 
+                    if(op4Check(ans)){
                     tpw("Opción no válida, por favor escriba '1' si ir a la izquierda, '2' si quieres ir a la derecha, '3' volver y '4' si quieres abrir el inventario");
+                    }
                 } while (op4Check(ans));
 
                 switch (ans) {
@@ -1484,6 +1480,7 @@ public class ProyectoV3 {
         String ans;
         char pub;
         Scanner sc = new Scanner(System.in);
+        tpw("\nAl entrar a la sala parece activarse una prueba especial");
         tpw("\nBienvenido a la prueba de las vidas.\nTienes la opción de tomar una prueba y, en caso de acertala, se otorgará 1 vida, de lo contrario, perderás 1 vida.\n");
 
         do {
@@ -1498,7 +1495,7 @@ public class ProyectoV3 {
             }
         }while (ynCheck(pub));
 
-        if (lugar == 7 || lugar == 33) {
+        if (rooms[xpos][ypos] == 7 || rooms[xpos][ypos] == 33) {
             estuve = false;
             if (pub == 'y') {
                 preguntas(nombre);
@@ -1507,7 +1504,7 @@ public class ProyectoV3 {
             }
             pregvid1 = true;
         } else {
-            if (lugar == 35){
+            if (rooms[xpos][ypos] == 35){
                 estuve = true;
             }
             if (pub == 'y') {
@@ -1517,8 +1514,8 @@ public class ProyectoV3 {
             }
             pregvid2 = true;
         }
-
-        return lugar;
+        invuse = true;
+        return rooms[xpos][ypos];
     }
 
     public static int salMed (String nombre){
@@ -1541,12 +1538,12 @@ public class ProyectoV3 {
         } while (ynCheck(pub));
         if (pub == 'y'){
             preguntaDif(nombre);
-            return lugar;
+            return rooms[xpos][ypos];
         } else {
             tpw("La prueba se ha cancelado");
             over = true;
         }
-        return lugar;
+        return rooms[xpos][ypos];
     }
 
     public static void preguntas(){
@@ -1659,7 +1656,7 @@ public class ProyectoV3 {
         String ans;
         String resp;
 
-        tpw("\nMuy bien" + nombre + "\n, aparece una prueba enfrente tuya:\nResponde correctamente a la siguiente pregunta para superar la prueba, en caso de fallar, se te restará una vida\nLa respuesta tiene que ser la más corta posible mientras que sea un palabra existente o en número si es posible, o se contará como error... y recuerda las tildes.");
+        tpw("\nMuy bien " + nombre + ", aparece una prueba enfrente tuya:\nResponde correctamente a la siguiente pregunta para superar la prueba, en caso de fallar, se te restará una vida\nLa respuesta tiene que ser la más corta posible mientras que sea un palabra existente o en número si es posible, o se contará como error...y recuerda las tildes.");
 
         int pos = r.nextInt(quest.length);
         String preg = quest[pos] ;
@@ -1679,13 +1676,14 @@ public class ProyectoV3 {
         ans = sc.nextLine().toLowerCase();
 
         if (Objects.equals(ans, resp)){
-            tpw("\nRespuesta correcta, ganaste una vida.\n Continue con su aventura.\n");
+            tpw("\nRespuesta correcta, ganaste una vida.\nContinue con su aventura.\n");
             vidas++;
         } else {
             tpw("\nRespuesta incorrecta, -1 vida\n");
             vidas--;
             sigueVivo();
         }
+        invuse = true;
     }
 
     public static void preguntaDif (String nombre){
@@ -1846,7 +1844,7 @@ public class ProyectoV3 {
                 case "piedra preciosa" -> {
                     if (gema2){
                         check = "\nUna piedra brillante de color azul marino, no se puede identificar que tipo de piedra es en este momento";
-                        if (lugar == 16 || lugar == 31){
+                        if (rooms[xpos][ypos] == 16 || rooms[xpos][ypos] == 31){
                             use = "\nLa piedra encaja en la puerta";
                             piedab = true;
                         } else {
@@ -1922,7 +1920,7 @@ public class ProyectoV3 {
                 acc = sc.nextLine().toLowerCase();
 
                 if (acc.isEmpty() || op2Check(acc) ){
-                    tpw("Opción incorrecta, escriba '1' examinar y '2' para usar un objeto");
+                    tpw("Opción no válida, escriba '1' examinar y '2' para usar un objeto");
                 }
             } while (acc.isEmpty() || op2Check(acc));
 
