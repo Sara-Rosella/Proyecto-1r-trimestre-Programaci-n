@@ -866,11 +866,7 @@ public class ProyectoV3 {
         Scanner sc = new Scanner(System.in);
         String ans = "";
 
-        if (!piedab) {
-            tpw("\nTe encuentras ante una puerta cerrada. Parece que necesita un objeto\n");
-        }
-
-        if (piedab){
+        if (!piedab){
             switch (rooms[xpos][ypos]) {
                 case 31 -> {
                     tpw("\nSolo tienes un camino\n");
@@ -897,7 +893,7 @@ public class ProyectoV3 {
                     return rooms[xpos][ypos];
                 }
                 case 16-> {
-                    tpw("Tienes de caminos");
+                    tpw("Tienes dos caminos");
                     do {
                         tpw(nombre + ", ¿Qué camino quieres escoger? (1-> Avanzar, 2-> Izquierda y '3' -> Inventario): ");
                         ans = sc.next();
@@ -923,6 +919,7 @@ public class ProyectoV3 {
         } 
         else {
             do {
+                tpw("\nTe encuentras ante una puerta cerrada. Parece que necesita un objeto\n");
                 tpw(nombre + ", ¿Qué te gustaría hacer? (1-> Volver, 2-> Inventario): ");
                 ans = sc.nextLine();
 
@@ -933,7 +930,7 @@ public class ProyectoV3 {
         }
 
         if (Objects.equals(ans, "1")){
-            xpos--;
+            xpos++;
         } else {
             inv();
             if (!piedab) {
@@ -1025,6 +1022,7 @@ public class ProyectoV3 {
         Scanner sc = new Scanner(System.in);
         String ans;
         char yn;
+        int lugar = rooms[xpos][ypos];
         System.out.println(rooms[xpos][ypos]);
         tpw("\nTe encuentras en una sala con un cofre en el medio.");
 
@@ -1040,7 +1038,7 @@ public class ProyectoV3 {
 
         if (yn == 'y'){
            String obtain;
-            switch (rooms[xpos][ypos]){
+            switch (lugar){
 
                case 5 ->{
                    obtain ="una llave";
@@ -1089,7 +1087,7 @@ public class ProyectoV3 {
 
             tpw("\nAbres el cofre y en el te encuentras " + obtain);
 
-            if (rooms[xpos][ypos] == 25 || rooms[xpos][ypos] == 29 ){
+            if (lugar == 25 || lugar == 29 ){
                 do{
                     tpw("\n¿Qué desea hacer ahora? 1-> Avanzar, 2-> volver\n");
                     ans = sc.next().toLowerCase();
@@ -1116,7 +1114,7 @@ public class ProyectoV3 {
                 tpw(("\n(Vuelves a la sala anterior)\n"));
             }
         } else {
-            if (rooms[xpos][ypos] == 25 || rooms[xpos][ypos] == 29) {
+            if (lugar == 25 || lugar == 29 || lugar == 36) {
                 do {
                     tpw("\n¿Qué desea hacer ahora? 1-> volver, 2-> ir adelante, 3-> abrir el cofre\n");
                     ans = sc.next().toLowerCase();
@@ -1130,12 +1128,18 @@ public class ProyectoV3 {
 
                 switch (ans) {
                     case "1" -> {
-                        xpos++;
-                        ypos++;
+                        if (lugar == 36){
+                            ypos--;
+                         } else {
+                            xpos++;
+                            ypos++;
+                        }
                     }
                     case "2" -> {
                         xpos--;
-                        ypos++;
+                        if (lugar != 36) {
+                            ypos++;
+                        }
                     }
                     case "3" -> {
                         return rooms[xpos][ypos];
@@ -1152,11 +1156,8 @@ public class ProyectoV3 {
                 } while (op2Check(ans));
 
                 if (Objects.equals(ans, "1")) {
-                    switch (rooms[xpos][ypos]) {
+                    switch (lugar) {
                         case 5, 10, 19, 13 -> xpos++;
-
-                        case 36 -> ypos--;
-
                     }
                 }
             }
@@ -1354,7 +1355,9 @@ public class ProyectoV3 {
                     tpw(" \n(1-> Izquierda, 2-> Derecha, 3-> Volver, 4 -> inventario): \n");
                     ans = sc.next();
 
-                    tpw("Opción no válida, por favor escriba '1' si ir a la izquierda, '2' si quieres ir a la derecha, '3' volver y '4' si quieres abrir el inventario");
+                    if (op4Check(ans)) {
+                        tpw("Opción no válida, por favor escriba '1' si ir a la izquierda, '2' si quieres ir a la derecha, '3' volver y '4' si quieres abrir el inventario");
+                    }
                 } while (op4Check(ans));
 
                 switch (ans) {
@@ -1459,7 +1462,7 @@ public class ProyectoV3 {
                                 ypos++;
                                 invuse = false;
                             }
-                            case 4, 7, 16, 26, 27, 28, 37 -> {
+                            case 4, 7, 26, 27, 28, 37 -> {
                                 xpos++;
                                 invuse = false;
                             }
@@ -1567,7 +1570,7 @@ public class ProyectoV3 {
         String ans;
         String resp;
 
-        tpw("\nAparece una prueba enfrente tuya:\nResponde correctamente a la siguiente pregunta para superar la prueba, en caso de fallar, se te restará una vida\nLa respuesta tiene que ser la más corta posible mientras que sea un palabra existente o en número si es posible, o se contará como error... y recuerda las tildes.\nSi tienes algo que te ayude a responder, escriba 'ayuda'\n");
+        tpw("\nAparece una prueba enfrente tuya:\nResponde correctamente a la siguiente pregunta para superar la prueba, en caso de fallar, se te restará una vida\nLa respuesta tiene que ser la más corta posible mientras que sea un palabra existente o en número si es posible, además, o se contará como error... y recuerda las tildes.\nSi tienes algo que te ayude a responder, escriba 'ayuda'\n");
 
         int pos = r.nextInt(quest.length);
         String preg = quest[pos] ;
@@ -1590,7 +1593,7 @@ public class ProyectoV3 {
 
         do {
             tpw("Pregunta: " + preg + "\n");
-            ans = sc.nextLine().toLowerCase();
+            ans = sc.nextLine().toLowerCase().replaceAll("\\s+", "");
 
             if (Objects.equals(ans, "ayuda")) {
                 if (notepadQuest.isEmpty()) {
@@ -1672,7 +1675,7 @@ public class ProyectoV3 {
         }
 
         tpw("Pregunta: " + preg + "\n");
-        ans = sc.nextLine().toLowerCase();
+        ans = sc.nextLine().toLowerCase().replaceAll("\\s+", "");
 
         if (Objects.equals(ans, resp)){
             tpw("\nRespuesta correcta, ganaste una vida.\nContinue con su aventura.\n");
@@ -1719,7 +1722,7 @@ public class ProyectoV3 {
         }
 
         tpw("Pregunta: " + preg + "\n");
-        ans = sc.nextLine().toLowerCase();
+        ans = sc.nextLine().toLowerCase().replaceAll("\\s+", "");
 
         if (Objects.equals(ans, resp)){
             tpw("\nRespuesta correcta, ganaste una vida.\n Continue con su aventura.\n");
