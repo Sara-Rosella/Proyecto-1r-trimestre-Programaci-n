@@ -1296,6 +1296,7 @@ public class ProyectoV3 {
         String acc;
         String check = " ";
         String use = " ";
+        String cond = " ";
 
         if (inv.isEmpty()){
             tpw("\nNo hay nada en el inventario\n");
@@ -1351,6 +1352,14 @@ public class ProyectoV3 {
                 case "vidas" -> {
                     check = "\nTambién se podria decir tus condiciones o cuantas vidas tienes";
                     use = "\nTienes " + vidas + " vidas";
+
+                    if (vidas == 1){
+                        cond = "Parece que estas para el arrastre";
+                    } else if (vidas > 1 && vidas < 5){
+                        cond = "Has tenido mejores días";
+                    } else {
+                        cond = "Tienes buen aspecto";
+                    }
                 }
                 case "nota" -> {
                     check = "\nUn papel encontrado en la entrada que contiene un texto, ¿Quién lo habrá dejado?";
@@ -1436,6 +1445,10 @@ public class ProyectoV3 {
                         tpw("\n" + notepadQuest.get(i));
                         tpw("\n" + notepadAns.get(i) + "\n");
                     }
+                }
+
+                if (Objects.equals(ans, "vidas")){
+                    tpw("\n" + cond + "\n");
                 }
             }
         }
