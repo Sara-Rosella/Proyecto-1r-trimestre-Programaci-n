@@ -196,10 +196,10 @@ public class ProyectoV3 {
             tpw("\n" + nombre + ", ¿Qué camino quieres escoger (1-> Izquierda, 2-> Derecha, 3-> Conducto, 4-> Inventario): ");
             ans = sc.next();
 
-            if (Op4Check(ans)){
+            if (op4Check(ans)){
                 tpw("Opción no válida, por favor escriba '1' si quieres ir a la izquierda, '2' si quieres ir a la derecha, '3' si quieres ir por el ducto y '4' si quieres abrir el inventario");
             }
-        } while (Op4Check(ans));
+        } while (op4Check(ans));
 
            switch (ans) {
                case "1" -> {
@@ -229,10 +229,10 @@ public class ProyectoV3 {
             tpw("\n" + nombre + ", ¿Por donde quieres ir? (1->Izquierda, 2->Derecha, 3-> Inventario): ");
             ans = sc.next();
 
-            if (Op3Check(ans)){
+            if (op3Check(ans)){
                 tpw("Opción no válida, por favor escriba '1' si quieres ir a la izquierda, '2' si quieres ir a la derecha y '3' si quieres abrir el inventario");
             }
-        } while (Op3Check(ans));
+        } while (op3Check(ans));
 
         switch (ans){
             case "1" ->{
@@ -312,10 +312,10 @@ public class ProyectoV3 {
             tpw("\n" + nombre + ", ¿Qué camino quieres escoger?(1-> Izquierda, 2-> Derecha, 3 -> Inventario): ");
             ans = sc.next();
 
-            if (Op3Check(ans)) {
+            if (op3Check(ans)) {
                 tpw("Opción no válida, por favor escriba '1' si quieres ir a la izquierda, '2' si quieres ir a la derecha y '3' si quieres abrir el inventario");
             }
-        } while (Op3Check(ans));
+        } while (op3Check(ans));
 
         switch (ans){
             case "1" ->{
@@ -404,10 +404,10 @@ public class ProyectoV3 {
             tpw(nombre + ", ¿Qué camino quieres escoger?(1-> Izquierda, 2-> Derecha, 3 -> Inventario): ");
             ans = sc.next();
 
-            if (Op3Check(ans)) {
+            if (op3Check(ans)) {
                 tpw("Opción no válida, por favor escriba '1' si quieres ir a la izquierda, '2' si quieres ir a la derecha y '3' si quieres abrir el inventario");
             }
-        } while (Op3Check(ans));
+        } while (op3Check(ans));
 
         switch (ans){
             case "1" ->{
@@ -438,7 +438,7 @@ public class ProyectoV3 {
         n = sc.next();
 
 
-        while (Op2Check(n)){
+        while (op2Check(n)){
             tpw("\nOpción no válida, por favor introduzca '1' si quieres seguir o '2' si quieres darte la vuelta: ");
             n = sc.next();
         }
@@ -581,10 +581,10 @@ public class ProyectoV3 {
                     tpw("\n" + nombre + ", ¿Qué quieres hacer ahora? (1-> Avanzar, 2-> Volver, 3-> Inventario): ");
                     ans = sc.next();
 
-                    if (Op3Check(ans)) {
+                    if (op3Check(ans)) {
                         tpw("Opción no válida, por favor escriba '1' si quieres ir a la izquierda, '2' si quieres ir a la derecha y '3' si quieres abrir el inventario");
                     }
-                } while (Op3Check(ans));
+                } while (op3Check(ans));
 
                 switch (ans){
                     case "1" -> xpos--;
@@ -600,10 +600,10 @@ public class ProyectoV3 {
                 do {
                     tpw("\n" + nombre + ", ¿Qué quieres hacer ahora? (1-> Izquierda, 2-> Derecha, 3-> Volver, 4 -> Inventario): ");
                     ans = sc.next();
-                    if (Op4Check(ans)) {
+                    if (op4Check(ans)) {
                         tpw("Opción no válida, por favor escriba '1' si quieres ir a la izquierda, '2' si quieres ir a la derecha, '3' si quieres volver y '4' si queires abrir el inventario");
                     }
-                } while (Op4Check(ans));
+                } while (op4Check(ans));
 
                 switch (ans) {
                     case "1" -> xpos--;
@@ -626,7 +626,7 @@ public class ProyectoV3 {
         }
     }
 
-    public static boolean IntCheck (String opc) { //Función para comprobar que la opción introducida es un número y no crashee si meto una letra
+    public static boolean intCheck (String opc) { //Función para comprobar que la opción introducida es un número y no crashee si meto una letra
         if (!opc.isEmpty()) {
             for (int i = 0; i < opc.length(); i++) {
                 if (opc.charAt(i) > '9' || opc.charAt(i) < '0' || opc.length() != 1) {
@@ -637,20 +637,20 @@ public class ProyectoV3 {
         return false;
     }
 
-    public static boolean Op4Check(String opc) { //Función para comprobar que la opción introducida sea 1 2 o 3 o 4
-        if (IntCheck(opc)) {
+    public static boolean op4Check(String opc) { //Función para comprobar que la opción introducida sea 1 2 o 3 o 4
+        if (intCheck(opc)) {
             return true;
         } else return opc.charAt(0) != '1' && opc.charAt(0) != '2' && opc.charAt(0) != '3' && opc.charAt(0) != '4';
     }
 
-    public static boolean Op3Check(String opc) { //Función para comprobar que la opción introducida sea 1 o 2 o 3
-        if (IntCheck(opc)) {
+    public static boolean op3Check(String opc) { //Función para comprobar que la opción introducida sea 1 o 2 o 3
+        if (intCheck(opc)) {
             return true;
         } else return opc.charAt(0) != '1' && opc.charAt(0) != '2' && opc.charAt(0) != '3';
     }
 
-    public static boolean Op2Check(String opc) { //Función para comprobar que la opción introducida sea 1 o 2
-        if (IntCheck(opc)) {
+    public static boolean op2Check(String opc) { //Función para comprobar que la opción introducida sea 1 o 2
+        if (intCheck(opc)) {
             return true;
         } else return opc.charAt(0) != '1' && opc.charAt(0) != '2';
     }
@@ -697,10 +697,10 @@ public class ProyectoV3 {
                 tpw(nombre + ", ¿Qué camino quieres escoger? (1-> Izquierda, 2-> Derecha, 3-> Inventario): ");
                 ans = sc.next();
 
-                if (Op3Check(ans)) {
+                if (op3Check(ans)) {
                     tpw("Opción no válida, por favor escriba '1' si quieres ir a la izquierda, '2' si quieres ir a la derecha y '3' si quieres abrir el inventario");
                 }
-            } while (Op3Check(ans));
+            } while (op3Check(ans));
 
             switch (ans){
                 case "1" -> xpos--;
@@ -722,10 +722,10 @@ public class ProyectoV3 {
                 tpw(nombre + ", ¿Qué te gustaría hacer? (1-> Volver, 2-> Inventario): ");
                 ans = sc.nextLine();
 
-                if (Op3Check(ans)) {
+                if (op3Check(ans)) {
                     tpw("Opción no válida, por favor escriba '1' si quieres volver y '2' si quieres abrir el inventario");
                 }
-            } while (Op2Check(ans));
+            } while (op2Check(ans));
         }
 
         if (Objects.equals(ans, "1")){
@@ -775,10 +775,10 @@ public class ProyectoV3 {
                 tpw(nombre + ", ¿Qué quieres hacer? (1-> Ir a la Izquierda, 2-> Ir a la Derecha, 3 -> Inventario): ");
                 ans = sc.next();
 
-                if (Op3Check(ans)) {
+                if (op3Check(ans)) {
                     tpw("Opción no válida, por favor escriba '1' si quieres ir a la izquierda, '2' si quieres ir a la derecha y '3' si quieres abrir el inventario");
                 }
-            } while (Op3Check(ans));
+            } while (op3Check(ans));
 
             switch (ans) {
                 case "1" -> xpos--;
@@ -849,10 +849,10 @@ public class ProyectoV3 {
                     tpw("\n¿Qué desea hacer ahora? 1-> Avanzar, 2-> volver\n");
                     ans = sc.next().toLowerCase();
 
-                    if (Op2Check(ans)) {
+                    if (op2Check(ans)) {
                         tpw("\nOpción no válida, porfavor escriba '1' si quieres avanzar y '2' si quieres volver");
                     }
-                } while (Op2Check(ans));
+                } while (op2Check(ans));
 
                 estuve = true;
 
@@ -876,10 +876,10 @@ public class ProyectoV3 {
                     tpw("\n¿Qué desea hacer ahora? 1-> volver, 2-> ir adelante, 3-> abrir el cofre\n");
                     ans = sc.next().toLowerCase();
 
-                    if (Op3Check(ans)) {
+                    if (op3Check(ans)) {
                         tpw("\nOpción no válida, porfavor escriba '1' si quieres volver volver, '2' si quieres avanzar y '3' si quieres volver a interctuar con el cofre");
                     }
-                } while (Op3Check(ans));
+                } while (op3Check(ans));
 
                 estuve = true;
 
@@ -901,10 +901,10 @@ public class ProyectoV3 {
                     tpw("\n¿Qué desea hacer ahora? 1-> volver atrás, 2-> abrir el cofre\n");
                     ans = sc.next().toLowerCase();
 
-                    if (Op2Check(ans)) {
+                    if (op2Check(ans)) {
                         tpw("\nOpción no válida, porfavor escriba '1' si quieres volver y '2' si quieres volver a interctuar con el cofre");
                     }
-                } while (Op2Check(ans));
+                } while (op2Check(ans));
 
                 if (Objects.equals(ans, "1")) {
                     switch (rooms[xpos][ypos]) {
@@ -935,10 +935,10 @@ public class ProyectoV3 {
                 tpw("\n¿Qué desea hacer ahora? 1-> Avanzar, 2-> volver, 3-> inventario\n");
                 ans = sc.next().toLowerCase();
 
-                if (Op3Check(ans)) {
+                if (op3Check(ans)) {
                     tpw("\nOpción no válida, porfavor escriba '1' para avanzar, '2' para volver y '3' para abrir el inventario");
                 }
-            } while (Op3Check(ans));
+            } while (op3Check(ans));
 
             estuve = true;
 
@@ -985,7 +985,7 @@ public class ProyectoV3 {
             do {
                 tpw(" \n(1-> Izquierda, 2-> Derecha, 3-> Volver, 4 -> inventario): \n");
                 ans = sc.next();
-            } while (Op4Check(ans));
+            } while (op4Check(ans));
 
             switch (ans) {
                 case "1" -> {
@@ -1014,10 +1014,10 @@ public class ProyectoV3 {
                     tpw(" \n(1-> Avanzar, 2-> Volver, 3-> Investigar 4 -> inventario): \n");
                     ans = sc.next();
 
-                    if (Op4Check(ans)){
+                    if (op4Check(ans)){
                         tpw("Opción no válida, por favor escriba '1' si quieres avanzar, '2' si quieres volver, '4' si quieres investigar la habitación y '4' si quieres abrir el inventario");
                     }
-                } while (Op4Check(ans));
+                } while (op4Check(ans));
 
                 switch (ans) {
                     case "1" -> {
@@ -1046,10 +1046,10 @@ public class ProyectoV3 {
                     tpw(" \n(1-> Avanzar, 2-> Volver, 3 -> inventario): \n");
                     ans = sc.next();
 
-                    if (Op3Check(ans)){
+                    if (op3Check(ans)){
                         tpw("Opción no válida, por favor escriba '1' si quieres avanzar, '2' si quieres volver y '3' si quieres abrir el inventario");
                     }
-                } while (Op3Check(ans));
+                } while (op3Check(ans));
 
                 switch (ans) {
                     case "1" -> {
@@ -1073,10 +1073,10 @@ public class ProyectoV3 {
                 tpw(" (1-> Avanzar 2-> Volver, 3-> Inventario): ");
                 ans = sc.next();
 
-                if (Op3Check(ans)) {
+                if (op3Check(ans)) {
                     tpw("Opción no válida, por favor escriba '1' si quieres avanzar, '2' si quieres volver y '3' si quieres abrir el inventario");
                 }
-            } while (Op3Check(ans));
+            } while (op3Check(ans));
 
             switch (ans){
                 case "1" -> {
@@ -1264,10 +1264,10 @@ public class ProyectoV3 {
             tpw(" \n(1-> Avanzar, 2-> Volver, 3-> Inventario): \n");
             ans = sc.next();
 
-            if (Op3Check(ans)) {
+            if (op3Check(ans)) {
                 tpw("Opción no válida, por favor escriba '1' si quieres avanzar, '2' si quieres volver y '3' si quieres abrir el inventario");
             }
-        } while (Op3Check(ans));
+        } while (op3Check(ans));
 
         switch (ans){
             case "1" -> xpos--;
@@ -1410,10 +1410,10 @@ public class ProyectoV3 {
                 tpw("\n¿Qué quieres hacer? (1-> examinar, 2-> usar): \n");
                 acc = sc.nextLine().toLowerCase();
 
-                if (acc.isEmpty() || Op2Check(acc) ){
+                if (acc.isEmpty() || op2Check(acc) ){
                     tpw("Opción incorrecta, escriba '1' examinar y '2' para usar un objeto");
                 }
-            } while (acc.isEmpty() || Op2Check(acc));
+            } while (acc.isEmpty() || op2Check(acc));
 
             if (Objects.equals(acc, "1")) {
                 tpw(check);
