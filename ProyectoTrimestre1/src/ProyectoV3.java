@@ -50,6 +50,8 @@ public class ProyectoV3 {
     static boolean invuse;
     static boolean gema2;
     static boolean cofab2;
+    static boolean pregvid1;
+    static boolean pregvid2;
     static ArrayList<String> inv = new ArrayList<>();
     static ArrayList<String> notepadQuest = new ArrayList<>();
     static ArrayList<String> notepadAns= new ArrayList<>();
@@ -62,6 +64,8 @@ public class ProyectoV3 {
         Scanner sc = new Scanner(System.in);
         String nombre;
         vidas = 7;
+        pregvid1 = false;
+        pregvid2 = false;
         cofab2 = false;
         gema2 = false;
         stop = false;
@@ -165,7 +169,23 @@ public class ProyectoV3 {
                         curoom = salCof();
                     }
                 }
-                case 3, 4, 7, 12, 26, 16, 27, 28, 32, 34, 37 -> curoom = salVac(nombre);
+                case 3, 4, 12, 26, 16, 27, 28, 32, 34, 37 -> curoom = salVac(nombre);
+
+                case 7, 33-> {
+                    if (pregvid1) {
+                        curoom = salVac(nombre);
+                    } else {
+                        curoom = salVid(nombre);
+                    }
+                }
+                case 30, 35-> {
+                    if (pregvid2) {
+                        curoom = salVac(nombre);
+                    } else {
+                        curoom = salVid(nombre);
+                    }
+                }
+
                 case 14 -> {
                     if (palcodfin){
                     curoom = palcod(nombre);
@@ -891,12 +911,14 @@ public class ProyectoV3 {
                    vidas--;
                    xpos++;
                    ypos++;
+                   estuve = true;
                    cofab2 = true;
                }
                case 36 -> {
                    obtain = "Una rata.\nLa rata se asusta y te araña la cara.\n-1 vida";
                    vidas--;
                    ypos--;
+                   estuve = false;
                    cofab2 = true;
                }
                case 10, 19 -> {
@@ -991,7 +1013,6 @@ public class ProyectoV3 {
                         }
 
                         case 36 -> {
-                            estuve = true;
                             ypos--;
                         }
 
@@ -1041,6 +1062,10 @@ public class ProyectoV3 {
 
             switch (rooms[xpos][ypos]) {
                 case 5, 10, 19, 13 -> xpos++;
+                case 35 -> {
+                    estuve=true;
+                    xpos++;
+                }
 
                 case 25 -> {
                     estuve = true;
@@ -1061,43 +1086,11 @@ public class ProyectoV3 {
         }
         tpw("\nTe encuentras en una sala vacía, ¿a dónde te gustaría ir " + nombre + "?");
 
-        if (rooms[xpos][ypos] == 12) {
-            do {
-                tpw(" \n(1-> Izquierda, 2-> Derecha, 3-> Volver, 4 -> inventario): \n");
-                ans = sc.next();
-            } while (op4Check(ans));
-
-            switch (ans) {
-                case "1" -> {
-                    xpos--;
-                    invuse = false;
-                }
-
-                case "2" -> {
-                    xpos--;
-                    ypos++;
-                    invuse = false;
-                }
-                case "3" -> {
-                    xpos++;
-                    ypos--;
-                    invuse = false;
-                }
-                case "4" -> {
-                    inv();
-                    invuse = true;
-                }
-            }
-        }
-        else if (rooms[xpos][ypos] == 27 || rooms[xpos][ypos] == 28){
-            if (!sombrero) {
+        switch (rooms[xpos][ypos]){
+            case 12 ->{
                 do {
-                    tpw(" \n(1-> Avanzar, 2-> Volver, 3-> Investigar 4 -> inventario): \n");
+                    tpw(" \n(1-> Izquierda, 2-> Derecha, 3-> Volver, 4 -> inventario): \n");
                     ans = sc.next();
-
-                    if (op4Check(ans)){
-                        tpw("Opción no válida, por favor escriba '1' si quieres avanzar, '2' si quieres volver, '4' si quieres investigar la habitación y '4' si quieres abrir el inventario");
-                    }
                 } while (op4Check(ans));
 
                 switch (ans) {
@@ -1107,22 +1100,143 @@ public class ProyectoV3 {
                     }
 
                     case "2" -> {
-                        xpos++;
+                        xpos--;
+                        ypos++;
                         invuse = false;
-
                     }
-
                     case "3" -> {
-                        gorro();
+                        xpos++;
+                        ypos--;
                         invuse = false;
                     }
-
                     case "4" -> {
                         inv();
                         invuse = true;
                     }
                 }
-            } else {
+            }
+            case 27,28 -> {
+                if (!sombrero) {
+                    do {
+                        tpw(" \n(1-> Avanzar, 2-> Volver, 3-> Investigar 4 -> inventario): \n");
+                        ans = sc.next();
+
+                        if (op4Check(ans)){
+                            tpw("Opción no válida, por favor escriba '1' si quieres avanzar, '2' si quieres volver, '3' si quieres investigar la habitación y '4' si quieres abrir el inventario");
+                        }
+                    } while (op4Check(ans));
+
+                    switch (ans) {
+                        case "1" -> {
+                            xpos--;
+                            invuse = false;
+                        }
+
+                        case "2" -> {
+                            xpos++;
+                            invuse = false;
+
+                        }
+
+                        case "3" -> {
+                            gorro();
+                            invuse = false;
+                        }
+
+                        case "4" -> {
+                            inv();
+                            invuse = true;
+                        }
+                    }
+                } else {
+                    do {
+                        tpw(" \n(1-> Avanzar, 2-> Volver, 3 -> inventario): \n");
+                        ans = sc.next();
+
+                        if (op3Check(ans)){
+                            tpw("Opción no válida, por favor escriba '1' si quieres avanzar, '2' si quieres volver y '3' si quieres abrir el inventario");
+                        }
+                    } while (op3Check(ans));
+
+                    switch (ans) {
+                        case "1" -> {
+                            xpos--;
+                            invuse = false;
+                        }
+
+                        case "2" -> {
+                            xpos++;
+                            invuse = false;
+                        }
+
+                        case "3" -> {
+                            inv();
+                            invuse = true;
+                        }
+                    }
+                }
+            }
+            case 7 -> {
+                estuve = false;
+                do {
+                    tpw(" \n(1-> Izquierda, 2-> Derecha, 3-> Volver, 4 -> inventario): \n");
+                    ans = sc.next();
+
+                    tpw("Opción no válida, por favor escriba '1' si ir a la izquierda, '2' si quieres ir a la derecha, '3' volver y '4' si quieres abrir el inventario");
+                } while (op4Check(ans));
+
+                switch (ans) {
+                    case "1" -> {
+                        xpos--;
+                        ypos--;
+                        invuse = false;
+                    }
+
+                    case "2" -> {
+                        xpos--;
+                        invuse = false;
+                    }
+                    case "3" -> {
+                        xpos++;
+                        invuse = false;
+                    }
+                    case "4" -> {
+                        inv();
+                        invuse = true;
+                    }
+                }
+            }
+            case 35 -> {
+                estuve = true;
+                do {
+                    tpw(" \n(1-> Izquierda, 2-> Derecha, 3-> Volver, 4 -> inventario): \n");
+                    ans = sc.next();
+
+                    tpw("Opción no válida, por favor escriba '1' si ir a la izquierda, '2' si quieres ir a la derecha, '3' volver y '4' si quieres abrir el inventario");
+                } while (op4Check(ans));
+
+                switch (ans) {
+                    case "1" -> {
+                        xpos--;
+                        ypos++;
+                        invuse = false;
+                    }
+
+                    case "2" -> {
+                        ypos++;
+                        invuse = false;
+                    }
+                    case "3" -> {
+                        xpos++;
+                        invuse = false;
+                    }
+                    case "4" -> {
+                        inv();
+                        invuse = true;
+                    }
+                }
+            }
+            case 33 -> {
                 do {
                     tpw(" \n(1-> Avanzar, 2-> Volver, 3 -> inventario): \n");
                     ans = sc.next();
@@ -1134,7 +1248,7 @@ public class ProyectoV3 {
 
                 switch (ans) {
                     case "1" -> {
-                        xpos--;
+                        ypos--;
                         invuse = false;
                     }
 
@@ -1149,38 +1263,70 @@ public class ProyectoV3 {
                     }
                 }
             }
-        }
-        else {
+            case 30, 37 -> {
                 do {
-                tpw(" (1-> Avanzar 2-> Volver, 3-> Inventario): ");
-                ans = sc.next();
-                if (op3Check(ans)) {
-                    tpw("Opción no válida, por favor escriba '1' si quieres avanzar, '2' si quieres volver y '3' si quieres abrir el inventario");
-                }
-            } while (op3Check(ans));
+                    tpw(" \n(1-> Avanzar, 2-> Volver, 3 -> inventario): \n");
+                    ans = sc.next();
 
-            switch (ans){
-                case "1" -> {
+                    if (op3Check(ans)){
+                        tpw("Opción no válida, por favor escriba '1' si quieres avanzar, '2' si quieres volver y '3' si quieres abrir el inventario");
+                    }
+                } while (op3Check(ans));
+
+                switch (ans) {
+                    case "1" -> {
+                        xpos++;
+                        invuse = false;
+                    }
+
+                    case "2" -> {
+                        if (estuve){
+                            xpos++;
+                            ypos--;
+                        } else {
+                            xpos++;
+                        }
+                        invuse = false;
+                    }
+
+                    case "3" -> {
+                        inv();
+                        invuse = true;
+                    }
+                }
+            }
+            default -> {
+                do {
+                    tpw(" (1-> Avanzar 2-> Volver, 3-> Inventario): ");
+                    ans = sc.next();
+                    if (op3Check(ans)) {
+                        tpw("Opción no válida, por favor escriba '1' si quieres avanzar, '2' si quieres volver y '3' si quieres abrir el inventario");
+                    }
+                } while (op3Check(ans));
+
+                switch (ans){
+                    case "1" -> {
                         xpos--;
                         invuse = false;
 
-                }
-                case "2" -> {
-                    switch (rooms[xpos][ypos]) {
-                        case 3, 34 -> {
-                            xpos++;
-                            ypos++;
-                            invuse = false;
-                        }
-                        case 4, 7, 16, 26, 27, 28, 37 -> {
-                            xpos++;
-                            invuse = false;
+                    }
+                    case "2" -> {
+                        switch (rooms[xpos][ypos]) {
+                            case 3, 34 -> {
+                                xpos++;
+                                ypos++;
+                                invuse = false;
+                            }
+                            case 4, 7, 16, 26, 27, 28, 37 -> {
+                                xpos++;
+                                invuse = false;
+                            }
                         }
                     }
-                }
-                case "3" -> {
-                    inv();
-                    invuse = true;
+                    case "3" -> {
+                        inv();
+                        invuse = true;
+                    }
                 }
             }
         }
@@ -1188,11 +1334,46 @@ public class ProyectoV3 {
     }
 
     public static int salVid (String nombre){
-        tpw("\nBienvenido a la prueba de las vidas.\nTienes la opción de tomar la prueba y, en caso de acertala, se otorgará 1 vida, de lo contrario, perderás 1 vida.\n");
+        String ans;
+        char pub;
+        Scanner sc = new Scanner(System.in);
+        tpw("\nBienvenido a la prueba de las vidas.\nTienes la opción de tomar una prueba y, en caso de acertala, se otorgará 1 vida, de lo contrario, perderás 1 vida.\n");
 
-        tpw(nombre);
+        do {
+            tpw(nombre + ", te gustaría hacer la prueba? Si te niegas, no podrás consguir vidas en futuras pruebas en esta sala (Y/N)\n");
+            ans = sc.nextLine().toLowerCase();
+            pub = ans.charAt(0);
+
+            if (ynCheck(pub)){
+                tpw("\nOpción no válida, escriba 'Y' si quieres hacer la prueba y 'N' si no\n");
+                ans = sc.nextLine().toLowerCase();
+                pub = ans.charAt(0);
+            }
+        }while (ynCheck(pub));
+
+        if (rooms[xpos][ypos] == 7 || rooms[xpos][ypos] == 33) {
+            estuve = false;
+            if (pub == 'y') {
+                preguntas(nombre);
+            } else {
+                tpw("\nLa prueba se ha cancelado\n");
+            }
+            pregvid1 = true;
+        } else {
+            if (rooms[xpos][ypos] == 35){
+                estuve = true;
+            }
+            if (pub == 'y') {
+                preguntas(nombre);
+            } else {
+                tpw("\nLa prueba se ha cancelado\n");
+            }
+            pregvid2 = true;
+        }
+
         return rooms[xpos][ypos];
     }
+
     public static void preguntas(){
         Scanner sc = new Scanner(System.in);
         Random r = new Random();
@@ -1284,6 +1465,51 @@ public class ProyectoV3 {
                 tpw("\nRespuesta incorrecta, -1 vida\n");
                 vidas--;
                 sigueVivo();
+        }
+    }
+
+    public static void preguntas(String nombre){
+        Scanner sc = new Scanner(System.in);
+        Random r = new Random();
+        String[] quest = {
+                "¿Cuánto es  34 + 5 - 21?",
+                "¿Cuanto es (9 * 6 + 10)/4?",
+                "¿Capital de Canadá?",
+                "¿Cuantos lados tiene un decágono?",
+                "¿En qué continente está Singapur?",
+                "¿Qué es la luna?",
+                "¿Qué tipo de animal es un delfín?",
+        };
+
+        String ans;
+        String resp;
+
+        tpw("\nMuy bien" + nombre + "\n, aparece una prueba enfrente tuya:\nResponde correctamente a la siguiente pregunta para superar la prueba, en caso de fallar, se te restará una vida\nLa respuesta tiene que ser la más corta posible mientras que sea un palabra existente o en número si es posible, o se contará como error... y recuerda las tildes.");
+
+        int pos = r.nextInt(quest.length);
+        String preg = quest[pos] ;
+
+        switch (pos){
+            case 0 -> resp = "18";
+            case 1 -> resp = "16";
+            case 2 -> resp = "ottawa";
+            case 3 -> resp  = "10";
+            case 4 -> resp = "asia";
+            case 5 -> resp = "satélite";
+            case 6 -> resp = "mamífero";
+            default -> resp = "";
+        }
+
+        tpw("Pregunta: " + preg + "\n");
+        ans = sc.nextLine().toLowerCase();
+
+        if (Objects.equals(ans, resp)){
+            tpw("\nRespuesta correcta, ganaste una vida.\n Continue con su aventura.\n");
+            vidas++;
+        } else {
+            tpw("\nRespuesta incorrecta, -1 vida\n");
+            vidas--;
+            sigueVivo();
         }
     }
 
