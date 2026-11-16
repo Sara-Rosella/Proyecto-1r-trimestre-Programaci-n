@@ -1798,12 +1798,12 @@ public class ProyectoV3 {
 
         if (gema || gema2){
             if (gema && gema2){
-                yay = "unas miseras gemas en las manos";
+                yay = " unas miseras gemas en las manos";
             } else {
-                yay = "una misera gema en las manos";
+                yay = " una misera gema en las manos";
             }
         } else {
-            yay = "las manos vacías";
+            yay = " las manos vacías";
         }
 
         switch (rooms [xpos][ypos]){
