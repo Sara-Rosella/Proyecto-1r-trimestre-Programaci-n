@@ -894,7 +894,7 @@ public class ProyectoV3 {
                 case 16-> {
                     tpw("\nTienes dos caminos\n");
                     do {
-                        tpw(nombre + ", ¿Qué camino quieres escoger? (1-> Avanzar, 2-> Izquierda y '3' -> Inventario): ");
+                        tpw(nombre + ", ¿Qué camino quieres escoger? (1-> Avanzar, 2-> Izquierda y 3 -> Inventario): ");
                         ans = sc.next();
 
                         if (op2Check(ans)) {
@@ -978,7 +978,7 @@ public class ProyectoV3 {
                 tpw("\nTe encuentras en una sala con una puerta cerrada, la cual dirige a dos caminos.\n");
 
                 do {
-                    tpw(nombre + ", ¿Qué quieres hacer? (1-> Izquierda, 2-> Avanzar, 3 -> Volver, 4-> inventario): \n");
+                    tpw(nombre + ", ¿Qué quieres hacer? (1-> Avanzar, 2-> Izquierda, 3 -> Volver, 4-> inventario): \n");
                     ans = sc.next();
 
                     if (op4Check(ans)) {
@@ -1224,9 +1224,9 @@ public class ProyectoV3 {
     public static int salVac(String nombre) {
         Scanner sc = new Scanner(System.in);
         String ans;
-        if (!invuse) {
-            preguntas();
-        }
+        //if (!invuse) {
+            //preguntas();
+        //}
         tpw("\nTe encuentras en una sala vacía, ¿a dónde te gustaría ir " + nombre + "?");
 
         switch (rooms[xpos][ypos]){
@@ -1528,8 +1528,9 @@ public class ProyectoV3 {
         char pub;
 
         if (fin){
+            tpw("\nObservas un camino abierto.\n");
             do {
-                tpw(" (1-> Avanzar 2-> Volver, 3-> Inventario): ");
+                tpw("Que desea hacer? (1-> Avanzar 2-> Volver, 3-> Inventario): \n");
                 ans = sc.next();
                 if (op3Check(ans)) {
                     tpw("Opción no válida, por favor escriba '1' si quieres avanzar, '2' si quieres volver y '3' si quieres abrir el inventario");
@@ -1538,22 +1539,13 @@ public class ProyectoV3 {
 
             switch (ans){
                 case "1" -> {
-                    ypos++;
-                    ypos++;
+                    ypos--;
+                    ypos--;
                     invuse = false;
                 }
                 case "2" -> {
-                    switch (rooms[xpos][ypos]) {
-                        case 3, 34 -> {
-                            xpos++;
-                            ypos++;
-                            invuse = false;
-                        }
-                        case 4, 7, 26, 27, 28, 37 -> {
-                            xpos++;
-                            invuse = false;
-                        }
-                    }
+                    xpos--;
+                    ypos++;
                 }
                 case "3" -> {
                     inv();
@@ -1580,6 +1572,8 @@ public class ProyectoV3 {
                 return rooms[xpos][ypos];
             } else {
                 tpw("\nLa prueba se ha cancelado.\nEres expulsado a la sala anterior.\n");
+                ypos++;
+                xpos--;
                 over = true;
             }
         }
@@ -1743,7 +1737,7 @@ public class ProyectoV3 {
         };
 
 
-        tpw("\nMuy bien" + nombre + ", aparece una prueba enfrente tuya:\nResponde correctamente a la siguiente pregunta para superar la prueba, en caso de fallar, se te restará una vida\nLa respuesta tiene que ser la más corta posible mientras que sea un palabra existente o en número si es posible, o se contará como error... y recuerda las tildes.");
+        tpw("\nMuy bien " + nombre + ", aparece una prueba enfrente tuya:\nResponde correctamente a la siguiente pregunta para superar la prueba, en caso de fallar, se te restará una vida\nLa respuesta tiene que ser la más corta posible mientras que sea un palabra existente o en número si es posible, o se contará como error... y recuerda las tildes.\n");
 
         int pos = r.nextInt(quest.length);
         String preg = quest[pos] ;
@@ -1763,16 +1757,15 @@ public class ProyectoV3 {
         ans = sc.nextLine().toLowerCase().replaceAll("\\s+", "");
 
         if (Objects.equals(ans, resp)){
-            tpw("\nRespuesta correcta, ganaste dos vidas.\n Continue con su aventura.\n");
+            tpw("\nRespuesta correcta, ganaste dos vidas.\nContinue con su aventura.\n");
             vidas++;
             vidas++;
         } else {
-            tpw("\nRespuesta incorrecta, -1 vida\n");
+            tpw("\nRespuesta incorrecta, -1 vida.\nHas sido expulsado de la sala\n");
             vidas--;
             over = true;
             sigueVivo();
         }
-
     }
 
     public static void termino (){
@@ -1880,7 +1873,7 @@ public class ProyectoV3 {
                 }
                 case "nota" -> {
                     check = "\nUn papel encontrado en la entrada que contiene un texto, ¿Quién lo habrá dejado?";
-                    use = "\nEl papel lee:\n\u001B[3m'Quién sea que coja este papel, este templo está de pruebas hasta arriba, en casi todas las salas que he explorado he tenido que hacer una.\nIncluso si vuelvo una sala cuya prueba ya he superado, el templo me obliga ha hacer otra prueba de nuevo.\nTen cuidado al entrar a una sala,es posible que una prueba se active.\u001B[0m";
+                    use = "\nEl papel lee:\n\u001B[3m'Quién sea que coja este papel, este templo está de pruebas hasta arriba, en casi todas las salas que he explorado he tenido que hacer una.\nIncluso si vuelvo una sala cuya prueba ya he superado, el templo me obliga ha hacer otra prueba de nuevo.\nTen cuidado al entrar a una sala,es posible que una prueba se active. Y una última cosa aventurero, esto es como un laberinto, a no se que tengas un mapa, te recomiendo que memorices por donde has ido\u001B[0m";
                 }
                 case "piedra preciosa" -> {
                     if (gema2){
@@ -1925,8 +1918,13 @@ public class ProyectoV3 {
                     if (perro) {
                         check = "\nUn perro encontrado dentro de un templo, te está siguiendo a todas lados\n";
                         switch (rooms[xpos][ypos]) {
-                            case 1, 12, 2, 14 ->
+                            case 1, 12, 2, 14, 16 -> {
+                                if (over) {
+                                    use = "\nEl perro se reboza por el suelo, no tiene mucho que decir";
+                                } else {
                                     use = "\nEl perro se acerca a la puerta de la izquierda, parece que quiere le sigas";
+                                }
+                            }
                             case 6, 15 -> {
                                 if (abierto) {
                                     use = "\nEl perro tiene interés por lo que haya por el camino de la derecha";
@@ -1934,9 +1932,16 @@ public class ProyectoV3 {
                                     use = "\nEl perro vuelve hacia atrás, parece que quiere que le sigas";
                                 }
                             }
-                            case 5, 10, 13, 25, 19, 8, 17, 3, 9, 27, 28 ->
+                            case 5, 10, 13, 25, 19, 8, 17, 3, 9, 28, 30, 31 ->
                                     use = "\nEl perro se reboza por el suelo, no tiene mucho que decir";
-                            case 7, 16 -> use = "\nEl perro mira hacia delante";
+                            case 29, 27, 32, 38, 37, 36, 34, 33, 35 ->{
+                                if (gema2){
+                                    use = "\nEl perro se reboza por el suelo, no tiene mucho que decir";
+                                } else {
+                                    use = "\nEl perro te incita a volver atrás";
+                                }
+                            }
+                            case 7 -> use = "\nEl perro mira hacia delante";
                             case 4, 26 -> {
                                 if (!abierto) {
                                     use = "\nEl perro mira hacia atrás";
