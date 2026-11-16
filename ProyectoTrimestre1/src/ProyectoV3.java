@@ -1424,7 +1424,6 @@ public class ProyectoV3 {
                 }
             }
             case 30, 37 -> {
-                System.out.println(estuve);
                 do {
                     tpw(" \n(1-> Avanzar, 2-> Volver, 3 -> inventario): \n");
                     ans = sc.next();
@@ -1458,7 +1457,7 @@ public class ProyectoV3 {
             }
             default -> {
                 do {
-                    tpw(" (1-> Avanzar 2-> Volver, 3-> Inventario): ");
+                    tpw("\n(1-> Avanzar 2-> Volver, 3-> Inventario): \n");
                     ans = sc.next();
                     if (op3Check(ans)) {
                         tpw("Opción no válida, por favor escriba '1' si quieres avanzar, '2' si quieres volver y '3' si quieres abrir el inventario");
@@ -1478,7 +1477,7 @@ public class ProyectoV3 {
                                 ypos++;
                                 invuse = false;
                             }
-                            case 4, 7, 26, 27, 28, 37 -> {
+                            case 4, 7, 26, 27, 28, 37, 32 -> {
                                 xpos++;
                                 invuse = false;
                             }
@@ -1708,7 +1707,7 @@ public class ProyectoV3 {
         String ans;
         String resp;
 
-        tpw("\nMuy bien " + nombre + ", aparece una prueba enfrente tuya:\nResponde correctamente a la siguiente pregunta para superar la prueba, en caso de fallar, se te restará una vida\nLa respuesta tiene que ser la más corta posible mientras que sea un palabra existente o en número si es posible, o se contará como error...y recuerda las tildes.");
+        tpw("\nMuy bien " + nombre + ", aparece una prueba enfrente tuya:\nResponde correctamente a la siguiente pregunta para superar la prueba, en caso de fallar, se te restará una vida\nLa respuesta tiene que ser la más corta posible mientras que sea un palabra existente o en número si es posible, o se contará como error...y recuerda las tildes.\n");
 
         int pos = r.nextInt(quest.length);
         String preg = quest[pos] ;
@@ -1841,7 +1840,7 @@ public class ProyectoV3 {
         } else {
             do {
                 tpw("\n¿Qué quieres ver? ");
-                tpw( "Si no quieres ver nada, escriba 'Salir'\n" );
+                tpw( "\nSi no quieres ver nada, escriba 'Salir'\n" );
                 tpw(inv.toString() + ": ");
                 ans = sc.nextLine().toLowerCase();
 
@@ -1984,7 +1983,7 @@ public class ProyectoV3 {
                 acc = sc.nextLine().toLowerCase();
 
                 if (acc.isEmpty() || op2Check(acc) ){
-                    tpw("Opción no válida, escriba '1' examinar y '2' para usar un objeto");
+                    tpw("\nOpción no válida, escriba '1' examinar y '2' para usar un objeto\n");
                 }
             } while (acc.isEmpty() || op2Check(acc));
 
