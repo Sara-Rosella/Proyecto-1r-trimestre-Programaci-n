@@ -451,7 +451,7 @@ public class ProyectoV3 {
                     n = sc.next().toLowerCase();
                     char s = n.charAt(0);
                     while (ynCheck(s)) {
-                        tpw("\nOpción no válida, por favor introduzca '1' si quieres seguir o '2' si quieres darte la vuelta: ");
+                        tpw("\nOpción no válida, por favor introduzca 'Y' si quieres seguir o 'N' si quieres darte la vuelta: ");
                         n = sc.next();
                         s = n.charAt(0);
                     }
