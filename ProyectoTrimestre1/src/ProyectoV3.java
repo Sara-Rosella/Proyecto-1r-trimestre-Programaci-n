@@ -445,24 +445,26 @@ public class ProyectoV3 {
 
 
         switch (n) {
-            case "1":
+            case "1", "y":
                 for (int i = 0; i < 3; i++) {
-                    tpw("\nTodavía sigues sin ver el final..., ¿quieres seguir recorriendo este pasillo? (1-> Sí, 2-> No): ");
-                    n = sc.next();
-                    while (Op2Check(n)) {
+                    tpw("\nTodavía sigues sin ver el final..., ¿quieres seguir recorriendo este pasillo? (Y/N): ");
+                    n = sc.next().toLowerCase();
+                    char s = n.charAt(0);
+                    while (ynCheck(s)) {
                         tpw("\nOpción no válida, por favor introduzca '1' si quieres seguir o '2' si quieres darte la vuelta: ");
                         n = sc.next();
+                        s = n.charAt(0);
                     }
 
 
-                    if (n.charAt(0) == '2') {
+                    if (s == 'n') {
                         tpw("\nVuelves a la sala inicial");
                         xpos--;
                         return rooms[xpos][ypos];
                     }
                 }
                 break;
-            case "2":
+            case "2", "n":
                 tpw("\nVuelves a la sala inicial");
                 xpos--;
                 return rooms[xpos][ypos];
@@ -470,7 +472,7 @@ public class ProyectoV3 {
         tpw("Consigues llegar al final del pasillo donde te encuentras un perro quien te mira con cara de expectación y miedo.\nDespués de unos minutos se acerca a ti amistosamente y parece estar listo para seguirte durante tu aventura.");
         tpw("Vuelves a la entrada, no nada más aquí");
         perro = true;
-        inv.add("Perro");
+        inv.add("perro");
         xpos--;
         return rooms[xpos][ypos];
     }
