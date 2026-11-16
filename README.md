@@ -18,7 +18,7 @@ El juego tiene un sistema de vidas, si te quedas con 0 vidas, la partida de term
 
 También tienes un inventario, al que puedes acceder siempre que no estés en medio de una prueba y puedes examinar o usar todos los objetos en el inventario.  
 
-Consiste en explorar un templo, el cual está dividido en salas con pruebas, cofres y puertas.  
+Consiste en explorar un templo, el cual está dividido en salas con pruebas, cofres que puedes abrir y puertas que requieren un objeto especial.  
 
 Dependiendo del camino que elijas, obtendrás diferentes recompensas, con el objetivo de obtener el tesoro del Dragón. 
 
