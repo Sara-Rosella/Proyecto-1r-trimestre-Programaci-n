@@ -78,7 +78,7 @@ public class ProyectoV3 {
         xpos = 11;
         ypos = 2;
 
-        tpw("\nTe encuentras en la primera sala, una sala vacía normal y corriente, sin ningún tipo de prueba o reto visible, sin embargo encuentras una nota a tu derecha.\nParece que la nota habla del templo, es mejor guardarla por si acaso.\n(Pones la nota el junto a un papel que trajiste de casa, para usarlo o examinarlo, abra el inventario)");
+        tpw("\nTe encuentras en la primera sala, una sala vacía normal y corriente, sin ningún tipo de prueba o reto visible, sin embargo encuentras una nota a tu derecha.\nParece que la nota habla del templo, es mejor guardarla por si acaso.\n(Pones la nota el junto a un papel que trajiste de casa, para usarlo o examinarlo, abra el inventario)\n");
         inv.add("nota");
 
         room(rooms[xpos][ypos], nombre);
@@ -90,7 +90,7 @@ public class ProyectoV3 {
             System.out.print(text.charAt(i));
 
             try {
-                Thread.sleep(1);
+                Thread.sleep(7);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 break;
@@ -222,14 +222,14 @@ public class ProyectoV3 {
         Scanner sc = new Scanner(System.in);
         String ans;
 
-        tpw("\n\nMiras tu entorno y ves 3 posibles caminos, izquierda, derecha y un pequeño conducto detrás de ti.");
+        tpw("\nMiras tu entorno y ves 3 posibles caminos, izquierda, derecha y un pequeño conducto detrás de ti.");
 
         do {
-            tpw("\n" + nombre + ", ¿Qué camino quieres escoger (1-> Izquierda, 2-> Derecha, 3-> Conducto, 4-> Inventario): ");
+            tpw("\n" + nombre + ", ¿Qué camino quieres escoger (1-> Izquierda, 2-> Derecha, 3-> Conducto, 4-> Inventario): \n");
             ans = sc.next();
 
             if (op4Check(ans)){
-                tpw("Opción no válida, por favor escriba '1' si quieres ir a la izquierda, '2' si quieres ir a la derecha, '3' si quieres ir por el ducto y '4' si quieres abrir el inventario");
+                tpw("\nOpción no válida, por favor escriba '1' si quieres ir a la izquierda, '2' si quieres ir a la derecha, '3' si quieres ir por el ducto y '4' si quieres abrir el inventario\n");
             }
         } while (op4Check(ans));
 
@@ -262,7 +262,7 @@ public class ProyectoV3 {
             ans = sc.next();
 
             if (op3Check(ans)){
-                tpw("Opción no válida, por favor escriba '1' si quieres ir a la izquierda, '2' si quieres ir a la derecha y '3' si quieres abrir el inventario");
+                tpw("\nOpción no válida, por favor escriba '1' si quieres ir a la izquierda, '2' si quieres ir a la derecha y '3' si quieres abrir el inventario\n");
             }
         } while (op3Check(ans));
 
@@ -284,7 +284,7 @@ public class ProyectoV3 {
         String n;
         Scanner sc = new Scanner(System.in);
 
-        tpw("\nTe encuentras en un pasillo que no parece tener final, ¿qué quiere hacer? (1-> Seguir hacia adelante, 2-> Darte la vuelta y volver al incio): ");
+        tpw("\nTe encuentras en un pasillo que no parece tener final, ¿qué quiere hacer? (1-> Seguir hacia adelante, 2-> Darte la vuelta y volver al incio): \n");
         n = sc.next();
 
 
@@ -297,30 +297,30 @@ public class ProyectoV3 {
         switch (n) {
             case "1", "y":
                 for (int i = 0; i < 3; i++) {
-                    tpw("\nTodavía sigues sin ver el final..., ¿quieres seguir recorriendo este pasillo? (Y/N): ");
+                    tpw("\nTodavía sigues sin ver el final..., ¿quieres seguir recorriendo este pasillo? (Y/N): \n");
                     n = sc.next().toLowerCase();
                     char s = n.charAt(0);
                     while (ynCheck(s)) {
-                        tpw("\nOpción no válida, por favor introduzca 'Y' si quieres seguir o 'N' si quieres darte la vuelta: ");
+                        tpw("\nOpción no válida, por favor introduzca 'Y' si quieres seguir o 'N' si quieres darte la vuelta: \n");
                         n = sc.next();
                         s = n.charAt(0);
                     }
 
 
                     if (s == 'n') {
-                        tpw("\nVuelves a la sala inicial");
+                        tpw("\nVuelves a la sala inicial\n");
                         xpos--;
                         return rooms[xpos][ypos];
                     }
                 }
                 break;
             case "2", "n":
-                tpw("\nVuelves a la sala inicial");
+                tpw("\nVuelves a la sala inicial\n");
                 xpos--;
                 return rooms[xpos][ypos];
         }
-        tpw("Consigues llegar al final del pasillo donde te encuentras un perro quien te mira con cara de expectación y miedo.\nDespués de unos minutos se acerca a ti amistosamente y parece estar listo para seguirte durante tu aventura.");
-        tpw("Vuelves a la entrada, no nada más aquí");
+        tpw("\nConsigues llegar al final del pasillo donde te encuentras un perro quien te mira con cara de expectación y miedo.\nDespués de unos minutos se acerca a ti amistosamente y parece estar listo para seguirte durante tu aventura.\n");
+        tpw("\nVuelves a la entrada, no nada más aquí\n");
         perro = true;
         inv.add("perro");
         xpos--;
@@ -347,7 +347,7 @@ public class ProyectoV3 {
             sb.append(palabra.charAt(r));
         }
 
-        tpw("\n(Escuchas a un puerta moverse)\n\nBienvenido viajero " + nombre + " a la prueba del anagrama.\nEsta prueba consiste en reordenar las letras de la cadena dada para adivinar la palabra escondida detrás de ese desorden.\nTeniendo en cuenta su dificultad te doy la opción de rendirte, a cambio perderás 3 vidas solo tendrás que introducir 'escapar'.");
+        tpw("\n(Escuchas a un puerta moverse)\n\nBienvenido viajero " + nombre + " a la prueba del anagrama.\nEsta prueba consiste en reordenar las letras de la cadena dada para adivinar la palabra escondida detrás de ese desorden.\nTeniendo en cuenta su dificultad te doy la opción de rendirte, a cambio perderás 3 vidas solo tendrás que introducir 'escapar'.\n");
         tpw("\nANAGRAMA: " + sb);
         tpw("\nPor favor, " + nombre + ", introduzca su intento: ");
         intento = sc.nextLine().toLowerCase();
@@ -368,10 +368,10 @@ public class ProyectoV3 {
         if (intento.equalsIgnoreCase(palabra)) {
             tpw("\nPalabra adivinada correctamente, felicidades.\n");
             anafin = true;
-            tpw("La entrada por la que entraste empieza a colapsar, bloqueando el camino por donde entraste");
+            tpw("\nLa entrada por la que entraste empieza a colapsar, bloqueando el camino por donde entraste\n");
         } else if (intento.equalsIgnoreCase("escapar")) {
             vidas-= 3;
-            tpw("\nIntentas escapar de la prueba pero en la sala empieza a temblar y te caen piedras grandes encima, logras esquivar la mayoría pero sales con heridas, quitándote 3 vidas.");
+            tpw("\nIntentas escapar de la prueba pero en la sala empieza a temblar y te caen piedras grandes encima, logras esquivar la mayoría pero sales con heridas, quitándote 3 vidas.\n");
             sigueVivo();
             tpw("\nVidas restantes: " + vidas);
             anafin = true;
@@ -388,11 +388,11 @@ public class ProyectoV3 {
         tpw("\nHay dos caminos enfrente tuya, izquierda y derecha\n");
 
         do {
-            tpw("\n" + nombre + ", ¿Qué camino quieres escoger?(1-> Izquierda, 2-> Derecha, 3 -> Inventario): ");
+            tpw("\n" + nombre + ", ¿Qué camino quieres escoger?(1-> Izquierda, 2-> Derecha, 3 -> Inventario): \n");
             ans = sc.next();
 
             if (op3Check(ans)) {
-                tpw("Opción no válida, por favor escriba '1' si quieres ir a la izquierda, '2' si quieres ir a la derecha y '3' si quieres abrir el inventario");
+                tpw("\nOpción no válida, por favor escriba '1' si quieres ir a la izquierda, '2' si quieres ir a la derecha y '3' si quieres abrir el inventario\n");
             }
         } while (op3Check(ans));
 
@@ -425,7 +425,7 @@ public class ProyectoV3 {
         }
 
 
-        tpw("\nBienvenido viajero " + nombre + ", esta prueba se llama 'palabra codificada' y como su propio nombre indica, consiste en adivinar la palabra codificada mostrada.\nDurante la aventura has podido encontrar alguna pista para resolverlo pero si no la encontraste solo me queda desearte buena suerte. \nTendrás los mismos intentos que vidas restantes tengas, cada fallo te restará 1 vida piénsalo antes de resolver a lo loco.");
+        tpw("\nBienvenido viajero " + nombre + ", esta prueba se llama 'palabra codificada' y como su propio nombre indica, consiste en adivinar la palabra codificada mostrada.\nDurante la aventura has podido encontrar alguna pista para resolverlo pero si no la encontraste solo me queda desearte buena suerte. \nTendrás los mismos intentos que vidas restantes tengas, cada fallo te restará 1 vida .");
         tpw("\nLa palabra codificada es: ");
         tpw(sb.toString());
 
@@ -435,7 +435,7 @@ public class ProyectoV3 {
         }
 
 
-        tpw("\nIntroduce tu intento, por favor (puedes salir de la prueba escribiendo 'salir'): ");
+        tpw("\nIntroduce tu intento, por favor (puedes salir de la prueba escribiendo 'salir'): \n");
         intento = sc.next();
 
 
@@ -450,7 +450,7 @@ public class ProyectoV3 {
             }
             tpw("\nLa palabra codficada: ");
             tpw(sb.toString());
-            tpw("\nPor favor, introduce un nuevo intento (recordatorio, puedes salir escribiendo 'salir'): ");
+            tpw("\nPor favor, introduce un nuevo intento (recordatorio, puedes salir escribiendo 'salir'): \n");
             intento = sc.next();
 
         }
@@ -480,11 +480,11 @@ public class ProyectoV3 {
         tpw("\nEn la sala se pueden ver dos caminos.\n");
 
         do {
-            tpw(nombre + ", ¿Qué camino quieres escoger?(1-> Izquierda, 2-> Derecha, 3 -> Inventario): ");
+            tpw(nombre + ", ¿Qué camino quieres escoger?(1-> Izquierda, 2-> Derecha, 3 -> Inventario): \n");
             ans = sc.next();
 
             if (op3Check(ans)) {
-                tpw("Opción no válida, por favor escriba '1' si quieres ir a la izquierda, '2' si quieres ir a la derecha y '3' si quieres abrir el inventario");
+                tpw("\nOpción no válida, por favor escriba '1' si quieres ir a la izquierda, '2' si quieres ir a la derecha y '3' si quieres abrir el inventario\n");
             }
         } while (op3Check(ans));
 
@@ -526,7 +526,7 @@ public class ProyectoV3 {
         counter = pal.length();
 
 
-        tpw("Te encuentras en la prueba del ahorcado, tu objetivo es adivinar la palabra secreta.\nTendrás la opción de decir una letra y comprobar si está contenida en la palabra, o de adivinarla cuando lo tengas claro.\nCada letra o intento fallado te restará una vida, ahora sí que comience la prueba...");
+        tpw("\nTe encuentras en la prueba del ahorcado, tu objetivo es adivinar la palabra secreta.\nTendrás la opción de decir una letra y comprobar si está contenida en la palabra, o de adivinarla cuando lo tengas claro.\nCada letra o intento fallado te restará una vida, ahora sí que comience la prueba...\n");
         for (int i = 0; i < pal.length(); i++) {
             show[i] = '_';
         }
@@ -614,7 +614,7 @@ public class ProyectoV3 {
                     ans = sc.next();
 
                     if (op3Check(ans)) {
-                        tpw("Opción no válida, por favor escriba '1' si quieres ir a la izquierda, '2' si quieres ir a la derecha y '3' si quieres abrir el inventario");
+                        tpw("\nOpción no válida, por favor escriba '1' si quieres ir a la izquierda, '2' si quieres ir a la derecha y '3' si quieres abrir el inventario\n");
                     }
                 } while (op3Check(ans));
 
@@ -662,28 +662,28 @@ public class ProyectoV3 {
         tpw("\nEsta prueba consiste en intentar adivinar el número oculto. Si lo adivinas la recompensa puede ser muuuy valiosa, mientras que si fallas sufrirás un pequeño castigo.\n EL número se encuentra entre el 1 y el 20\n");
 
         do {
-            tpw("Te gustaría participar en esta prueba? Ten en cuenta que una vez rechazado, no podrás volver ha hacerla (Y/N)");
+            tpw("\nTe gustaría participar en esta prueba? Ten en cuenta que una vez rechazado, no podrás volver ha hacerla (Y/N)\n");
             ans = sc.next().toLowerCase();
             first = ans.charAt(0);
 
             if (ynCheck(first)){
-                tpw("Opción incorrecta, escriba 'Y' si quieres proceder con la prueba o 'N' si quieres saltártela");
+                tpw("\nOpción incorrecta, escriba 'Y' si quieres proceder con la prueba o 'N' si quieres saltártela\n");
                 ans = sc.next().toLowerCase();
                 first = ans.charAt(0);
             }
         }while (ynCheck(first));
 
         if (first == 'y'){
-            tpw("\nAhora estimado viajero, introduce tu número elegido: ");
+            tpw("\nAhora estimado viajero, introduce tu número elegido: \n");
             intento = sc.nextInt();
 
             while (intento < 1 || intento > 20){
-                tpw("\nNúmero no valido, por favor introduzca otro: ");
+                tpw("\nNúmero no valido, por favor introduzca otro: \n");
                 intento = sc.nextInt();
             }
 
             if (intento == numAleat){
-                tpw("\nFelicidades, acertaste el número secreto. Se te recompensará con 5 vidas extra para terminar tu aventura, espero que sepas usarlas.");
+                tpw("\nFelicidades, acertaste el número secreto. Se te recompensará con 5 vidas extra para terminar tu aventura.\n");
                 vidas+=5;
                 tpw("\nEl número de vidas actualmente es: " + vidas);
             } else {
@@ -692,7 +692,7 @@ public class ProyectoV3 {
                 sigueVivo();
                 tpw("\nTe quedan " + vidas + " vidas");
                 tpw("\nLa respuesta correcta era: " + numAleat + ", mala suerte\n");
-                tpw("(Vuelves a la sala anterior)");
+                tpw("(Vuelves a la sala anterior)\n");
             }
             xpos++;
             ypos--;
@@ -715,7 +715,7 @@ public class ProyectoV3 {
             ans = sc.next();
 
             if (op3Check(ans)) {
-                tpw("Opción no válida, por favor escriba '1' si quieres avanzar, '2' si quieres volver y '3' si quieres abrir el inventario");
+                tpw("\nOpción no válida, por favor escriba '1' si quieres avanzar, '2' si quieres volver y '3' si quieres abrir el inventario\n");
             }
         } while (op3Check(ans));
 
@@ -793,7 +793,7 @@ public class ProyectoV3 {
                 ans = sc.nextLine();
 
                 if (op3Check(ans)) {
-                    tpw("Opción no válida, por favor escriba '1' si quieres volver y '2' si quieres abrir el inventario");
+                    tpw("\nOpción no válida, por favor escriba '1' si quieres volver y '2' si quieres abrir el inventario\n");
                 }
             } while (op2Check(ans));
 
@@ -829,7 +829,7 @@ public class ProyectoV3 {
                         }
                     }
                 } else {
-                    tpw("\nLe das una vuelta a la llave y abres la puerta.");
+                    tpw("\nLe das una vuelta a la llave y abres la puerta.\n");
                 }
                 return rooms[xpos][ypos];
             }
@@ -842,11 +842,11 @@ public class ProyectoV3 {
         tpw("\nTe encuentras en una sala con una puerta abierta, la cual dirige a dos caminos.\n");
 
             do {
-                tpw(nombre + ", ¿Qué quieres hacer? (1-> Ir a la Izquierda, 2-> Ir a la Derecha, 3 -> Inventario): ");
+                tpw(nombre + ", ¿Qué quieres hacer? (1-> Ir a la Izquierda, 2-> Ir a la Derecha, 3 -> Inventario): \n");
                 ans = sc.next();
 
                 if (op3Check(ans)) {
-                    tpw("Opción no válida, por favor escriba '1' si quieres ir a la izquierda, '2' si quieres ir a la derecha y '3' si quieres abrir el inventario");
+                    tpw("\nOpción no válida, por favor escriba '1' si quieres ir a la izquierda, '2' si quieres ir a la derecha y '3' si quieres abrir el inventario\n");
                 }
             } while (op3Check(ans));
 
@@ -919,11 +919,11 @@ public class ProyectoV3 {
         else {
             tpw("\nTe encuentras ante una puerta cerrada. Parece que necesita un objeto\n");
             do {
-                tpw(nombre + ", ¿Qué te gustaría hacer? (1-> Volver, 2-> Inventario): ");
+                tpw(nombre + ", ¿Qué te gustaría hacer? (1-> Volver, 2-> Inventario): \n");
                 ans = sc.nextLine();
 
                 if (op3Check(ans)) {
-                    tpw("Opción no válida, por favor escriba '1' si quieres volver y '2' si quieres abrir el inventario");
+                    tpw("\nOpción no válida, por favor escriba '1' si quieres volver y '2' si quieres abrir el inventario\n");
                 }
             } while (op2Check(ans));
 
@@ -943,7 +943,7 @@ public class ProyectoV3 {
                     }
                 }
                 else {
-                    tpw("\nInsertas la piedra en la puerta. La puerta se abre y avanzas, pero al sacar la piedra brillante, la puerta se cierra de nuevo.\nNo parce tener una hueco para la piedra desde este lado.");
+                    tpw("\nInsertas la piedra en la puerta. La puerta se abre y avanzas, pero al sacar la piedra brillante, la puerta se cierra de nuevo.\nNo parce tener una hueco para la piedra desde este lado.\n");
                 }
             }
         }
@@ -1036,7 +1036,7 @@ public class ProyectoV3 {
             yn = ans.charAt(0);
 
             if (ynCheck(yn)){
-                tpw("\nOpción no válida, porfavor escriba 'Y' si quieres abrir el cofre y 'N' si no quieres interactuar: ");
+                tpw("\nOpción no válida, porfavor escriba 'Y' si quieres abrir el cofre y 'N' si no quieres interactuar: \n");
             }
         } while(ynCheck(yn));
 
@@ -1124,7 +1124,7 @@ public class ProyectoV3 {
                     ans = sc.next().toLowerCase();
 
                     if (op3Check(ans)) {
-                        tpw("\nOpción no válida, porfavor escriba '1' si quieres volver volver, '2' si quieres avanzar y '3' si quieres volver a interctuar con el cofre");
+                        tpw("\nOpción no válida, porfavor escriba '1' si quieres volver volver, '2' si quieres avanzar y '3' si quieres volver a interctuar con el cofre\n");
                     }
                 } while (op3Check(ans));
 
@@ -1157,7 +1157,7 @@ public class ProyectoV3 {
                     ans = sc.next().toLowerCase();
 
                     if (op2Check(ans)) {
-                        tpw("\nOpción no válida, porfavor escriba '1' si quieres volver y '2' si quieres volver a interctuar con el cofre");
+                        tpw("\nOpción no válida, porfavor escriba '1' si quieres volver y '2' si quieres volver a interctuar con el cofre\n");
                     }
                 } while (op2Check(ans));
 
@@ -1184,7 +1184,7 @@ public class ProyectoV3 {
                 ans = sc.next().toLowerCase();
 
                 if (op3Check(ans)) {
-                    tpw("\nOpción no válida, porfavor escriba '1' para avanzar, '2' para volver y '3' para abrir el inventario");
+                    tpw("\nOpción no válida, porfavor escriba '1' para avanzar, '2' para volver y '3' para abrir el inventario\n");
                 }
             } while (op3Check(ans));
 
@@ -1215,7 +1215,7 @@ public class ProyectoV3 {
                 }
             }
         } else {
-            tpw("Es mejor volver\n");
+            tpw("Es mejor volver.\n(Vuelves a la sala anterior.\n)");
 
             switch (rooms[xpos][ypos]) {
                 case 5, 10, 19, 13 -> xpos++;
@@ -1237,9 +1237,9 @@ public class ProyectoV3 {
     public static int salVac(String nombre) {
         Scanner sc = new Scanner(System.in);
         String ans;
-        //if (!invuse) {
-            //preguntas();
-        //}
+        if (!invuse) {
+            preguntas();
+        }
         tpw("\nTe encuentras en una sala vacía, ¿a dónde te gustaría ir " + nombre + "?");
 
         switch (rooms[xpos][ypos]){
@@ -1460,7 +1460,7 @@ public class ProyectoV3 {
                     tpw("\n(1-> Avanzar 2-> Volver, 3-> Inventario): \n");
                     ans = sc.next();
                     if (op3Check(ans)) {
-                        tpw("Opción no válida, por favor escriba '1' si quieres avanzar, '2' si quieres volver y '3' si quieres abrir el inventario");
+                        tpw("\nOpción no válida, por favor escriba '1' si quieres avanzar, '2' si quieres volver y '3' si quieres abrir el inventario\n");
                     }
                 } while (op3Check(ans));
 
@@ -1546,7 +1546,7 @@ public class ProyectoV3 {
                 tpw("Que desea hacer? (1-> Avanzar 2-> Volver, 3-> Inventario): \n");
                 ans = sc.next();
                 if (op3Check(ans)) {
-                    tpw("Opción no válida, por favor escriba '1' si quieres avanzar, '2' si quieres volver y '3' si quieres abrir el inventario");
+                    tpw("\nOpción no válida, por favor escriba '1' si quieres avanzar, '2' si quieres volver y '3' si quieres abrir el inventario\n");
                 }
             } while (op3Check(ans));
 
@@ -1570,15 +1570,15 @@ public class ProyectoV3 {
             ypos++;
             return rooms[xpos][ypos];
         } else {
-            tpw("Bienvenido a esta prueba, se te va a hacer una pregunta, si respondes correctamente, podrás continuar y se te dará 2 vidas, de lo contrario, se te hechará de la sala y no podrás volver, además se te restrá 1 vida\n");
+            tpw("\nBienvenido a esta prueba, se te va a hacer una pregunta, si respondes correctamente, podrás continuar y se te dará 2 vidas, de lo contrario, se te hechará de la sala y no podrás volver, además se te restrá 1 vida\n");
 
             do {
-                tpw("Estás listo para la prueba, " + nombre + "? (Y/N)");
+                tpw("Estás listo para la prueba, " + nombre + "? (Y/N)\n");
                 ans = sc.nextLine().toLowerCase();
                 pub = ans.charAt(0);
 
                 if (ynCheck(pub)) {
-                    tpw("Opción no válida, por favor introduce 'Y' si quieres hacer la prueba y 'N' si no");
+                    tpw("\nOpción no válida, por favor introduce 'Y' si quieres hacer la prueba y 'N' si no\n");
                     ans = sc.nextLine().toLowerCase();
                     pub = ans.charAt(0);
                 }
@@ -2012,7 +2012,7 @@ public class ProyectoV3 {
         Scanner sc = new Scanner(System.in);
         String ans;
         char exp;
-        tpw("Hay un esqueleto de un aventurero que no tuvo la misma suerte que tú, pero tiene un sombero que está que flipas\n");
+        tpw("\nHay un esqueleto de un aventurero que no tuvo la misma suerte que tú, pero tiene un sombero que está que flipas\n");
 
         do {
             tpw("Te gustaría cogerlo?(Y/N)\n");
@@ -2020,7 +2020,7 @@ public class ProyectoV3 {
             exp = ans.charAt(0);
 
             if (ynCheck(exp)) {
-                tpw("Opción no válida, por favor escriba 'Y' si quieres cogerlo o '2' si quieres dejarlo como está");
+                tpw("\nOpción no válida, por favor escriba 'Y' si quieres cogerlo o '2' si quieres dejarlo como está\n");
             }
         } while (ynCheck(exp));
 
