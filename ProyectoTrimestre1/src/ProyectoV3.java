@@ -1067,9 +1067,9 @@ public class ProyectoV3 {
                }
                case 36 -> {
                    obtain = "una rata.\nLa rata se asusta y te araña la cara.\n-1 vida";
+                   estuve = false;
                    vidas--;
                    ypos--;
-                   estuve = false;
                    cofab2 = true;
                }
                case 10, 19 -> {
@@ -1128,20 +1128,22 @@ public class ProyectoV3 {
                     }
                 } while (op3Check(ans));
 
-                estuve = true;
-
                 switch (ans) {
                     case "1" -> {
                         if (lugar == 36){
+                            estuve = false;
                             ypos--;
                          } else {
+                            estuve = true;
                             xpos++;
                             ypos++;
                         }
                     }
                     case "2" -> {
                         xpos--;
+                        estuve = false;
                         if (lugar != 36) {
+                            estuve = true;
                             ypos++;
                         }
                     }
@@ -1171,11 +1173,12 @@ public class ProyectoV3 {
 
     public static int salCofAb (){
         Scanner sc = new Scanner(System.in);
+        int lugar = rooms[xpos][ypos];
         String ans;
         tpw("\nTe encuentras en una sala con un cofre en el medio.");
         tpw ("\nEl cofre está abierto, no hay nada más en la habitación\n");
         tpw(("\n(Vuelves a la sala anterior)"));
-        if (rooms[xpos][ypos] == 25){
+        if (lugar == 25 || lugar == 36){
             do {
                 tpw("\n¿Qué desea hacer ahora? 1-> Avanzar, 2-> volver, 3-> inventario\n");
                 ans = sc.next().toLowerCase();
@@ -1185,16 +1188,26 @@ public class ProyectoV3 {
                 }
             } while (op3Check(ans));
 
-            estuve = true;
+
 
             switch (ans) {
                 case "1" -> {
-                    xpos--;
-                    ypos++;
+                    if(lugar == 36){
+                        estuve = false;
+                        xpos--;
+                    } else {
+                        estuve = true;
+                        xpos--;
+                        ypos++;
+                    }
                 }
                 case "2" -> {
-                    xpos++;
-                    ypos++;
+                    if (lugar == 36){
+                        ypos--;
+                    } else {
+                        xpos++;
+                        ypos++;
+                    }
                 }
                 case "3"-> {
                     inv();
@@ -1411,6 +1424,7 @@ public class ProyectoV3 {
                 }
             }
             case 30, 37 -> {
+                System.out.println(estuve);
                 do {
                     tpw(" \n(1-> Avanzar, 2-> Volver, 3 -> inventario): \n");
                     ans = sc.next();
