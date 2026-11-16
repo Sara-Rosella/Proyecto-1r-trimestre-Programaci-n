@@ -28,9 +28,9 @@ public class ProyectoV3 {
             {0, 0,  1, 0, 0, 0},
             {0, 0, -1, 0, 0, 0}
     };
-
     static int xpos;
     static int ypos;
+    static int lugar = rooms[xpos][ypos];
     static boolean perro;
     static boolean llave;
     static boolean clave;
@@ -52,6 +52,8 @@ public class ProyectoV3 {
     static boolean cofab2;
     static boolean pregvid1;
     static boolean pregvid2;
+    static boolean piedab;
+    static boolean abierto2;
     static ArrayList<String> inv = new ArrayList<>();
     static ArrayList<String> notepadQuest = new ArrayList<>();
     static ArrayList<String> notepadAns= new ArrayList<>();
@@ -64,6 +66,8 @@ public class ProyectoV3 {
         Scanner sc = new Scanner(System.in);
         String nombre;
         vidas = 7;
+        abierto2 = false;
+        piedab = false;
         pregvid1 = false;
         pregvid2 = false;
         cofab2 = false;
@@ -99,7 +103,7 @@ public class ProyectoV3 {
         tpw("\nTe encuentras en la primera sala, una sala vacía normal y corriente, sin ningún tipo de prueba o reto visible, sin embargo encuentras una nota a tu derecha.\nParece que la nota habla del templo, es mejor guardarla por si acaso.\n(Pones la nota el junto a un papel que trajiste de casa, para usarlo o examinarlo, abra el inventario)");
         inv.add("nota");
 
-        room(rooms[xpos][ypos], nombre);
+        room(lugar, nombre);
     }
 
     public static void tpw (String text) {
@@ -169,7 +173,7 @@ public class ProyectoV3 {
                         curoom = salCof();
                     }
                 }
-                case 3, 4, 12, 26, 16, 27, 28, 32, 34, 37 -> curoom = salVac(nombre);
+                case 3, 4, 12, 26, 27, 28, 32, 34, 37 -> curoom = salVac(nombre);
 
                 case 7, 33-> {
                     if (pregvid1) {
@@ -183,6 +187,14 @@ public class ProyectoV3 {
                         curoom = salVac(nombre);
                     } else {
                         curoom = salVid(nombre);
+                    }
+                }
+
+                case 31, 16 -> {
+                    if (piedab){
+                        curoom = puertpiedab(nombre);
+                    } else {
+                        curoom = puertapied(nombre);
                     }
                 }
 
@@ -872,6 +884,117 @@ public class ProyectoV3 {
         return rooms[xpos][ypos];
     }
 
+    public static int puertapied (String nombre){
+        Scanner sc = new Scanner(System.in);
+        String ans = "";
+
+        if (!piedab) {
+            tpw("\nTe encuentras ante una puerta cerrada. Parece que necesita un objeto\n");
+        }
+
+        if (piedab){
+            switch (lugar) {
+                case 31 -> {
+                    tpw("\nSolo tienes un camino\n");
+
+                    do {
+                        tpw(nombre + ", ¿Qué camino quieres escoger? (1-> Avanzar, 2-> Inventario): ");
+                        ans = sc.next();
+
+                        if (op2Check(ans)) {
+                            tpw("Opción no válida, por favor escriba '1' si quieres ir a la izquierda y '2' si quieres abrir el inventario");
+                        }
+                    } while (op2Check(ans));
+
+                    switch (ans) {
+                        case "1" -> xpos--;
+                        case "2" -> {
+                            inv();
+                            if (piedab) {
+                                return rooms[xpos][ypos];
+                            }
+                        }
+                    }
+                    abierto2 = true;
+                    return rooms[xpos][ypos];
+                }
+                case 16-> {
+                    tpw("Tienes de caminos");
+                    do {
+                        tpw(nombre + ", ¿Qué camino quieres escoger? (1-> Avanzar, 2-> Izquierda y '3' -> Inventario): ");
+                        ans = sc.next();
+
+                        if (op2Check(ans)) {
+                            tpw("Opción no válida, por favor escriba '1' si quieres ir avanzar, '2' si quieres ir a la izquierda y '3' si quieres abrir el inventario");
+                        }
+                    } while (op2Check(ans));
+
+                    switch (ans) {
+                        case "1" -> xpos--;
+                        case "2" -> {
+                            xpos++;
+                            ypos--;
+                        }
+                        case "3" -> inv();
+
+                    }
+                    abierto2 = true;
+                    return rooms[xpos][ypos];
+                    }
+            }
+        } 
+        else {
+            do {
+                tpw(nombre + ", ¿Qué te gustaría hacer? (1-> Volver, 2-> Inventario): ");
+                ans = sc.nextLine();
+
+                if (op2Check(ans)) {
+                    tpw("Opción no válida, por favor escriba '1' si quieres volver y '2' si quieres abrir el inventario");
+                }
+            } while (op2Check(ans));
+        }
+
+        if (Objects.equals(ans, "1")){
+            xpos--;
+        } else {
+            inv();
+            if (!piedab) {
+                tpw("\nA lo mejor deberías volver sobre tus pasos\n");
+                tpw("\n(Vuelves a la sala anterior)\n");
+                    xpos++;
+                    return lugar;
+            } else {
+                tpw("\nIntroduces la piedra y abres la puerta. Al volver a coger la piedra, la puerta se cierra");
+            }
+        }
+        return lugar;
+    }
+
+    public static int puertpiedab (String nombre){
+        Scanner sc = new Scanner(System.in);
+        String ans;
+        tpw("\nTe encuentras en una sala con una puerta abierta, la cual dirige a dos caminos.\n");
+
+        do {
+            tpw(nombre + ", ¿Qué quieres hacer? (1-> Avanzar, 2-> Volver, 3 -> Inventario): ");
+            ans = sc.next();
+
+            if (op3Check(ans)) {
+                tpw("Opción no válida, por favor escriba '1' si quieres avanzar, '2' si quieres volver y '3' si quieres abrir el inventario");
+            }
+        } while (op3Check(ans));
+
+        switch (ans) {
+            case "1" -> xpos--;
+            case "2" -> {
+                tpw("No puedes volver");
+                return rooms[xpos][ypos];
+            }
+            case "3" -> inv();
+        }
+        return rooms[xpos][ypos];
+    }
+
     public static int salCof (){
         Scanner sc = new Scanner(System.in);
         String ans;
@@ -1012,10 +1135,7 @@ public class ProyectoV3 {
                             ypos++;
                         }
 
-                        case 36 -> {
-                            ypos--;
-                        }
-
+                        case 36 -> ypos--;
 
                     }
                 }
@@ -1351,7 +1471,7 @@ public class ProyectoV3 {
             }
         }while (ynCheck(pub));
 
-        if (rooms[xpos][ypos] == 7 || rooms[xpos][ypos] == 33) {
+        if (lugar == 7 || lugar == 33) {
             estuve = false;
             if (pub == 'y') {
                 preguntas(nombre);
@@ -1360,7 +1480,7 @@ public class ProyectoV3 {
             }
             pregvid1 = true;
         } else {
-            if (rooms[xpos][ypos] == 35){
+            if (lugar == 35){
                 estuve = true;
             }
             if (pub == 'y') {
@@ -1371,7 +1491,7 @@ public class ProyectoV3 {
             pregvid2 = true;
         }
 
-        return rooms[xpos][ypos];
+        return lugar;
     }
 
     public static void preguntas(){
@@ -1587,15 +1707,6 @@ public class ProyectoV3 {
                         use = "\nEstas son las cosas que te has apuntado";
                     }
                 }
-                case "piedra preciosa" -> {
-                    if (gema2){
-                        check = "\nUna piedra brillante de color azul marino, no se puede identificar que tipo de piedra es en este momento";
-                        use = "\nEs una piedra hermosa, pero no parece tener utilidad\n";
-                    } else {
-                        tpw("\nNo tienes ese objeto\n");
-                        return;
-                    }
-                }
                 case "clave de cifrado" -> {
                     if (clave) {
                         check = "\nUn papel con un cifrado, parece importante\n";
@@ -1605,7 +1716,6 @@ public class ProyectoV3 {
                         return;
                     }
                 }
-
                 case "sombrero" -> {
                     if (sombrero){
                         check = "\nUn sombrero que cojiste prestado de un aventurero";
@@ -1629,6 +1739,21 @@ public class ProyectoV3 {
                 case "nota" -> {
                     check = "\nUn papel encontrado en la entrada que contiene un texto, ¿Quién lo habrá dejado?";
                     use = "\nEl papel lee:\n\u001B[3m'Quién sea que coja este papel, este templo está de pruebas hasta arriba, en casi todas las salas que he explorado he tenido que hacer una.\nIncluso si vuelvo una sala cuya prueba ya he superado, el templo me obliga ha hacer otra prueba de nuevo.\nTen cuidado al entrar a una sala,es posible que una prueba se active.\u001B[0m";
+                }
+                case "piedra preciosa" -> {
+                    if (gema2){
+                        check = "\nUna piedra brillante de color azul marino, no se puede identificar que tipo de piedra es en este momento";
+                        if (lugar == 16 || lugar == 31){
+                            use = "\nLa piedra encaja en la puerta";
+                            piedab = true;
+                        } else {
+                            use = "\nEs una piedra hermosa, pero no puedes hacer nada con ella ahora mismo\n";
+                        }
+                    } else {
+                        tpw("\nNo tienes ese objeto\n");
+                        return;
+                    }
+
                 }
                 case "llave" -> {
                     if (llaveGet) {
