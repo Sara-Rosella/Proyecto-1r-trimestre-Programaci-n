@@ -21,3 +21,6 @@ También tienes un inventario, al que puedes acceder siempre que no estés en me
 Consiste en explorar un templo, el cual está dividido en salas con pruebas, cofres y puertas.  
 
 Dependiendo del camino que elijas, obtendrás diferentes recompensas, con el objetivo de obtener el tesoro del Dragón. 
+
+## Enlace al repositorio en GITHUB
+[Proyecto 1er Trimestre](https://github.com/Sara-Rosella/Proyecto-1r-trimestre-Programacion).
