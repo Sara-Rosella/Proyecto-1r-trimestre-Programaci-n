@@ -168,7 +168,7 @@ public class ProyectoV3 {
                 }
 
                 case 31, 16 -> {
-                    if (piedab){
+                    if (abierto2){
                         curoom = puertpiedab(nombre);
                     } else {
                         curoom = puertapied(nombre);
@@ -735,9 +735,6 @@ public class ProyectoV3 {
         String ans;
         String pick;
         char check;
-        if (!llave) {
-            tpw("\nTe encuentras ante una puerta cerrada. Parece que necesita una llave\n");
-        }
 
         if (llave){
             if (!stop) {
@@ -789,6 +786,7 @@ public class ProyectoV3 {
             abierto = true;
             return rooms[xpos][ypos];
         } else {
+            tpw("\nTe encuentras ante una puerta cerrada. Parece que necesita una llave\n");
             do {
                 tpw(nombre + ", ¿Qué te gustaría hacer? (1-> Volver, 2-> Inventario): ");
                 ans = sc.nextLine();
@@ -797,27 +795,8 @@ public class ProyectoV3 {
                     tpw("Opción no válida, por favor escriba '1' si quieres volver y '2' si quieres abrir el inventario");
                 }
             } while (op2Check(ans));
-        }
 
-        if (Objects.equals(ans, "1")){
-            if (rooms[xpos][ypos] == 6){
-                xpos++;
-                return rooms[xpos][ypos];
-            } else {
-                if (estuve){
-                    xpos++;
-                    ypos--;
-                    return rooms[xpos][ypos];
-                } else {
-                    xpos++;
-                    return rooms[xpos][ypos];
-                }
-            }
-        } else {
-            inv();
-            if (!llave) {
-                tpw("\nA lo mejor deberías volver sobre tus pasos\n");
-                tpw("\n(Vuelves a la sala anterior)\n");
+            if (Objects.equals(ans, "1")) {
                 if (rooms[xpos][ypos] == 6) {
                     xpos++;
                     return rooms[xpos][ypos];
@@ -825,15 +804,34 @@ public class ProyectoV3 {
                     if (estuve) {
                         xpos++;
                         ypos--;
-                        estuve = false;
+                        return rooms[xpos][ypos];
                     } else {
                         xpos++;
+                        return rooms[xpos][ypos];
                     }
                 }
             } else {
-                tpw("\nLe das una vuelta a la llave y abres la puerta.");
+                inv();
+                if (!llave) {
+                    tpw("\nA lo mejor deberías volver sobre tus pasos\n");
+                    tpw("\n(Vuelves a la sala anterior)\n");
+                    if (rooms[xpos][ypos] == 6) {
+                        xpos++;
+                        return rooms[xpos][ypos];
+                    } else {
+                        if (estuve) {
+                            xpos++;
+                            ypos--;
+                            estuve = false;
+                        } else {
+                            xpos++;
+                        }
+                    }
+                } else {
+                    tpw("\nLe das una vuelta a la llave y abres la puerta.");
+                }
+                return rooms[xpos][ypos];
             }
-            return rooms[xpos][ypos];
         }
     }
 
@@ -864,9 +862,9 @@ public class ProyectoV3 {
 
     public static int puertapied (String nombre){
         Scanner sc = new Scanner(System.in);
-        String ans = "";
+        String ans;
 
-        if (!piedab){
+        if (piedab){
             switch (rooms[xpos][ypos]) {
                 case 31 -> {
                     tpw("\nSolo tienes un camino\n");
@@ -893,7 +891,7 @@ public class ProyectoV3 {
                     return rooms[xpos][ypos];
                 }
                 case 16-> {
-                    tpw("Tienes dos caminos");
+                    tpw("\nTienes dos caminos\n");
                     do {
                         tpw(nombre + ", ¿Qué camino quieres escoger? (1-> Avanzar, 2-> Izquierda y '3' -> Inventario): ");
                         ans = sc.next();
@@ -916,30 +914,36 @@ public class ProyectoV3 {
                     return rooms[xpos][ypos];
                     }
             }
-        } 
+        }
         else {
+            tpw("\nTe encuentras ante una puerta cerrada. Parece que necesita un objeto\n");
             do {
-                tpw("\nTe encuentras ante una puerta cerrada. Parece que necesita un objeto\n");
                 tpw(nombre + ", ¿Qué te gustaría hacer? (1-> Volver, 2-> Inventario): ");
                 ans = sc.nextLine();
 
-                if (op2Check(ans)) {
+                if (op3Check(ans)) {
                     tpw("Opción no válida, por favor escriba '1' si quieres volver y '2' si quieres abrir el inventario");
                 }
             } while (op2Check(ans));
-        }
 
-        if (Objects.equals(ans, "1")){
-            xpos++;
-        } else {
-            inv();
-            if (!piedab) {
-                tpw("\nA lo mejor deberías volver sobre tus pasos\n");
-                tpw("\n(Vuelves a la sala anterior)\n");
-                    xpos++;
-                    return rooms[xpos][ypos];
+            if (Objects.equals(ans, "1")) {
+                xpos++;
+                return rooms[xpos][ypos];
             } else {
-                tpw("\nIntroduces la piedra y abres la puerta. Al volver a coger la piedra, la puerta se cierra");
+                inv();
+                if (!piedab) {
+                    tpw("\nA lo mejor deberías volver sobre tus pasos\n");
+                    tpw("\n(Vuelves a la sala anterior)\n");
+                    if (rooms[xpos][ypos] == 16) {
+                        xpos++;
+                        return rooms[xpos][ypos];
+                    } else {
+                        xpos++;
+                    }
+                }
+                else {
+                    tpw("\nInsertas la piedra en la puerta. La puerta se abre y avanzas, pero al sacar la piedra brillante, la puerta se cierra de nuevo.\nNo parce tener una hueco para la piedra desde este lado.");
+                }
             }
         }
         return rooms[xpos][ypos];
@@ -949,7 +953,7 @@ public class ProyectoV3 {
         Scanner sc = new Scanner(System.in);
         String ans;
         if (rooms[xpos][ypos] == 31){
-        tpw("\nTe encuentras en una sala con una puerta abierta.\n");
+        tpw("\nTe encuentras en una sala con una puerta cerrada, pero no puede abrirla.\n");
 
         do {
             tpw(nombre + ", ¿Qué quieres hacer? (1-> Avanzar, 2-> Volver, 3 -> Inventario): ");
@@ -994,7 +998,7 @@ public class ProyectoV3 {
                     case "4" -> inv();
                 }
             } else {
-                tpw("\nTe encuentras en una sala con una puerta abierta, la solo puedes avanzar, al puerta de la izquierda está bloqueada.\n");
+                tpw("\nTe encuentras en una sala con una puerta abierta, solo puedes avanzar, al puerta de la izquierda está bloqueada.\n");
 
                 do {
                     tpw(nombre + ", ¿Qué quieres hacer? (1-> Avanzar, 2 -> Volver, 3-> inventario): \n");
