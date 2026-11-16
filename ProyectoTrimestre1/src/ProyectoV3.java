@@ -652,7 +652,6 @@ public class ProyectoV3 {
             tpw("\nAhora estimado viajero, introduce tu número elegido: ");
             intento = sc.nextInt();
 
-
             while (intento < 1 || intento > 20){
                 tpw("\nNúmero no valido, por favor introduzca otro: ");
                 intento = sc.nextInt();
@@ -1245,6 +1244,7 @@ public class ProyectoV3 {
         } else {
                 tpw("\nRespuesta incorrecta, -1 vida\n");
                 vidas--;
+                sigueVivo();
         }
     }
 
