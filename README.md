@@ -5,6 +5,7 @@ Juego de aventura conversacional por consola, desarrollado en Java como Proyecto
 **Integrantes:** Marcos Castro, Pablo Espinal y Sara Rosella
 
 **Repositorio:** [https\://github.com/Sara-Rosella/Proyecto-1r-trimestre-Programacion](https://github.com/Sara-Rosella/Proyecto-1r-trimestre-Programacion)   
+
 ---
 
 ## **1\. Descripción**
