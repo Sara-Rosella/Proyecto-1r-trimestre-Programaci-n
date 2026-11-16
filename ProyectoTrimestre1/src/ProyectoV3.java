@@ -138,20 +138,20 @@ public class ProyectoV3 {
                 }
                 case 5, 13, 25 ->{
                     if (cofab) {
-                        curoom = SalCofAb();
+                        curoom = salCofAb();
                     } else {
-                        curoom = SalCof();
+                        curoom = salCof();
                     }
                 }
 
                 case 19, 10 ->{
                     if (cofrerul){
-                        curoom = SalCofAb();
+                        curoom = salCofAb();
                     } else {
-                        curoom = SalCof();
+                        curoom = salCof();
                     }
                 }
-                case 3, 4, 7, 12, 26, 16, 27, 28 -> curoom = SalVac(nombre);
+                case 3, 4, 7, 12, 26, 16, 27, 28 -> curoom = salVac(nombre);
                 case 14 -> {
                     if (palcodfin){
                     curoom = palcod(nombre);
@@ -184,6 +184,13 @@ public class ProyectoV3 {
             }
         } while (curoom != 0);
 
+    }
+
+    public static void sigueVivo() { //Funcion para comprobar las vidas al acabar las pruebas
+        if (vidas <= 0) {
+            tpw("\n\u001B[31mTE HAS QUEDADO SIN VIDAS. FIN DE LA AVENTURA.");
+            System.exit(0);
+        }
     }
 
     public static int entrada (String nombre) {
@@ -245,6 +252,53 @@ public class ProyectoV3 {
             }
             case "3" -> inv();
         }
+        return rooms[xpos][ypos];
+    }
+
+    public static int salaSecreta () { //En esta funcion quiero que pregunte 3 veces si quiero tomar el camino para llegar a la sala secreta
+        String n;
+        Scanner sc = new Scanner(System.in);
+
+        tpw("\nTe encuentras en un pasillo que no parece tener final, ¿qué quiere hacer? (1-> Seguir hacia adelante, 2-> Darte la vuelta y volver al incio): ");
+        n = sc.next();
+
+
+        while (op2Check(n)){
+            tpw("\nOpción no válida, por favor introduzca '1' si quieres seguir o '2' si quieres darte la vuelta: ");
+            n = sc.next();
+        }
+
+
+        switch (n) {
+            case "1", "y":
+                for (int i = 0; i < 3; i++) {
+                    tpw("\nTodavía sigues sin ver el final..., ¿quieres seguir recorriendo este pasillo? (Y/N): ");
+                    n = sc.next().toLowerCase();
+                    char s = n.charAt(0);
+                    while (ynCheck(s)) {
+                        tpw("\nOpción no válida, por favor introduzca 'Y' si quieres seguir o 'N' si quieres darte la vuelta: ");
+                        n = sc.next();
+                        s = n.charAt(0);
+                    }
+
+
+                    if (s == 'n') {
+                        tpw("\nVuelves a la sala inicial");
+                        xpos--;
+                        return rooms[xpos][ypos];
+                    }
+                }
+                break;
+            case "2", "n":
+                tpw("\nVuelves a la sala inicial");
+                xpos--;
+                return rooms[xpos][ypos];
+        }
+        tpw("Consigues llegar al final del pasillo donde te encuentras un perro quien te mira con cara de expectación y miedo.\nDespués de unos minutos se acerca a ti amistosamente y parece estar listo para seguirte durante tu aventura.");
+        tpw("Vuelves a la entrada, no nada más aquí");
+        perro = true;
+        inv.add("perro");
+        xpos--;
         return rooms[xpos][ypos];
     }
 
@@ -430,53 +484,6 @@ public class ProyectoV3 {
         return c;
     }
 
-    public static int salaSecreta () { //En esta funcion quiero que pregunte 3 veces si quiero tomar el camino para llegar a la sala secreta
-        String n;
-        Scanner sc = new Scanner(System.in);
-
-        tpw("\nTe encuentras en un pasillo que no parece tener final, ¿qué quiere hacer? (1-> Seguir hacia adelante, 2-> Darte la vuelta y volver al incio): ");
-        n = sc.next();
-
-
-        while (op2Check(n)){
-            tpw("\nOpción no válida, por favor introduzca '1' si quieres seguir o '2' si quieres darte la vuelta: ");
-            n = sc.next();
-        }
-
-
-        switch (n) {
-            case "1", "y":
-                for (int i = 0; i < 3; i++) {
-                    tpw("\nTodavía sigues sin ver el final..., ¿quieres seguir recorriendo este pasillo? (Y/N): ");
-                    n = sc.next().toLowerCase();
-                    char s = n.charAt(0);
-                    while (ynCheck(s)) {
-                        tpw("\nOpción no válida, por favor introduzca 'Y' si quieres seguir o 'N' si quieres darte la vuelta: ");
-                        n = sc.next();
-                        s = n.charAt(0);
-                    }
-
-
-                    if (s == 'n') {
-                        tpw("\nVuelves a la sala inicial");
-                        xpos--;
-                        return rooms[xpos][ypos];
-                    }
-                }
-                break;
-            case "2", "n":
-                tpw("\nVuelves a la sala inicial");
-                xpos--;
-                return rooms[xpos][ypos];
-        }
-        tpw("Consigues llegar al final del pasillo donde te encuentras un perro quien te mira con cara de expectación y miedo.\nDespués de unos minutos se acerca a ti amistosamente y parece estar listo para seguirte durante tu aventura.");
-        tpw("Vuelves a la entrada, no nada más aquí");
-        perro = true;
-        inv.add("perro");
-        xpos--;
-        return rooms[xpos][ypos];
-    }
-
     public static int ahorcado (String[] ans){
         Scanner sc = new Scanner(System.in);
         Random r = new Random();
@@ -619,44 +626,85 @@ public class ProyectoV3 {
         return rooms[xpos][ypos];
     }
 
-    public static void sigueVivo() { //Funcion para comprobar las vidas al acabar las pruebas
-        if (vidas <= 0) {
-            tpw("\n\u001B[31mTE HAS QUEDADO SIN VIDAS. FIN DE LA AVENTURA.");
-            System.exit(0);
-        }
-    }
+    public static int ruleta(){
+        Random rnd = new Random();
+        Scanner sc = new Scanner(System.in);
+        int numAleat = rnd.nextInt(20) + 1; //rango del 1 al 20
+        int intento;
+        String ans;
+        char first;
 
-    public static boolean intCheck (String opc) { //Función para comprobar que la opción introducida es un número y no crashee si meto una letra
-        if (!opc.isEmpty()) {
-            for (int i = 0; i < opc.length(); i++) {
-                if (opc.charAt(i) > '9' || opc.charAt(i) < '0' || opc.length() != 1) {
-                    return true;
-                }
+        tpw("\nEsta prueba consiste en intentar adivinar el número oculto. Si lo adivinas la recompensa puede ser muuuy valiosa, mientras que si fallas sufrirás un pequeño castigo.\n EL número se encuentra entre el 1 y el 20\n");
+
+        do {
+            tpw("Te gustaría participar en esta prueba? Ten en cuenta que una vez rechazado, no podrás volver ha hacerla (Y/N)");
+            ans = sc.next().toLowerCase();
+            first = ans.charAt(0);
+
+            if (ynCheck(first)){
+                tpw("Opción incorrecta, escriba 'Y' si quieres proceder con la prueba o 'N' si quieres saltártela");
+                ans = sc.next().toLowerCase();
+                first = ans.charAt(0);
             }
+        }while (ynCheck(first));
+
+        if (first == 'y'){
+            tpw("\nAhora estimado viajero, introduce tu número elegido: ");
+            intento = sc.nextInt();
+
+
+            while (intento < 1 || intento > 20){
+                tpw("\nNúmero no valido, por favor introduzca otro: ");
+                intento = sc.nextInt();
+            }
+
+            if (intento == numAleat){
+                tpw("\nFelicidades, acertaste el número secreto. Se te recompensará con 5 vidas extra para terminar tu aventura, espero que sepas usarlas.");
+                vidas+=5;
+                tpw("\nEl número de vidas actualmente es: " + vidas);
+            } else {
+                tpw("\nNúmero incorrecto. Tu castigo: perder 1 vida.\n");
+                vidas--;
+                sigueVivo();
+                tpw("\nTe quedan " + vidas + " vidas");
+                tpw("\nLa respuesta correcta era: " + numAleat + ", mala suerte\n");
+                tpw("(Vuelves a la sala anterior)");
+            }
+            xpos++;
+            ypos--;
+        } else {
+            tpw("\nLa prueba ha sido cancelada\n");
         }
-        return false;
+
+        rulefin = true;
+        return rooms[xpos][ypos];
     }
 
-    public static boolean op4Check(String opc) { //Función para comprobar que la opción introducida sea 1 2 o 3 o 4
-        if (intCheck(opc)) {
-            return true;
-        } else return opc.charAt(0) != '1' && opc.charAt(0) != '2' && opc.charAt(0) != '3' && opc.charAt(0) != '4';
-    }
+    public static int ruletav2(){
+        Scanner sc = new Scanner(System.in);
+        String ans;
 
-    public static boolean op3Check(String opc) { //Función para comprobar que la opción introducida sea 1 o 2 o 3
-        if (intCheck(opc)) {
-            return true;
-        } else return opc.charAt(0) != '1' && opc.charAt(0) != '2' && opc.charAt(0) != '3';
-    }
+        tpw("\nLa sala está vacía, que te gustaría hacer?");
 
-    public static boolean op2Check(String opc) { //Función para comprobar que la opción introducida sea 1 o 2
-        if (intCheck(opc)) {
-            return true;
-        } else return opc.charAt(0) != '1' && opc.charAt(0) != '2';
-    }
+        do {
+            tpw(" \n(1-> Avanzar, 2-> Volver, 3-> Inventario): \n");
+            ans = sc.next();
 
-    public static boolean ynCheck (char opc){
-        return opc != 'y' && opc != 'n';
+            if (op3Check(ans)) {
+                tpw("Opción no válida, por favor escriba '1' si quieres avanzar, '2' si quieres volver y '3' si quieres abrir el inventario");
+            }
+        } while (op3Check(ans));
+
+        switch (ans){
+            case "1" -> xpos--;
+
+            case "2" -> {
+                xpos++;
+                ypos--;
+            }
+            case "3" -> inv();
+        }
+        return rooms[xpos][ypos];
     }
 
     public static int puertallav (String nombre){
@@ -791,7 +839,7 @@ public class ProyectoV3 {
         return rooms[xpos][ypos];
     }
 
-    public static int SalCof (){
+    public static int salCof (){
         Scanner sc = new Scanner(System.in);
         String ans;
         char yn;
@@ -923,7 +971,7 @@ public class ProyectoV3 {
         return rooms[xpos][ypos];
     }
 
-    public static int SalCofAb (){
+    public static int salCofAb (){
         Scanner sc = new Scanner(System.in);
         String ans;
         tpw("\nTe encuentras en una sala con un cofre en el medio.");
@@ -972,7 +1020,7 @@ public class ProyectoV3 {
         return rooms[xpos][ypos];
     }
 
-    public static int SalVac(String nombre) {
+    public static int salVac(String nombre) {
         Scanner sc = new Scanner(System.in);
         String ans;
 
@@ -1200,85 +1248,46 @@ public class ProyectoV3 {
         }
     }
 
-    public static int ruleta(){
-        Random rnd = new Random();
-        Scanner sc = new Scanner(System.in);
-        int numAleat = rnd.nextInt(20) + 1; //rango del 1 al 20
-        int intento;
-        String ans;
-        char first;
-
-        tpw("\nEsta prueba consiste en intentar adivinar el número oculto. Si lo adivinas la recompensa puede ser muuuy valiosa, mientras que si fallas sufrirás un pequeño castigo.\n EL número se encuentra entre el 1 y el 20\n");
-
-        do {
-            tpw("Te gustaría participar en esta prueba? Ten en cuenta que una vez rechazado, no podrás volver ha hacerla (Y/N)");
-            ans = sc.next().toLowerCase();
-            first = ans.charAt(0);
-
-            if (ynCheck(first)){
-                tpw("Opción incorrecta, escriba 'Y' si quieres proceder con la prueba o 'N' si quieres saltártela");
-                ans = sc.next().toLowerCase();
-                first = ans.charAt(0);
+    public static void termino (){
+        String per = ".";
+        String yay;
+        if (perro){
+            switch (rooms[xpos][ypos]) {
+                case 11 -> per = " y un nuevo leal compañero.";
+                case 21 -> per = " acompañado de tu nuevo compañero.";
+                case 22 -> per = ", diciendole adiós al perro que encontraste y viendo como se aleja a la distancia.";
             }
-        }while (ynCheck(first));
+        }
 
-        if (first == 'y'){
-        tpw("\nAhora estimado viajero, introduce tu número elegido: ");
-        intento = sc.nextInt();
-
-
-            while (intento < 1 || intento > 20){
-                tpw("\nNúmero no valido, por favor introduzca otro: ");
-                intento = sc.nextInt();
-            }
-
-            if (intento == numAleat){
-                tpw("\nFelicidades, acertaste el número secreto. Se te recompensará con 5 vidas extra para terminar tu aventura, espero que sepas usarlas.");
-                vidas+=5;
-                tpw("\nEl número de vidas actualmente es: " + vidas);
+        if (gema || gema2){
+            if (gema && gema2){
+                yay = "unas miseras gemas en las manos";
             } else {
-                tpw("\nNúmero incorrecto. Tu castigo: perder 1 vida.\n");
-                vidas--;
-                sigueVivo();
-                tpw("\nTe quedan " + vidas + " vidas");
-                tpw("\nLa respuesta correcta era: " + numAleat + ", mala suerte\n");
-                tpw("(Vuelves a la sala anterior)");
+                yay = "una misera gema en las manos";
             }
-            xpos++;
-            ypos--;
         } else {
-            tpw("\nLa prueba ha sido cancelada\n");
+            yay = "las manos vacías";
         }
 
-        rulefin = true;
-        return rooms[xpos][ypos];
-    }
+        switch (rooms [xpos][ypos]){
+            case 11 -> {
+                tpw("\nTe encuentras en una sala con un gran cofre rodeado de una fortuna. \nTe acercas al cofre y al abrirlo te encuentras con el tesoro del templo del DRAGÓN HERÁLDICO GUIVERNO BLANCO. \nUna puerta se abre delante tuya, incitandote a salir con el fruto de tus esfuerzos" + per);
 
-    public static int ruletav2(){
-        Scanner sc = new Scanner(System.in);
-        String ans;
-
-        tpw("\nLa sala está vacía, que te gustaría hacer?");
-
-        do {
-            tpw(" \n(1-> Avanzar, 2-> Volver, 3-> Inventario): \n");
-            ans = sc.next();
-
-            if (op3Check(ans)) {
-                tpw("Opción no válida, por favor escriba '1' si quieres avanzar, '2' si quieres volver y '3' si quieres abrir el inventario");
+                tpw("\n\u001B[32m FINAL BUENO");
             }
-        } while (op3Check(ans));
 
-        switch (ans){
-            case "1" -> xpos--;
-
-            case "2" -> {
-                xpos++;
-                ypos--;
+            case 21 -> {
+                tpw("\nTe encuentras en una sala con un pilar en el medio. \nEncima de este, un cofre iluminado por una luz procedente del exterior. \nAl abrirlo te encuentras con varios tesoros, pero no parece que sean tan legendarias como las historias decían que eran. \nUna puerta se abre dando al exterior, decides recoger los tesoro dentro del cofre y volver a tu hogar" + per);
+                tpw("\n\u001B[33m FINAL NEUTRAL");
             }
-            case "3" -> inv();
+
+            case 22 ->{
+                tpw("\nTe encuentras en una sala con una puerta que da al exterior del templo. \nParece que esta puerta fue recientemente movida, pero no ves nada que de una indicación a un tesoro. \nAl final terminas volviendo con" + yay + per);
+
+                tpw("\n\u001B[31m FINAL MALO");
+            }
         }
-        return rooms[xpos][ypos];
+        System.exit(0);
     }
 
     public static void inv (){
@@ -1466,45 +1475,36 @@ public class ProyectoV3 {
         return true;
     }
 
-    public static void termino (){
-        String per = ".";
-        String yay;
-        if (perro){
-            switch (rooms[xpos][ypos]) {
-                case 11 -> per = " y un nuevo leal compañero.";
-                case 21 -> per = " acompañado de tu nuevo compañero.";
-                case 22 -> per = ", diciendole adiós al perro que encontraste y viendo como se aleja a la distancia.";
+    public static boolean intCheck (String opc) { //Función para comprobar que la opción introducida es un número y no crashee si meto una letra
+        if (!opc.isEmpty()) {
+            for (int i = 0; i < opc.length(); i++) {
+                if (opc.charAt(i) > '9' || opc.charAt(i) < '0' || opc.length() != 1) {
+                    return true;
+                }
             }
         }
+        return false;
+    }
 
-        if (gema || gema2){
-            if (gema && gema2){
-                yay = "unas miseras gemas en las manos";
-            } else {
-                yay = "una misera gema en las manos";
-            }
-        } else {
-            yay = "las manos vacías";
-        }
+    public static boolean op4Check(String opc) { //Función para comprobar que la opción introducida sea 1 2 o 3 o 4
+        if (intCheck(opc)) {
+            return true;
+        } else return opc.charAt(0) != '1' && opc.charAt(0) != '2' && opc.charAt(0) != '3' && opc.charAt(0) != '4';
+    }
 
-        switch (rooms [xpos][ypos]){
-            case 11 -> {
-                tpw("\nTe encuentras en una sala con un gran cofre rodeado de una fortuna. \nTe acercas al cofre y al abrirlo te encuentras con el tesoro del templo del DRAGÓN HERÁLDICO GUIVERNO BLANCO. \nUna puerta se abre delante tuya, incitandote a salir con el fruto de tus esfuerzos" + per);
+    public static boolean op3Check(String opc) { //Función para comprobar que la opción introducida sea 1 o 2 o 3
+        if (intCheck(opc)) {
+            return true;
+        } else return opc.charAt(0) != '1' && opc.charAt(0) != '2' && opc.charAt(0) != '3';
+    }
 
-                tpw("\n\u001B[32m FINAL BUENO");
-            }
+    public static boolean op2Check(String opc) { //Función para comprobar que la opción introducida sea 1 o 2
+        if (intCheck(opc)) {
+            return true;
+        } else return opc.charAt(0) != '1' && opc.charAt(0) != '2';
+    }
 
-            case 21 -> {
-                tpw("\nTe encuentras en una sala con un pilar en el medio. \nEncima de este, un cofre iluminado por una luz procedente del exterior. \nAl abrirlo te encuentras con varios tesoros, pero no parece que sean tan legendarias como las historias decían que eran. \nUna puerta se abre dando al exterior, decides recoger los tesoro dentro del cofre y volver a tu hogar" + per);
-                tpw("\n\u001B[33m FINAL NEUTRAL");
-            }
-
-            case 22 ->{
-                tpw("\nTe encuentras en una sala con una puerta que da al exterior del templo. \nParece que esta puerta fue recientemente movida, pero no ves nada que de una indicación a un tesoro. \nAl final terminas volviendo con" + yay + per);
-
-                tpw("\n\u001B[31m FINAL MALO");
-            }
-        }
-        System.exit(0);
+    public static boolean ynCheck (char opc){
+        return opc != 'y' && opc != 'n';
     }
 }
